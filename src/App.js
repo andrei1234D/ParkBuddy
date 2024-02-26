@@ -1,10 +1,8 @@
-import './style/App.css';
-
-//Router Imports:
-
 // import Login from './pages/Login';
 import Home from './pages/Home';
-// import Nav from './navigation/nav';
+import Nav from './navigation/nav';
+import Particles from './particles/ParticlesBackground';
+
 // import ProtectedRoutes from '../ProtectedRoutes';
 import DarkMode from './DarkMode/DarkMode';
 
@@ -15,7 +13,8 @@ function App() {
   return (
     <div>
       <Router>
-        {/* <Nav /> */}
+        <Particles />
+        <Nav />
         <DarkMode />
         <Routes>
           {/* <Route path="/login" element={<Login />} /> */}

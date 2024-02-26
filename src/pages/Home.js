@@ -1,17 +1,23 @@
-import '../style/Home.css';
+import Particles from 'react-tsparticles';
+import { useCallback } from 'react';
+import { loadSlim } from 'tsparticles-slim';
 
+import '../style/Home.css';
 function Home() {
-  return (
-    <div>
-      <div className="parkBuddy">
-        <img
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXe6TZvP4Xnm8T0TP5LiNfEcC42vjZGP6sxA&usqp=CAU"
-          alt="nothing"
-          style={{ width: '100%', height: '100%' }}
-        ></img>
-      </div>
-    </div>
-  );
+  const particlesInit = useCallback(async (engine) => {
+    console.log(engine);
+    // you can initiate the tsParticles instance (engine) here, adding custom shapes or presets
+    // this loads the tsparticles package bundle, it's the easiest method for getting everything ready
+    // starting from v2 you can add only the features you need reducing the bundle size
+    //await loadFull(engine);
+    await loadSlim(engine);
+  }, []);
+
+  const particlesLoaded = useCallback(async (container) => {
+    await console.log(container);
+  }, []);
+
+  return <div className="title">Park Buddy</div>;
 }
 
 export default Home;
