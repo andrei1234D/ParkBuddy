@@ -1,4 +1,83 @@
 .title {
   text-align: center;
-  font-size: 12vw;
+  font-size: 7vw;
+  font-weight: 700;
+  color: #bacbdbe4;
+  text-shadow: 40px 30px 50px rgba(0, 0, 0, 0.8);
+  letter-spacing: 10px;
+  margin-bottom: 15vh; /* Added margin-bottom for distance from the options container */
+}
+
+.options-container {
+  bottom: 0;
+  margin-left: 5%;
+  margin-right: 5%;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.option-box {
+  opacity: 0.92;
+  width: 150px;
+  padding: 20px;
+  margin: 10px;
+  text-align: center;
+  font-weight: 500;
+  text-shadow: 30px 20px 35px rgba(0, 0, 0, 0.7);
+  font-size: 1.5rem;
+  color: #bacbdbe4;
+  background-color: rgba(130, 119, 165, 0.596);
+  border-radius: 28%;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+
+  /* Added flex properties for vertical alignment */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.language-button {
+  text-shadow: 20px 10px 20px rgba(0, 0, 0, 0.5);
+  opacity: 0.92;
+  color: #bacbdbe4;
+  background-color: #175899;
+  display: block;
+  margin: 40px auto;
+  padding: 15px 30px;
+  font-size: 1.5rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 28%;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+.link {
+  text-decoration: none;
+}
+
+/* Media query for resolutions smaller than 800 pixels */
+@media (max-width: 800px) {
+  .options-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .option-box {
+    font-size: 40px;
+    width: 70%;
+    height: 70px; /* Increased button height on smaller screens */
+    margin: 15px; /* Increased distance between buttons on smaller screens */
+    border-radius: 28%;
+  }
+  .title {
+    font-size: 80px;
+    margin-top: 15%;
+    letter-spacing: 5px;
+  }
+  .language-button {
+    font-size: 40px;
+  }
 }

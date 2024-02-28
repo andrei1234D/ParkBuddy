@@ -1,23 +1,24 @@
-import Particles from 'react-tsparticles';
-import { useCallback } from 'react';
-import { loadSlim } from 'tsparticles-slim';
+import React from 'react';
+import { Link } from 'react-router-dom';
+
+import translations from '../translation/Translation';
 
 import '../style/Home.css';
+
 function Home() {
-  const particlesInit = useCallback(async (engine) => {
-    console.log(engine);
-    // you can initiate the tsParticles instance (engine) here, adding custom shapes or presets
-    // this loads the tsparticles package bundle, it's the easiest method for getting everything ready
-    // starting from v2 you can add only the features you need reducing the bundle size
-    //await loadFull(engine);
-    await loadSlim(engine);
-  }, []);
+  const language = localStorage.getItem('language');
+  const translate = (key) => translations[language][key];
+  return (
+    <div>
+      <div className="title">Park Buddy</div>
 
-  const particlesLoaded = useCallback(async (container) => {
-    await console.log(container);
-  }, []);
-
-  return <div className="title">Park Buddy</div>;
+      <div className="options-container">
+        <div className="option-box">{translate('login')}</div>
+        <Link></Link>
+        <div className="option-box">{translate('rentASpot')}</div>
+      </div>
+    </div>
+  );
 }
 
 export default Home;

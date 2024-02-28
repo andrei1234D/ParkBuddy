@@ -2,7 +2,6 @@
   -ms-overflow-style: none;
   transition: all 0.3s ease-in-out;
   font-family: 'Josefin Sans';
-  color: white;
 }
 
 ::-webkit-scrollbar {

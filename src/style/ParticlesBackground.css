@@ -1,7 +1,5 @@
 .background_container {
   position: absolute;
-  width: 110%;
-  height: 110%;
   background-color: var(--body_background);
   position: relative;
   z-index: -2; /* Ensure background is behind particles */

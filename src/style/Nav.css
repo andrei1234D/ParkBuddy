@@ -1,8 +1,8 @@
 .parkBuddy {
   top: 0;
   left: 0;
-  width: clamp(75px, 10vw, 150px); /* Set your preferred range */
-  height: clamp(70px, 9vw, 130px); /* Set your preferred range */
+  width: clamp(150px, 10vw, 200px); /* Set your preferred range */
+  height: clamp(140px, 9vw, 150px); /* Set your preferred range */
   overflow: hidden;
   border-radius: clamp(0px, 15px, 25px);
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.437);
@@ -21,4 +21,10 @@
 }
 .parkBuddy:active {
   transform: scale(0.9);
+}
+@media (max-width: 800px) {
+  .parkBuddy {
+    width: 150px;
+    height: 140px;
+  }
 }

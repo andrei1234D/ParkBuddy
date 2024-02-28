@@ -4,7 +4,7 @@ import { loadSlim } from 'tsparticles-slim';
 
 import '../style/ParticlesBackground.css';
 
-const ParticlesBackground = () => {
+const ParticlesComp = () => {
   const particlesInit = useCallback(async (engine) => {
     await loadSlim(engine);
   }, []);
@@ -54,6 +54,7 @@ const ParticlesBackground = () => {
       },
       color: {
         value: '#8b4513',
+        opacity: 1,
       },
       links: {
         color: '#66b2b2',
@@ -106,4 +107,4 @@ const ParticlesBackground = () => {
     </div>
   );
 };
-export default ParticlesBackground;
+export default ParticlesComp;

@@ -1,10 +1,11 @@
 // import Login from './pages/Login';
 import Home from './pages/Home';
 import Nav from './navigation/nav';
-import Particles from './particles/ParticlesBackground';
+import Particles from './particles/ParticlesComp';
+import Settings from './pages/Settings';
+import { LanguageProvider } from './context/LanguageContext';
 
 // import ProtectedRoutes from '../ProtectedRoutes';
-import DarkMode from './DarkMode/DarkMode';
 
 //Router imports
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
@@ -15,12 +16,13 @@ function App() {
       <Router>
         <Particles />
         <Nav />
-        <DarkMode />
-        <Routes>
-          {/* <Route path="/login" element={<Login />} /> */}
-          <Route path="/" element={<Home />} />
-          {/* <Route path="/search" element={<Search />} /> */}
-          {/* <Route element={<ProtectedRoutes />}>
+        <LanguageProvider>
+          <Settings />
+          <Routes>
+            {/* <Route path="/login" element={<Login />} /> */}
+            <Route path="/" element={<Home />} />
+            {/* <Route path="/search" element={<Search />} /> */}
+            {/* <Route element={<ProtectedRoutes />}>
             <Route path="/product/:id" element={<ProductPage />} />
             <Route path="/product/:id/:url" element={<ProductImage />} />
             <Route path="/account" element={<Account />} />
@@ -28,7 +30,8 @@ function App() {
             <Route path="/Cart" element={<Cart />} />
             <Route path="/Payment" element={<Payment />} />
           </Route> */}
-        </Routes>
+          </Routes>
+        </LanguageProvider>
       </Router>
     </div>
   );
