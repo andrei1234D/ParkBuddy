@@ -1,16 +1,38 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import Box from '@mui/material/Box';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import Popper from '@mui/material/Popper';
-import Paper from '@mui/material/Paper';
-import ClickAwayListener from '@mui/material/ClickAwayListener';
-import Slide from '@mui/material/Slide';
 import { IoSettings } from 'react-icons/io5';
 import DarkMode from '../DarkMode/DarkMode';
 import LanguageContext from '../context/LanguageContext';
 import translations from '../translation/Translation';
+import { useSpring, animated } from '@react-spring/web';
 import '../style/Settings.css';
+
+const Fade = React.forwardRef(function Fade(props, ref) {
+  const { in: open, children, onEnter, onExited, ...other } = props;
+  const style = useSpring({
+    from: { opacity: 0 },
+    to: { opacity: open ? 1 : 0 },
+    onStart: () => {
+      if (open && onEnter) {
+        onEnter();
+      }
+    },
+    onRest: () => {
+      if (!open && onExited) {
+        onExited();
+      }
+    },
+  });
+
+  return (
+    <animated.div ref={ref} style={style} {...other}>
+      {children}
+    </animated.div>
+  );
+});
 
 const Settings = () => {
   const languageOptions = [
@@ -22,45 +44,45 @@ const Settings = () => {
   const { language, toggleLanguage } = useContext(LanguageContext);
   const translate = (key) => translations[language][key];
 
-  const handleLanguageChange = (event) => {
-    toggleLanguage(event.target.value);
+  const [open, setOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+    setOpen((previousOpen) => !previousOpen);
   };
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
-  const id = open ? 'right-popper' : undefined;
-
-  const handleToggle = (event) => {
-    setAnchorEl(anchorEl ? null : event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  const id = open ? 'spring-popper' : undefined;
 
   return (
-    <Box>
-      <IoSettings onClick={handleToggle} className="settingsIcon" />
+    <Box className="settings">
+      <IoSettings className="settingsIcon" onClick={handleClick} />
       <Popper
         id={id}
         open={open}
         anchorEl={anchorEl}
-        placement="right-start"
         transition
-        style={{ zIndex: 1 }}
+        placement="left-start"
+        modifiers={[
+          {
+            name: 'offset',
+            options: {
+              offset: [0, 15],
+            },
+          },
+        ]}
       >
-        <ClickAwayListener onClickAway={handleClose}>
-          <Paper>
-            <Box style={{ padding: '10px' }}>
+        {({ TransitionProps }) => (
+          <Fade {...TransitionProps}>
+            <Box style={{ padding: '10px', backgroundColor: 'white' }}>
               <Box className="title">{translate('settings')} </Box>
               <DarkMode />
               <Box style={{ display: 'flex' }}>
                 <p>Language:</p>
                 <Select
                   value={language}
-                  onChange={handleLanguageChange}
+                  onChange={(event) => toggleLanguage(event.target.value)}
                   variant="outlined"
-                  className="language-selector"
                   style={{ backgroundColor: 'white' }}
                 >
                   {languageOptions.map((option) => (
@@ -71,8 +93,8 @@ const Settings = () => {
                 </Select>
               </Box>
             </Box>
-          </Paper>
-        </ClickAwayListener>
+          </Fade>
+        )}
       </Popper>
     </Box>
   );

@@ -1,13 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useContext } from 'react';
+import LanguageContext from '../context/LanguageContext';
 
 import translations from '../translation/Translation';
-
 import '../style/Home.css';
 
 function Home() {
-  const language = localStorage.getItem('language');
-  const translate = (key) => translations[language][key];
+  const { language, translate } = useContext(LanguageContext);
   return (
     <div>
       <div className="title">Park Buddy</div>

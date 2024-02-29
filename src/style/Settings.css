@@ -1,8 +1,33 @@
-.settingsIcon {
-  width: 50px;
-  height: 50px;
+.settings {
+  width: 35px;
+  height: 35px;
   cursor: pointer;
-  position: absolute;
-  top: 0;
-  right: 0;
+  position: relative;
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-style: solid;
+  border-color: rgb(4, 71, 18);
+  border-radius: 15%;
+  margin-right: 10px;
+  opacity: 0.7;
+  z-index: 2;
+  transition: box-shadow 0.3s ease-in-out, transform 0.4s ease-in-out; /* Add a smooth transition effect */
+}
+
+.settings:hover,
+.settings:active {
+  box-shadow: 0 0 10px 5px #00ff00 inset;
+  opacity: 1.2;
+  transform: scale(0.9); /* Apply scale transformation on hover and click */
+}
+
+.settings:active {
+  transform: scale(0.7); /* Apply scale transformation specifically on click */
+  transition: transform 0.02s ease-in-out;
+}
+.settingsIcon {
+  width: 25px;
+  height: 25px;
 }

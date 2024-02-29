@@ -1,20 +1,19 @@
 .parkBuddy {
-  top: 0;
-  left: 0;
-  width: clamp(150px, 10vw, 200px); /* Set your preferred range */
-  height: clamp(140px, 9vw, 150px); /* Set your preferred range */
+  margin-left: 10px;
+  margin-bottom: 10px;
+  width: 50px;
+  height: 50px;
   overflow: hidden;
-  border-radius: clamp(0px, 15px, 25px);
+  border-radius: 15%;
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.437);
   border-top: hidden;
   border-left: hidden;
   cursor: pointer;
-  opacity: 0.737;
+  opacity: 0.7;
   transition: box-shadow 0.12s ease-in-out, transform 0.07s ease-in-out,
     opacity 0.12s ease-in-out;
   position: relative;
 }
-
 .parkBuddy:hover {
   box-shadow: 8px 8px 8px rgba(0, 0, 0, 0.7);
   opacity: 1;
@@ -22,9 +21,22 @@
 .parkBuddy:active {
   transform: scale(0.9);
 }
-@media (max-width: 800px) {
-  .parkBuddy {
-    width: 150px;
-    height: 140px;
-  }
+.header {
+  position: sticky;
+  left: 0;
+  right: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  background-color: #040720;
+  opacity: 0.5;
+  border-bottom-style: solid;
+  border-bottom-color: white;
+  justify-content: space-around;
+}
+.header:hover {
+  opacity: 0.8;
+}
+.header > * {
+  margin-bottom: 3px;
 }

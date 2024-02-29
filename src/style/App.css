@@ -1,9 +1,9 @@
 * {
   -ms-overflow-style: none;
   transition: all 0.3s ease-in-out;
+  color: #bacbdbe4;
   font-family: 'Josefin Sans';
 }
-
 ::-webkit-scrollbar {
   display: none;
 }

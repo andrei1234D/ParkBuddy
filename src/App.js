@@ -2,9 +2,8 @@
 import Home from './pages/Home';
 import Nav from './navigation/nav';
 import Particles from './particles/ParticlesComp';
-import Settings from './pages/Settings';
 import { LanguageProvider } from './context/LanguageContext';
-
+import './style/App.css';
 // import ProtectedRoutes from '../ProtectedRoutes';
 
 //Router imports
@@ -14,15 +13,14 @@ function App() {
   return (
     <div>
       <Router>
-        <Particles />
-        <Nav />
         <LanguageProvider>
-          <Settings />
+          <Particles />
+          <Nav />
           <Routes>
             {/* <Route path="/login" element={<Login />} /> */}
             <Route path="/" element={<Home />} />
-            {/* <Route path="/search" element={<Search />} /> */}
-            {/* <Route element={<ProtectedRoutes />}>
+            {/* <Route path="/search" element={<Search />} />
+            <Route element={<ProtectedRoutes />}>
             <Route path="/product/:id" element={<ProductPage />} />
             <Route path="/product/:id/:url" element={<ProductImage />} />
             <Route path="/account" element={<Account />} />
