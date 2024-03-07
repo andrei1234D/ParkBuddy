@@ -3,7 +3,7 @@ const translations = {
     login: 'Login',
     rentASpot: 'Rent A Spot',
     settings: 'Settings',
-    welcome: 'welcome',
+    welcome: 'WELCOME',
   },
   ro: {
     login: 'Autentificare',
