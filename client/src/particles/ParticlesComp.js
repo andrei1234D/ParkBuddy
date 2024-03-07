@@ -9,9 +9,7 @@ const ParticlesComp = () => {
     await loadSlim(engine);
   }, []);
 
-  const particlesLoaded = useCallback((container) => {
-    console.log(container);
-  }, []);
+  const particlesLoaded = useCallback((container) => {}, []);
 
   const particleOptions = {
     background: {
@@ -95,7 +93,6 @@ const ParticlesComp = () => {
 
     detectRetina: true,
   };
-  console.log(particleOptions);
   return (
     <div className="background_container">
       <Particles

@@ -1,0 +1,64 @@
+.containerForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width: 50%;
+  height: 500px;
+  background-color: var(--UIColor);
+  opacity: 0.5;
+}
+.welcomeContainer {
+  margin-left: 20%;
+  margin-top: 100px;
+  border-radius: 13%;
+  width: 60%;
+  height: 550px;
+  display: flex;
+  flex-direction: column;
+}
+.containerForm:hover {
+  opacity: 0.8;
+}
+.containerLogin {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.headerLogin {
+  align-self: center;
+  font-size: 35px;
+  color: var(--UIText);
+}
+
+.textLogin {
+  color: var(--UIText);
+  font-size: 25px;
+}
+
+.buttonLogin {
+  color: var(--btn_text);
+  border-radius: 20%;
+  width: 35%;
+  height: 50px;
+}
+
+.inputLogin {
+  font-size: 20px;
+  height: 50px;
+  width: 80%;
+}
+
+.rightDiv {
+  background-color: var(--UIText);
+  height: 100%;
+  opacity: 1;
+}
+@media (max-width: 800px) {
+  .welcomeContainer {
+    width: 70%;
+    margin-left: 15%;
+    opacity: 0.8;
+  }
+}

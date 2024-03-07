@@ -1,6 +1,7 @@
-// import Login from './pages/Login';
+import Login from './pages/Login';
 import Home from './pages/Home';
 import Nav from './navigation/nav';
+
 import Particles from './particles/ParticlesComp';
 import { LanguageProvider } from './context/LanguageContext';
 import './style/App.css';
@@ -17,7 +18,7 @@ function App() {
           <Particles />
           <Nav />
           <Routes>
-            {/* <Route path="/login" element={<Login />} /> */}
+            <Route path="/login" element={<Login />} />
             <Route path="/" element={<Home />} />
             {/* <Route path="/search" element={<Search />} />
             <Route element={<ProtectedRoutes />}>

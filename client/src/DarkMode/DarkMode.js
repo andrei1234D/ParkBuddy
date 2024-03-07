@@ -7,10 +7,12 @@ const DarkMode = () => {
   const setDarkMode = () => {
     document.querySelector('body').setAttribute('data-theme', 'dark');
     localStorage.setItem('selectedTheme', 'dark');
+    window.dispatchEvent(new Event('storage'));
   };
   const setLightMode = () => {
     document.querySelector('body').setAttribute('data-theme', 'light');
     localStorage.setItem('selectedTheme', 'light');
+    window.dispatchEvent(new Event('storage'));
   };
   const selectedTheme = localStorage.getItem('selectedTheme');
 

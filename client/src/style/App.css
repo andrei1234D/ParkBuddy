@@ -1,0 +1,60 @@
+* {
+  -ms-overflow-style: none;
+  transition: all 0.3s ease-in-out;
+  font-family: 'Josefin Sans';
+}
+.textGlow {
+  text-shadow: var(--text-shadow);
+}
+.btn-gradient-border {
+  border: 2px double transparent;
+  background-image: var(--btn_background_gradient);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+}
+::-webkit-scrollbar {
+  display: none;
+}
+:root {
+  --border_color: rgba(2, 25, 10);
+  --body_background: #040720;
+  --UIColor: black;
+  --UIButtonColor: #040720;
+  --UIText: #bacbdbe4;
+  --btn_background_gradient: linear-gradient(white, white),
+    radial-gradient(circle at left top, rgb(1, 110, 218), rgb(217, 0, 192));
+  --text-shadow: 0 0 80px rgb(192 219 255 / 100%),
+    0 0 32px rgb(65 120 255 / 100%);
+}
+[data-theme='dark'] {
+  --border_color: rgba(2, 25, 10);
+  --body_background: #040720;
+  --UIColor: black;
+  --UIButtonColor: #040720;
+  --UIText: white;
+  --btn_background_gradient: linear-gradient(white, white),
+    radial-gradient(circle at left top, rgb(1, 110, 218), rgb(217, 0, 192));
+  --btn_text: black;
+  --text-shadow: 0 0 80px rgb(192 219 255 / 100%),
+    0 0 32px rgb(65 120 255 / 100%);
+}
+[data-theme='light'] {
+  --border_color: rgba(255, 255, 255);
+  --body_background: #454545;
+  --UIColor: white;
+  --UIButtonColor: #393f44;
+  --UIText: black;
+  --btn_background_gradient: linear-gradient(black, black),
+    radial-gradient(circle at left top, rgb(1, 110, 218), rgb(217, 0, 192));
+  --btn_text: white;
+  --text-shadow: 0 0 80px rgb(27, 162, 43), 0 0 32px rgba(1, 73, 14, 0.4);
+}
+body {
+  margin: 0;
+  padding: 0;
+
+  overflow: auto;
+  background-color: var(
+    --body_background
+  ); /* Set the overall background color */
+}

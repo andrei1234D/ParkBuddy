@@ -1,21 +1,29 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+
+//language translate imports
 import { useContext } from 'react';
 import LanguageContext from '../context/LanguageContext';
-
 import translations from '../translation/Translation';
+
 import '../style/Home.css';
 
 function Home() {
   const { language, translate } = useContext(LanguageContext);
+
   return (
     <div>
       <div className="title">Park Buddy</div>
 
       <div className="options-container">
-        <div className="option-box">{translate('login')}</div>
-        <Link></Link>
-        <div className="option-box">{translate('rentASpot')}</div>
+        <Link to="/login" className="link">
+          <div className="option-box btn-gradient-border">
+            {translate('login')}
+          </div>
+        </Link>
+        <div className="option-box btn-gradient-border">
+          {translate('rentASpot')}
+        </div>
       </div>
     </div>
   );

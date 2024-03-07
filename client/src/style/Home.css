@@ -28,8 +28,8 @@
   font-weight: 500;
   text-shadow: 30px 20px 35px rgba(0, 0, 0, 0.7);
   font-size: 1.5rem;
-  color: #bacbdbe4;
-  background-color: rgba(130, 119, 165, 0.596);
+  color: var(--btn_text);
+  background-color: var(--UIColor);
   border-radius: 28%;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 
@@ -38,23 +38,9 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  opacity: 0.6;
 }
 
-.language-button {
-  text-shadow: 20px 10px 20px rgba(0, 0, 0, 0.5);
-  opacity: 0.92;
-  color: #bacbdbe4;
-  background-color: #175899;
-  display: block;
-  margin: 40px auto;
-  padding: 15px 30px;
-  font-size: 1.5rem;
-  font-weight: 600;
-  border: none;
-  border-radius: 28%;
-  cursor: pointer;
-  transition: background-color 0.3s ease-in-out;
-}
 .link {
   text-decoration: none;
 }
@@ -77,8 +63,5 @@
     font-size: 80px;
     margin-top: 15%;
     letter-spacing: 5px;
-  }
-  .language-button {
-    font-size: 40px;
   }
 }

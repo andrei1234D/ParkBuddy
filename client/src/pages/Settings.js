@@ -1,9 +1,11 @@
 import React, { useContext, useState } from 'react';
 import Box from '@mui/material/Box';
+import IconButton from '@mui/material/IconButton';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import Popper from '@mui/material/Popper';
 import { IoSettings } from 'react-icons/io5';
+import { AiOutlineClose } from 'react-icons/ai'; // Import close icon
 import DarkMode from '../DarkMode/DarkMode';
 import LanguageContext from '../context/LanguageContext';
 import translations from '../translation/Translation';
@@ -52,12 +54,17 @@ const Settings = () => {
     setOpen((previousOpen) => !previousOpen);
   };
 
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const id = open ? 'spring-popper' : undefined;
 
   return (
     <Box className="settings">
       <IoSettings className="settingsIcon" onClick={handleClick} />
       <Popper
+        style={{ opacity: 0.8, zIndex: 100 }}
         id={id}
         open={open}
         anchorEl={anchorEl}
@@ -74,19 +81,70 @@ const Settings = () => {
       >
         {({ TransitionProps }) => (
           <Fade {...TransitionProps}>
-            <Box style={{ padding: '10px', backgroundColor: 'white' }}>
-              <Box className="title">{translate('settings')} </Box>
+            <Box
+              style={{
+                padding: '10px',
+                backgroundColor: 'var(--UIColor)',
+                borderRadius: '5%',
+                width: '250px',
+              }}
+            >
+              {/* Replace 'white' with your desired background color */}
+              <Box className="title">
+                <span className="textGlow settingsText">
+                  {translate('settings')}
+                </span>
+                <div
+                  className="closeIcon"
+                  style={{
+                    position: 'absolute',
+                    top: 5,
+                    right: 5,
+                    width: '25px',
+                    height: '25px',
+                  }}
+                  onClick={handleClose}
+                >
+                  <AiOutlineClose
+                    style={{
+                      position: 'absolute',
+                      width: '25px',
+                      height: '25px',
+                      top: 0,
+                      right: 0,
+                      color: 'var(--UIText)',
+                    }}
+                  />
+                </div>
+              </Box>
               <DarkMode />
-              <Box style={{ display: 'flex' }}>
-                <p>Language:</p>
+              <Box
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+                <p style={{ marginRight: '5px', color: 'var(--UIText)' }}>
+                  Language:
+                </p>
                 <Select
                   value={language}
                   onChange={(event) => toggleLanguage(event.target.value)}
-                  variant="outlined"
-                  style={{ backgroundColor: 'white' }}
+                  style={{
+                    backgroundColor: 'var(--UIColor)',
+                    color: 'var(--UIText)',
+                  }}
                 >
                   {languageOptions.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
+                    <MenuItem
+                      key={option.value}
+                      value={option.value}
+                      style={{
+                        textAlign: 'center',
+                        color: 'black',
+                      }}
+                    >
                       {option.label}
                     </MenuItem>
                   ))}
