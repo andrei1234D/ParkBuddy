@@ -68,7 +68,7 @@ const ParticlesComp = () => {
           default: 'bounce',
         },
         random: true, // Set random to true
-        speed: { min: 0.6, max: 2.2 }, // Provide a range for speed
+        speed: { min: 0.6, max: 1.5 }, // Provide a range for speed
         wrap: true,
       },
 

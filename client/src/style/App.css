@@ -20,9 +20,10 @@
   --body_background: #040720;
   --UIColor: black;
   --UIButtonColor: #040720;
-  --UIText: #bacbdbe4;
+  --UIText: white;
   --btn_background_gradient: linear-gradient(white, white),
     radial-gradient(circle at left top, rgb(1, 110, 218), rgb(217, 0, 192));
+  --btn_text: black;
   --text-shadow: 0 0 80px rgb(192 219 255 / 100%),
     0 0 32px rgb(65 120 255 / 100%);
 }

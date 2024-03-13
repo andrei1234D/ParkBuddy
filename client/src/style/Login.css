@@ -7,15 +7,14 @@
   height: 500px;
   background-color: var(--UIColor);
   opacity: 0.5;
+  border-radius: 0% 0% 0% 15%;
 }
 .welcomeContainer {
-  margin-left: 20%;
-  margin-top: 100px;
-  border-radius: 13%;
-  width: 60%;
-  height: 550px;
   display: flex;
   flex-direction: column;
+  margin-top: 5%;
+  margin-left: 10%;
+  width: 80%;
 }
 .containerForm:hover {
   opacity: 0.8;
@@ -38,27 +37,70 @@
 }
 
 .buttonLogin {
+  color: var(--UIText);
   color: var(--btn_text);
+  font-size: fit-content;
   border-radius: 20%;
-  width: 35%;
+  width: auto; /* Allow the button to resize based on text length */
   height: 50px;
+  margin-top: 5px;
 }
-
 .inputLogin {
-  font-size: 20px;
+  font-size: fit-content;
+  white-space: nowrap;
   height: 50px;
   width: 80%;
+  color: var(--UIColor);
+  background-color: var(--UIText);
 }
 
 .rightDiv {
   background-color: var(--UIText);
-  height: 100%;
   opacity: 1;
+  width: 50%;
+  height: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border-top-right-radius: 20%;
+}
+.imgDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+.imgDiv img {
+  max-width: 100%;
+  max-height: 100%;
+  z-index: 10;
+}
+.registerFooter {
+  color: VAR(--UIText);
+  display: flex;
+  flex-direction: row;
+}
+.registerNow {
+  cursor: pointer;
+  text-decoration: underline;
 }
 @media (max-width: 800px) {
   .welcomeContainer {
-    width: 70%;
-    margin-left: 15%;
+    width: 90%;
+    margin-left: 5%;
     opacity: 0.8;
+    height: 300px;
+  }
+  .containerLogin {
+    height: 300px;
+  }
+  .containerForm {
+    height: 300px;
+  }
+  .rightDiv {
+    width: 300px;
+    height: 300px;
   }
 }

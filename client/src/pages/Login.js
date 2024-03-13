@@ -1,40 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import '../style/Login.css';
 import carImg from '../images/parkImage.png';
 import carImgDarkMode from '../images/parkImageDarkMode.png';
+import { useNavigate } from 'react-router-dom';
 
 //language translate imports
-import { useContext } from 'react';
-import LanguageContext from '../context/LanguageContext';
+import GlobalStatesContext from '../context/GlobalStatesContext';
 import translations from '../translation/Translation';
 
 const Login = () => {
-  const { language, translate } = useContext(LanguageContext);
+  const { language, translate } = useContext(GlobalStatesContext);
+  const { isDarkMode } = useContext(GlobalStatesContext);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [theme, setTheme] = useState('dark');
-  console.log(theme);
-  useEffect(() => {
-    const storedTheme = localStorage.getItem('selectedTheme');
-    setTheme(storedTheme || 'dark');
-  }, []);
 
-  // Add this useEffect to listen for changes in selectedTheme
-  useEffect(() => {
-    const handleThemeChange = () => {
-      const storedTheme = localStorage.getItem('selectedTheme');
-      setTheme(storedTheme || 'dark');
-    };
-
-    // Listen for changes to the selectedTheme in localStorage
-    window.addEventListener('storage', handleThemeChange);
-
-    // Clean up the event listener when the component unmounts
-    return () => {
-      window.removeEventListener('storage', handleThemeChange);
-    };
-  }, []);
+  const navigate = useNavigate();
 
   const handleLogin = async () => {
     try {
@@ -47,16 +28,17 @@ const Login = () => {
       // Store the token in localStorage or a state management solution of your choice
       const token = response.data.token;
       console.log('Token:', token);
-
+      navigate('/');
       // Redirect or perform actions after successful login
     } catch (error) {
       console.error('Login failed:', error.response.data.message);
-      // Handle login failure
     }
   };
-
+  const navigateToRegister = () => {
+    navigate('/register'); // Use the push method to navigate to '/register'
+  };
   return (
-    <div>
+    <div id="bigContaineer">
       <div className="welcomeContainer">
         <div className="containerLogin">
           <div className="containerForm textGlow">
@@ -84,18 +66,17 @@ const Login = () => {
             >
               {translate('login')}
             </button>
+            <div className="registerFooter">
+              <div>{translate('registerText')}</div>
+              <div className="registerNow" onClick={navigateToRegister}>
+                {translate('registerNow')}
+              </div>
+            </div>
           </div>
           <div className="rightDiv">
-            <img
-              src={theme === 'dark' ? carImg : carImgDarkMode}
-              alt="carImg"
-              style={{
-                maxWidth: '100%',
-                height: 'auto',
-                position: 'relative',
-                zIndex: '10',
-              }}
-            />
+            <div className="imgDiv">
+              <img src={isDarkMode ? carImg : carImgDarkMode} alt="carImg" />
+            </div>
           </div>
         </div>
       </div>

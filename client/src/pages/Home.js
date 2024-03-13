@@ -3,8 +3,7 @@ import { Link } from 'react-router-dom';
 
 //language translate imports
 import { useContext } from 'react';
-import LanguageContext from '../context/LanguageContext';
-import translations from '../translation/Translation';
+import LanguageContext from '../context/GlobalStatesContext';
 
 import '../style/Home.css';
 

@@ -1,8 +1,10 @@
 import React, { createContext, useState, useEffect } from 'react';
 import translations from '../translation/Translation';
-const LanguageContext = createContext();
+const GlobalStatesContext = createContext();
 
-export const LanguageProvider = ({ children }) => {
+export const GlobalStatesContextProvider = ({ children }) => {
+  const [isDarkMode, setIsDarkMode] = useState(true);
+
   const languages = Object.keys(translations);
   const storedLanguage = localStorage.getItem('language');
   const initialLanguage =
@@ -26,11 +28,23 @@ export const LanguageProvider = ({ children }) => {
       : `Translation not available for key: ${key}`;
   };
 
+  const toggleDarkMode = () => {
+    setIsDarkMode((prevMode) => !prevMode);
+  };
+
   return (
-    <LanguageContext.Provider value={{ language, toggleLanguage, translate }}>
+    <GlobalStatesContext.Provider
+      value={{
+        language,
+        toggleLanguage,
+        translate,
+        isDarkMode,
+        toggleDarkMode,
+      }}
+    >
       {children}
-    </LanguageContext.Provider>
+    </GlobalStatesContext.Provider>
   );
 };
 
-export default LanguageContext;
+export default GlobalStatesContext;

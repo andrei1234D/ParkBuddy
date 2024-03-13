@@ -7,7 +7,7 @@ import Popper from '@mui/material/Popper';
 import { IoSettings } from 'react-icons/io5';
 import { AiOutlineClose } from 'react-icons/ai'; // Import close icon
 import DarkMode from '../DarkMode/DarkMode';
-import LanguageContext from '../context/LanguageContext';
+import LanguageContext from '../context/GlobalStatesContext';
 import translations from '../translation/Translation';
 import { useSpring, animated } from '@react-spring/web';
 import '../style/Settings.css';

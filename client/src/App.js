@@ -1,9 +1,10 @@
 import Login from './pages/Login';
 import Home from './pages/Home';
 import Nav from './navigation/nav';
+import Register from './pages/Register';
 
 import Particles from './particles/ParticlesComp';
-import { LanguageProvider } from './context/LanguageContext';
+import { GlobalStatesContextProvider } from './context/GlobalStatesContext';
 import './style/App.css';
 // import ProtectedRoutes from '../ProtectedRoutes';
 
@@ -14,12 +15,13 @@ function App() {
   return (
     <div>
       <Router>
-        <LanguageProvider>
+        <GlobalStatesContextProvider>
           <Particles />
           <Nav />
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/" element={<Home />} />
+            <Route path="/register" element={<Register />} />
             {/* <Route path="/search" element={<Search />} />
             <Route element={<ProtectedRoutes />}>
             <Route path="/product/:id" element={<ProductPage />} />
@@ -30,7 +32,7 @@ function App() {
             <Route path="/Payment" element={<Payment />} />
           </Route> */}
           </Routes>
-        </LanguageProvider>
+        </GlobalStatesContextProvider>
       </Router>
     </div>
   );
