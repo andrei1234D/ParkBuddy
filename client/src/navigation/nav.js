@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Settings from '../pages/Settings';
+import Settings from '../functionalElements/Settings';
+import Account from '../functionalElements/Account';
 import '../style/Nav.css';
 
 import parkBuddy from '../images/parkBuddy.png';
@@ -18,7 +19,10 @@ export default function Nav() {
             ></img>
           </div>
         </Link>
-        <Settings />
+        <div className="navOptions">
+          <Account />
+          <Settings />
+        </div>
       </div>
     </div>
   );

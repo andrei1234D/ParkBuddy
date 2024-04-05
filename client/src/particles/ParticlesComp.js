@@ -1,7 +1,9 @@
 import React, { useCallback } from 'react';
 import Particles from 'react-tsparticles';
 import { loadSlim } from 'tsparticles-slim';
+import { useContext } from 'react';
 
+import GlobalStatesContext from '../context/GlobalStatesContext';
 import '../style/ParticlesBackground.css';
 
 const ParticlesComp = () => {
@@ -10,7 +12,7 @@ const ParticlesComp = () => {
   }, []);
 
   const particlesLoaded = useCallback((container) => {}, []);
-
+  const { moveParticles } = useContext(GlobalStatesContext);
   const particleOptions = {
     background: {
       color: { value: '#040720' },
@@ -31,12 +33,12 @@ const ParticlesComp = () => {
 
       modes: {
         push: {
-          quantity: 5,
+          quantity: moveParticles ? 5 : 0,
         },
         //the attract onHover
         attract: {
           distance: 200,
-          speed: 1.3,
+          speed: moveParticles ? 1.3 : 0,
         },
       },
     },
@@ -62,8 +64,8 @@ const ParticlesComp = () => {
         width: 1.3,
       },
       move: {
+        enable: moveParticles,
         direction: 'none',
-        enable: true,
         outModes: {
           default: 'bounce',
         },

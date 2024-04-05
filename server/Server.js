@@ -32,11 +32,15 @@ const customerSchema = new mongoose.Schema({
   username: String,
   passwordHash: String,
 });
-
+const ParkingSpotSchema = new mongoose.Schema({
+  latitude: Number,
+  longitude: Number,
+  address: String,
+});
 // Models for partner and customer collections
 const Partner = mongoose.model('Partner', partnerSchema);
 const Customer = mongoose.model('Customer', customerSchema);
-
+const ParkingSpot = mongoose.model('Parking Spot', ParkingSpotSchema);
 const getUserModel = (role) => {
   if (role === 'partner') {
     return Partner;
@@ -47,10 +51,11 @@ const getUserModel = (role) => {
 
 // Endpoint for user login
 app.post('/login', async (req, res) => {
-  const { username, password } = req.body;
+  const { username, password, role } = req.body;
   try {
-    //see if th username is found in the database
+    //see if th username is found in the database(partner/customer)
     const user = await getUserModel(role).findOne({ username });
+
     if (!user) {
       return res.status(401).json({ message: 'User not found' });
     }
@@ -60,9 +65,13 @@ app.post('/login', async (req, res) => {
     if (!passwordMatch) {
       return res.status(401).json({ message: 'Invalid password' });
     }
-    const token = jwt.sign({ userId: user._id, role: user.role }, secretKey, {
-      expiresIn: '1h',
-    });
+    const token = jwt.sign(
+      { userId: user._id, userRole: role, userName: username },
+      secretKey,
+      {
+        expiresIn: '1h',
+      }
+    );
     res.json({ token });
   } catch (error) {
     res.status(500).json({ message: 'Internal server error' });
@@ -88,6 +97,24 @@ app.post('/register', async (req, res) => {
     res.json({ message: 'User registered successfully' });
   } catch (error) {
     res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+app.post('/rendSpot', async (req, res) => {
+  try {
+    const { latitude, longitude, address } = req.body;
+    const parkingSpot = new ParkingSpot({
+      latitude,
+      longitude,
+      address,
+    });
+    await parkingSpot.save();
+    res.json({ success: true, message: 'Parking spot added successfully.' });
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ success: false, message: 'Failed to add parking spot.' });
   }
 });
 

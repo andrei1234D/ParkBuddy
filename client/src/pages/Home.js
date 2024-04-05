@@ -8,7 +8,7 @@ import LanguageContext from '../context/GlobalStatesContext';
 import '../style/Home.css';
 
 function Home() {
-  const { language, translate } = useContext(LanguageContext);
+  const { translate } = useContext(LanguageContext);
 
   return (
     <div>

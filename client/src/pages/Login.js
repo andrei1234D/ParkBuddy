@@ -1,85 +1,268 @@
 import React, { useState, useContext } from 'react';
+
 import axios from 'axios';
 import '../style/Login.css';
 import carImg from '../images/parkImage.png';
 import carImgDarkMode from '../images/parkImageDarkMode.png';
+import customer from '../images/customerLight.png';
+import customerDark from '../images/customerDark.png';
+import partner from '../images/vipDark.png';
+import partnerDark from '../images/vipLight.png';
 import { useNavigate } from 'react-router-dom';
 
 //language translate imports
 import GlobalStatesContext from '../context/GlobalStatesContext';
-import translations from '../translation/Translation';
+
+//REACT MUI
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
+import Button from '@mui/material/Button';
 
 const Login = () => {
-  const { language, translate } = useContext(GlobalStatesContext);
+  const { translate, toggleLogin } = useContext(GlobalStatesContext);
   const { isDarkMode } = useContext(GlobalStatesContext);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
+  const [showDialogRedirect, setShowDialogRedirect] = useState(false);
+  const [dialogText, setDialogText] = useState('');
+  const [showDialog, setShowDialog] = useState(false);
+  const [isRegisterNormalPressed, setIsRegisterNormalPressed] = useState(null);
+
+  const customerClick = () => {
+    setIsRegisterNormalPressed(true);
+  };
+  const partnerClick = () => {
+    setIsRegisterNormalPressed(false);
+  };
+
   const navigate = useNavigate();
 
   const handleLogin = async () => {
+    let role;
+    isRegisterNormalPressed ? (role = 'customer') : (role = 'partner');
     try {
       // Make a POST request to your server for user login
       const response = await axios.post('http://localhost:5000/login', {
         username,
         password,
+        role,
       });
-
-      // Store the token in localStorage or a state management solution of your choice
       const token = response.data.token;
-      console.log('Token:', token);
-      navigate('/');
-      // Redirect or perform actions after successful login
+      localStorage.setItem('token', token);
+
+      setDialogText('Successfully Loggeed In');
+      setShowDialogRedirect(true);
+      toggleLogin();
     } catch (error) {
-      console.error('Login failed:', error.response.data.message);
+      if (error.response.data.message === 'User not found') {
+        setDialogText(translate('userNotFound'));
+        setShowDialog(true);
+      } else {
+        setDialogText(translate('incorrectUserPass'));
+        setShowDialog(true);
+      }
     }
   };
+  const handleCloseDialog = () => {
+    setShowDialog(false);
+  };
+  const handleCloseDialogRedirect = () => {
+    setShowDialogRedirect(false);
+  };
   const navigateToRegister = () => {
-    navigate('/register'); // Use the push method to navigate to '/register'
+    navigate('/register');
+  };
+  const navigateToHome = () => {
+    navigate('/');
   };
   return (
-    <div id="bigContaineer">
-      <div className="welcomeContainer">
+    <div className="biggestDiv">
+      <Dialog open={showDialog} onClose={handleCloseDialog}>
+        <DialogTitle
+          style={{ backgroundColor: 'var(--UIColor)', color: 'var(--UIText)' }}
+        >
+          Wrong Credentials
+        </DialogTitle>
+        <DialogContent
+          style={{ backgroundColor: 'var(--UIColor)', color: 'var(--UIText)' }}
+        >
+          <p>{dialogText}</p>
+        </DialogContent>
+        <DialogActions
+          style={{ backgroundColor: 'var(--UIColor)', color: 'var(--UIText)' }}
+        >
+          <Button onClick={handleCloseDialog}>Close</Button>
+        </DialogActions>
+      </Dialog>
+      <Dialog open={showDialogRedirect} onClose={handleCloseDialogRedirect}>
+        <DialogContent
+          style={{
+            backgroundColor: 'var(--UIColor)',
+            color: 'var(--UIText)',
+          }}
+        >
+          <p>{dialogText}</p>
+        </DialogContent>
+        <DialogActions
+          style={{
+            backgroundColor: 'var(--UIColor)',
+            color: 'var(--UIText)',
+            display: 'flex',
+            justifyContent: 'space-around',
+          }}
+        >
+          <Button onClick={handleCloseDialogRedirect}>Close</Button>
+          <Button onClick={navigateToHome}>TO HOME</Button>
+        </DialogActions>
+      </Dialog>
+      {isRegisterNormalPressed === null ? (
         <div className="containerLogin">
-          <div className="containerForm textGlow">
-            <h2 className=" headerLogin">{translate('welcome')}</h2>
-            <p className="textLogin">Username</p>
-            <input
-              className="inputLogin"
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
-            <p className="textLogin">Password</p>
-            <input
-              className="inputLogin"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-
-            <button
-              type="button"
-              style={{ fontWeight: '1000', fontSize: '25px' }}
-              onClick={handleLogin}
-              className="buttonLogin btn-gradient-border textGlow"
-            >
-              {translate('login')}
-            </button>
-            <div className="registerFooter">
-              <div>{translate('registerText')}</div>
-              <div className="registerNow" onClick={navigateToRegister}>
-                {translate('registerNow')}
+          <div className="customerDiv" onClick={customerClick}>
+            <div className="imgDiv">
+              <img
+                className="imgScaler"
+                src={isDarkMode ? customerDark : customer}
+                alt="customerImg"
+              />
+              <div className="bottomTextCustomer">
+                {translate('customer').toUpperCase()}
               </div>
             </div>
           </div>
-          <div className="rightDiv">
+          <div className="partnerDiv" onClick={partnerClick}>
             <div className="imgDiv">
-              <img src={isDarkMode ? carImg : carImgDarkMode} alt="carImg" />
+              <img
+                className="imgScaler"
+                src={isDarkMode ? partner : partnerDark}
+                alt="partnerImg"
+              />
+              <div className="bottomTextPartner">
+                {translate('partner').toUpperCase()}
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      ) : isRegisterNormalPressed ? (
+        //                            Customer Login
+        <div className="formDiv">
+          <div id="bigContainer">
+            <div className="welcomeContainer">
+              <div className="containerLogin">
+                <div className="containerForm textGlow highlight-on-hover">
+                  <h2 className=" headerLogin">{translate('welcome')}</h2>
+                  <p className="textLogin">{translate('username')}</p>
+                  <input
+                    className="inputLogin"
+                    type="text"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                  />
+                  <p className="textLogin">{translate('password')}</p>
+                  <input
+                    className="inputLogin"
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+
+                  <button
+                    type="button"
+                    style={{ fontWeight: '1000', fontSize: '25px' }}
+                    onClick={handleLogin}
+                    className="buttonLogin btn-gradient-border textGlow"
+                  >
+                    {translate('login')}
+                  </button>
+                  <div className="registerFooter">
+                    <div>{translate('registerText')}</div>
+                    <div className="registerNow" onClick={navigateToRegister}>
+                      {translate('registerNow')}
+                    </div>
+                  </div>
+                </div>
+                <div className="rightDiv">
+                  <div className="imgDiv">
+                    <img
+                      src={isDarkMode ? carImg : carImgDarkMode}
+                      alt="carImg"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="partnerIcon">
+            <img
+              onClick={partnerClick}
+              src={isDarkMode ? partnerDark : partner}
+              style={{ width: '100%', height: '100%' }}
+              alt="customerImg"
+            />
+          </div>
+        </div>
+      ) : (
+        //                            Partner Login
+        <div className="formDiv">
+          <div id="bigContainer">
+            <p style={{ color: 'pink' }}>PARTNER LOGIN</p>
+            <div className="welcomeContainer">
+              <div className="containerLogin">
+                <div className="containerForm textGlow">
+                  <h2 className=" headerLogin">{translate('welcome')}</h2>
+                  <p className="textLogin">{translate('username')}</p>
+                  <input
+                    className="inputLogin"
+                    type="text"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                  />
+                  <p className="textLogin">{translate('password')}</p>
+                  <input
+                    className="inputLogin"
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+
+                  <button
+                    type="button"
+                    style={{ fontWeight: '1000', fontSize: '25px' }}
+                    onClick={handleLogin}
+                    className="buttonLogin btn-gradient-border textGlow"
+                  >
+                    {translate('login')}
+                  </button>
+                  <div className="registerFooter">
+                    <div>{translate('registerText')}</div>
+                    <div className="registerNow" onClick={navigateToRegister}>
+                      {translate('registerNow')}
+                    </div>
+                  </div>
+                </div>
+                <div className="rightDiv">
+                  <div className="imgDiv">
+                    <img
+                      src={isDarkMode ? carImg : carImgDarkMode}
+                      alt="carImg"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="customerIcon" style={{ alignItems: 'center' }}>
+            <img
+              onClick={customerClick}
+              src={isDarkMode ? customerDark : customer}
+              style={{ width: '100%', height: '100%' }}
+              alt="customerImg"
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 };

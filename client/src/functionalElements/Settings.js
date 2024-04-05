@@ -11,7 +11,7 @@ import LanguageContext from '../context/GlobalStatesContext';
 import translations from '../translation/Translation';
 import { useSpring, animated } from '@react-spring/web';
 import '../style/Settings.css';
-
+import ParticleMovement from '../particles/ParticleControlButton';
 const Fade = React.forwardRef(function Fade(props, ref) {
   const { in: open, children, onEnter, onExited, ...other } = props;
   const style = useSpring({
@@ -64,7 +64,7 @@ const Settings = () => {
     <Box className="settings">
       <IoSettings className="settingsIcon" onClick={handleClick} />
       <Popper
-        style={{ opacity: 0.8, zIndex: 100 }}
+        style={{ zIndex: 100 }}
         id={id}
         open={open}
         anchorEl={anchorEl}
@@ -74,7 +74,7 @@ const Settings = () => {
           {
             name: 'offset',
             options: {
-              offset: [0, 15],
+              offset: [-10, 15],
             },
           },
         ]}
@@ -89,8 +89,7 @@ const Settings = () => {
                 width: '250px',
               }}
             >
-              {/* Replace 'white' with your desired background color */}
-              <Box className="title">
+              <Box className="titleSettings">
                 <span className="textGlow settingsText">
                   {translate('settings')}
                 </span>
@@ -117,38 +116,61 @@ const Settings = () => {
                   />
                 </div>
               </Box>
-              <DarkMode />
               <Box
+                id="settings options"
                 style={{
                   display: 'flex',
-                  justifyContent: 'center',
+                  flexDirection: 'column',
                   alignItems: 'center',
+                  justifyContent: 'space-around',
+                  height: '250px',
                 }}
               >
-                <p style={{ marginRight: '5px', color: 'var(--UIText)' }}>
-                  Language:
-                </p>
-                <Select
-                  value={language}
-                  onChange={(event) => toggleLanguage(event.target.value)}
+                <ParticleMovement />
+                <div
                   style={{
-                    backgroundColor: 'var(--UIColor)',
+                    display: 'flex',
+                    flexDirection: 'row',
+                    alignItems: 'center',
                     color: 'var(--UIText)',
                   }}
                 >
-                  {languageOptions.map((option) => (
-                    <MenuItem
-                      key={option.value}
-                      value={option.value}
-                      style={{
-                        textAlign: 'center',
-                        color: 'black',
-                      }}
-                    >
-                      {option.label}
-                    </MenuItem>
-                  ))}
-                </Select>
+                  <p>{translate('theme')}:</p>
+                  <DarkMode />
+                </div>
+                <Box
+                  id="language"
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
+                >
+                  <p style={{ marginRight: '5px', color: 'var(--UIText)' }}>
+                    {translate('language')}:
+                  </p>
+                  <Select
+                    value={language}
+                    onChange={(event) => toggleLanguage(event.target.value)}
+                    style={{
+                      backgroundColor: 'var(--UIColor)',
+                      color: 'var(--UIText)',
+                    }}
+                  >
+                    {languageOptions.map((option) => (
+                      <MenuItem
+                        key={option.value}
+                        value={option.value}
+                        style={{
+                          textAlign: 'center',
+                          color: 'black',
+                        }}
+                      >
+                        {option.label}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </Box>
               </Box>
             </Box>
           </Fade>

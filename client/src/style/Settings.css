@@ -11,7 +11,7 @@
   border-color: rgb(4, 71, 18);
   border-radius: 15%;
   margin-right: 10px;
-  opacity: 0.7;
+  opacity: 1;
 
   transition: box-shadow 0.3s ease-in-out, transform 0.4s ease-in-out; /* Add a smooth transition effect */
 }
@@ -22,11 +22,15 @@
   letter-spacing: 0px;
   color: var(--UIText);
 }
+.titleSettings {
+  text-align: center;
+  font-weight: 700;
+  margin-bottom: 10%;
+}
 
 .settings:hover,
 .settings:active {
   box-shadow: 0 0 10px 5px #00ff00 inset;
-  opacity: 1.2;
   transform: scale(0.9); /* Apply scale transformation on hover and click */
 }
 

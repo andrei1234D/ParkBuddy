@@ -35,8 +35,13 @@
   justify-content: space-around;
 }
 .header:hover {
-  opacity: 0.8;
+  opacity: 0.9;
 }
 .header > * {
   margin-bottom: 3px;
+}
+.navOptions {
+  display: flex;
+  flex-direction: row;
+  margin-left: auto;
 }
