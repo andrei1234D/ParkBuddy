@@ -25,6 +25,7 @@ function LendSpot() {
   const { translate, username } = useContext(GlobalStatesContext);
 
   const navigate = useNavigate();
+  const navigate = useNavigate();
   useEffect(() => {
     initMap();
   }, []); // Empty dependency array to ensure it only runs once on component mount
@@ -38,6 +39,8 @@ function LendSpot() {
         zoom: 11,
         styles: mapStyles,
         fullscreenControl: false,
+        styles: mapStyles,
+        fullscreenControl: false,
       }
     );
 
@@ -45,6 +48,30 @@ function LendSpot() {
     mapInstance.addListener('click', (event) => {
       placeMarker(event.latLng, mapInstance);
     });
+
+    // Initialize Places Autocomplete
+    const input = document.getElementById('searchInput');
+    const autocomplete = new window.google.maps.places.Autocomplete(input);
+    autocomplete.bindTo('bounds', mapInstance);
+
+    autocomplete.addListener('place_changed', () => {
+      const place = autocomplete.getPlace();
+      if (!place.geometry) {
+        window.alert("No details available for input: '" + place.name + "'");
+        return;
+      }
+
+      if (place.geometry.viewport) {
+        mapInstance.fitBounds(place.geometry.viewport);
+      } else {
+        mapInstance.setCenter(place.geometry.location);
+        mapInstance.setZoom(17); // Zoom in to an appropriate level when searching by place name
+      }
+
+      reverseGeocode(place.geometry.location);
+    });
+  };
+
 
     // Initialize Places Autocomplete
     const input = document.getElementById('searchInput');
@@ -84,8 +111,23 @@ function LendSpot() {
     // Set new marker
     setMarker(newMarker);
 
+    const newMarker = new window.google.maps.Marker({
+      position: location,
+      map: map,
+      draggable: true,
+      icon: {
+        url: markerImage, // Set marker icon
+        scaledSize: new window.google.maps.Size(70, 70), // Resize marker icon
+      },
+      animation: window.google.maps.Animation.DROP,
+    });
+
+    // Set new marker
+    setMarker(newMarker);
+
     // Reverse geocode to get address
     reverseGeocode(location);
+    setShowDialogRedirect(true);
     setShowDialogRedirect(true);
   };
 
@@ -125,6 +167,28 @@ function LendSpot() {
       }
 
       console.log(parkingSpotData);
+
+      // Show confetti
+      setShowConfetti(true);
+      // Reset marker after form submission
+      setShowDialogRedirect(false);
+
+      // Hide confetti after 3 seconds
+      setTimeout(() => {
+        setShowConfetti(false);
+        handleRedirect();
+      }, 4000);
+    }
+  };
+
+  const handleCloseDialogRedirect = () => {
+    setShowDialogRedirect(false);
+    marker.setMap(null); // Remove the marker from the map
+    setMarker(null); // Reset marker state
+  };
+
+  const handleRedirect = () => {
+    navigate('/');
 
       // Show confetti
       setShowConfetti(true);
@@ -225,7 +289,92 @@ function LendSpot() {
           }}
         />
       </div>
+      <Dialog open={showDialogRedirect} onClose={handleCloseDialogRedirect}>
+        <DialogTitle>{translate('Please_verify_the_address')}</DialogTitle>
+        <DialogContent>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <label
+              multiline
+              rows={3}
+              type="text"
+              InputProps={{
+                readOnly: true,
+              }}
+            >
+              {translate('pleaseVerify')}
+            </label>
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'space-around',
+              }}
+            >
+              <TextField
+                multiline
+                rows={3}
+                type="text"
+                id="address"
+                value={address}
+                InputProps={{
+                  readOnly: true,
+                }}
+              />
+
+              <Button onClick={handleSubmit} disabled={!marker}>
+                Save Parking Spot
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+        <DialogActions
+          style={{
+            display: 'flex',
+            justifyContent: 'space-around',
+          }}
+        >
+          <Button onClick={handleCloseDialogRedirect}>Repick</Button>
+        </DialogActions>
+      </Dialog>
+      <div style={{ position: 'relative' }}>
+        <input
+          id="searchInput"
+          type="text"
+          placeholder="Search..."
+          style={{
+            position: 'absolute',
+            top: '10%',
+            left: '25%',
+            zIndex: '1',
+            width: '378px',
+            height: '40px',
+            paddingRight: '25px',
+            fontSize: '20px',
+          }}
+        />
+        <FaSearch
+          style={{
+            position: 'absolute',
+            top: '20px', // Adjust position to vertically center the icon
+            right: '48%', // Adjust to position the icon to the right
+            transform: 'translateY(-50%)', // Center the icon vertically
+            color: '#555', // Adjust icon color if needed
+            zIndex: '2', // Ensure the icon is above the input field
+          }}
+        />
+      </div>
       <div id="map" style={{ height: '100vh', width: '100vw' }}></div>
+      {showConfetti && (
+        <Confetti
+          width={window.innerWidth}
+          height={window.innerHeight * 1.2}
+          numberOfPieces={600}
+          recycle={false}
+          origin={{ x: 0, y: 1 }}
+          gravity={1}
+        />
+      )}
+      {/* Render confetti if showConfetti is true */}
       {showConfetti && (
         <Confetti
           width={window.innerWidth}
