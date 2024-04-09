@@ -10,7 +10,6 @@ import partner from '../images/vipDark.png';
 import partnerDark from '../images/vipLight.png';
 
 import GlobalStatesContext from '../context/GlobalStatesContext';
-import translations from '../translation/Translation';
 
 //REACT MUI
 import Dialog from '@mui/material/Dialog';

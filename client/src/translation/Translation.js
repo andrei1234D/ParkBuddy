@@ -35,7 +35,12 @@ const translations = {
     userLength: 'Username must have at least 5 characters.',
     passwordVerify:
       'Password must have at least 7 characters and contain at least one special character ( ! @ # $ % ^ & * ) ',
+    //new translations for KELAJ
+    pleaseVerify:
+      "Please Verify that the address is correct then proceed or repick the location if you are not sure of it's validity",
+    Please_verify_the_address: 'Please verify the address',
   },
+
   ro: {
     login: 'Conecteaza-te',
     logout: 'Delogheaza-te',
@@ -72,7 +77,11 @@ const translations = {
     userLength: 'Numele de utilizator trebuie sa aiba cel putin 5 caractere.',
     passwordVerify:
       'Parola trebuie sa aiba cel putin 7 caractere si sa contina cel putin un caracter special( ! @ # $ % ^ & * ) ',
+    pleaseVerify:
+      'Te rog verifica validitatea adresei este corecta si apoi continua sau realege locatia daca nu esti sigur ca este valida.',
+    Please_verify_the_address: 'Te rog verifica adresa',
   },
+
   pl: {
     login: 'Zaloguj',
     logout: 'Wyloguj',
