@@ -1,4 +1,4 @@
-styles: [
+const mapStyles = [
   { elementType: 'geometry', stylers: [{ color: '#242f3e' }] },
   {
     elementType: 'labels.text.stroke',
@@ -81,3 +81,4 @@ styles: [
     stylers: [{ color: '#17263c' }],
   },
 ];
+export default mapStyles;

@@ -26,6 +26,13 @@ db.once('open', () => console.log('Connected to MongoDB'));
 const partnerSchema = new mongoose.Schema({
   username: String,
   passwordHash: String,
+  parkingSpots: [
+    {
+      latitude: Number,
+      longitude: Number,
+      address: String,
+    },
+  ],
 });
 
 const customerSchema = new mongoose.Schema({
@@ -52,6 +59,7 @@ const getUserModel = (role) => {
 // Endpoint for user login
 app.post('/login', async (req, res) => {
   const { username, password, role } = req.body;
+
   try {
     //see if th username is found in the database(partner/customer)
     const user = await getUserModel(role).findOne({ username });
@@ -100,9 +108,18 @@ app.post('/register', async (req, res) => {
   }
 });
 
-app.post('/rendSpot', async (req, res) => {
+app.post('/Lend-A-Spot', async (req, res) => {
+  const { latitude, longitude, address, username } = req.body;
+  const partner = await Partner.findOne({ username });
+  console.log(partner);
+  const parkingSpotPartner = {
+    latitude,
+    longitude,
+    address,
+  };
+  partner.parkingSpots.push(parkingSpotPartner);
+  await partner.save();
   try {
-    const { latitude, longitude, address } = req.body;
     const parkingSpot = new ParkingSpot({
       latitude,
       longitude,

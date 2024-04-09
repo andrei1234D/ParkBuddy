@@ -40,7 +40,7 @@ const Fade = React.forwardRef(function Fade(props, ref) {
 const Account = () => {
   const { role, username, toggleLogout, isLoggedIn, translate } =
     useContext(GlobalStatesContext);
-
+  console.log(`is logged in? ${isLoggedIn}`);
   const [open, setOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -75,6 +75,9 @@ const Account = () => {
   const handleLogin = () => {
     navigate('/login');
     setOpen(false);
+  };
+  const handleToLendASpot = () => {
+    navigate('/Lend-A-Spot');
   };
   return (
     <Box className="settings">
@@ -206,6 +209,7 @@ const Account = () => {
                               color: 'var(--UIColor)',
                               backgroundColor: 'var(--UIText)',
                             }}
+                            onClick={handleToLendASpot}
                           >
                             {translate('lend')}
                           </Button>
