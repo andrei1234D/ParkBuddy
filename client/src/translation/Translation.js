@@ -39,6 +39,12 @@ const translations = {
     pleaseVerify:
       "Please Verify that the address is correct then proceed or repick the location if you are not sure of it's validity",
     Please_verify_the_address: 'Please verify the address',
+    seeYourParkingSpots: 'My Spots',
+    addressName: 'Address Name',
+    longitude: 'Longitude',
+    latitude: 'Latitude',
+    status: 'Status',
+    nr: 'NR',
   },
 
   ro: {
@@ -80,6 +86,12 @@ const translations = {
     pleaseVerify:
       'Te rog verifica validitatea adresei este corecta si apoi continua sau realege locatia daca nu esti sigur ca este valida.',
     Please_verify_the_address: 'Te rog verifica adresa',
+    seeYourParkingSpots: 'Locurile mele',
+    addressName: 'Numele Adresei',
+    longitude: 'Longitudine',
+    latitude: 'Latitudine',
+    status: 'Statut',
+    nr: 'NR',
   },
 
   pl: {

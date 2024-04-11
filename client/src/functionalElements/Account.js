@@ -79,6 +79,9 @@ const Account = () => {
   const handleToLendASpot = () => {
     navigate('/Lend-A-Spot');
   };
+  const handleToYourParkingSpots = () => {
+    navigate('/Your-Parking-Spots');
+  };
   return (
     <Box className="settings">
       <MdOutlineManageAccounts className="settingsIcon" onClick={handleClick} />
@@ -215,7 +218,15 @@ const Account = () => {
                           </Button>
                         </div>
                       )}
-
+                      <Button
+                        style={{
+                          color: 'var(--UIColor)',
+                          backgroundColor: 'var(--UIText)',
+                        }}
+                        onClick={handleToYourParkingSpots}
+                      >
+                        {translate('seeYourParkingSpots')}
+                      </Button>
                       {/* ADD MORE SETTINGS FOR ACCOUNT HERE */}
                     </div>
                     <div>

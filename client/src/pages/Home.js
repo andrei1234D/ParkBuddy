@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom';
 
 //language translate imports
 import { useContext } from 'react';
-import LanguageContext from '../context/GlobalStatesContext';
+import GlobalStatesContext from '../context/GlobalStatesContext';
 
 import '../style/Home.css';
 
 function Home() {
-  const { translate } = useContext(LanguageContext);
+  const { translate } = useContext(GlobalStatesContext);
 
   return (
     <div>

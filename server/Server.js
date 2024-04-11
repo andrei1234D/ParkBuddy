@@ -31,6 +31,7 @@ const partnerSchema = new mongoose.Schema({
       latitude: Number,
       longitude: Number,
       address: String,
+      status: String,
     },
   ],
 });
@@ -43,6 +44,8 @@ const ParkingSpotSchema = new mongoose.Schema({
   latitude: Number,
   longitude: Number,
   address: String,
+  username: String,
+  status: String,
 });
 // Models for partner and customer collections
 const Partner = mongoose.model('Partner', partnerSchema);
@@ -109,21 +112,27 @@ app.post('/register', async (req, res) => {
 });
 
 app.post('/Lend-A-Spot', async (req, res) => {
+  //add new parking spot to the partner
   const { latitude, longitude, address, username } = req.body;
+  const status = 'free';
   const partner = await Partner.findOne({ username });
-  console.log(partner);
   const parkingSpotPartner = {
     latitude,
     longitude,
     address,
+    status,
   };
   partner.parkingSpots.push(parkingSpotPartner);
   await partner.save();
+
+  //add new parking spot
   try {
     const parkingSpot = new ParkingSpot({
       latitude,
       longitude,
       address,
+      username,
+      status,
     });
     await parkingSpot.save();
     res.json({ success: true, message: 'Parking spot added successfully.' });
@@ -132,6 +141,19 @@ app.post('/Lend-A-Spot', async (req, res) => {
     res
       .status(500)
       .json({ success: false, message: 'Failed to add parking spot.' });
+  }
+});
+app.post('/Your-Spots', async (req, res) => {
+  //add new parking spot to the partner
+  const { username } = req.body;
+  try {
+    const partner = await Partner.findOne({ username });
+
+    // Send back all parking spots of the partner
+    res.status(200).json({ parkingSpots: partner.parkingSpots });
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ message: 'Internal server error' });
   }
 });
 

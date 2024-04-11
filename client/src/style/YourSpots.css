@@ -1,0 +1,68 @@
+.containerParkingSpots {
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+
+  background-color: var(--UIColor);
+  color: var(--UIText);
+  margin: 0 auto;
+  margin-top: 50px;
+  padding: 50px;
+}
+.containerSpots {
+  display: flex;
+  flex-direction: row;
+  height: 80px;
+  width: auto;
+  padding-left: 10px;
+  padding-right: 4px;
+  margin-bottom: 40px;
+  width: 100%;
+  align-items: center;
+  color: var(--UIColor);
+  background-color: var(--UIText);
+  border-radius: 15px;
+}
+.containerHeaderSpots {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+  height: 80px;
+  width: auto;
+
+  width: 100%;
+  align-items: center;
+  color: var(--UIText);
+  border-radius: 15px;
+  padding-left: 10px;
+  padding-right: 4px;
+}
+.containerHeaderSpots p {
+  display: flex;
+  justify-content: center;
+}
+.containerSpots .coordinates,
+.status,
+.nrSpot {
+  display: flex;
+  justify-content: center;
+}
+
+.nrSpot {
+  width: 4%;
+}
+.addressName {
+  width: 43%;
+}
+.coordinates {
+  width: 23%;
+}
+.status {
+  width: 9%;
+}
+.loading {
+  font-size: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -114,7 +114,7 @@ function LendSpot() {
         let latitude = parkingSpotData.latitude;
         let longitude = parkingSpotData.longitude;
         let address = parkingSpotData.address;
-        const response = await axios.post('http://localhost:5000/Lend-A-Spot', {
+        await axios.post('http://localhost:5000/Lend-A-Spot', {
           latitude,
           longitude,
           address,
