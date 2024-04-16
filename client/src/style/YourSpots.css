@@ -7,15 +7,13 @@
   color: var(--UIText);
   margin: 0 auto;
   margin-top: 50px;
-  padding: 50px;
+  padding: 40px;
 }
 .containerSpots {
   display: flex;
   flex-direction: row;
   height: 80px;
   width: auto;
-  padding-left: 10px;
-  padding-right: 4px;
   margin-bottom: 40px;
   width: 100%;
   align-items: center;
@@ -34,8 +32,8 @@
   align-items: center;
   color: var(--UIText);
   border-radius: 15px;
-  padding-left: 10px;
-  padding-right: 4px;
+
+  padding-bottom: 25px;
 }
 .containerHeaderSpots p {
   display: flex;

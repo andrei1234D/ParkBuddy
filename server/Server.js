@@ -156,7 +156,15 @@ app.post('/Your-Spots', async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 });
-
+app.get('/Rent-A-Spot', async (req, res) => {
+  try {
+    const parkingSpots = await ParkingSpot.find();
+    console.log(parkingSpots);
+    res.json(parkingSpots);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });

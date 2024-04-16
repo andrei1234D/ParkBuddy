@@ -4,6 +4,7 @@ import Nav from './navigation/nav';
 import Register from './pages/Register';
 import LendSpot from './pages/LendSpot';
 import YourSpots from './pages/YourSpots';
+import RentSpot from './pages/RentSpot';
 import Particles from './particles/ParticlesComp';
 import { GlobalStatesContextProvider } from './context/GlobalStatesContext';
 import './style/App.css';
@@ -25,6 +26,7 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/Lend-A-Spot" element={<LendSpot />} />
             <Route path="/Your-Parking-Spots" element={<YourSpots />} />
+            <Route path="/Rent-A-Spot" element={<RentSpot />} />
             {/* <Route path="/search" element={<Search />} />
             <Route element={<ProtectedRoutes />}>
             <Route path="/product/:id" element={<ProductPage />} />
