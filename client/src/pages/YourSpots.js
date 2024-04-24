@@ -57,8 +57,11 @@ function Home() {
                 title={
                   <div style={{ fontSize: '13px' }}>
                     <FaCircle style={{ color: 'green' }} /> FREE <br />
-                    <FaCircle style={{ color: 'blue' }} /> RESERVED <br />
-                    <FaCircle style={{ color: 'red' }} /> OCCUPIED
+                    <FaCircle style={{ color: 'yellow' }} /> RESERVED <br />
+                    <FaCircle style={{ color: 'blue' }} /> OCCUPIED
+                    <br />
+                    <FaCircle style={{ color: 'red' }} /> UNAVAILABLE
+                    <br />
                   </div>
                 }
                 arrow
@@ -88,9 +91,12 @@ function Home() {
                   <FaCircle style={{ color: 'green' }} />
                 )}
                 {spot.status === 'reserved' && (
-                  <FaCircle style={{ color: 'blue' }} />
+                  <FaCircle style={{ color: 'yellow' }} />
                 )}
                 {spot.status === 'occupied' && (
+                  <FaCircle style={{ color: 'blue' }} />
+                )}
+                {spot.status === 'unavailable' && (
                   <FaCircle style={{ color: 'red' }} />
                 )}
               </p>

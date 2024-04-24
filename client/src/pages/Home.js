@@ -20,9 +20,11 @@ function Home() {
             {translate('login')}
           </div>
         </Link>
-        <div className="option-box btn-gradient-border">
-          {translate('rentASpot')}
-        </div>
+        <Link to="/Rent-A-Spot" className="link">
+          <div className="option-box btn-gradient-border">
+            {translate('rentASpot')}
+          </div>
+        </Link>
       </div>
     </div>
   );

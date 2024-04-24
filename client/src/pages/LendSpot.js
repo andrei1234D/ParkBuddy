@@ -8,6 +8,8 @@ import mapStyles from '../styleForMap/mapStyle';
 import markerImage from '../images/marker1.png';
 import GlobalStatesContext from '../context/GlobalStatesContext';
 import { useNavigate } from 'react-router-dom';
+import DatePicker from 'react-datepicker'; // Import DatePicker
+import 'react-datepicker/dist/react-datepicker.css'; // Import DatePicker styles
 
 // React MUI
 import TextField from '@mui/material/TextField';
@@ -16,13 +18,19 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
+import { Stack } from '@mui/material';
 
 function LendSpot() {
   const [marker, setMarker] = useState(null);
   const [address, setAddress] = useState('');
   const [showDialogRedirect, setShowDialogRedirect] = useState(false);
+  const [dialogError, setDialogError] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false); // State to control confetti
   const { translate, username } = useContext(GlobalStatesContext);
+  const [selectedStartDate, setSelectedStartDate] = useState(null); // State for selected start date
+  const [selectedEndDate, setSelectedEndDate] = useState(null); // State for selected end date
+  const [startTime, setStartTime] = useState(null); // State for selected start time
+  const [endTime, setEndTime] = useState(null); // State for selected end time
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -103,21 +111,46 @@ function LendSpot() {
 
   // Function to handle form submission
   const handleSubmit = async (event) => {
+    // console.log('Start Time:', startTime);
+    // console.log('End Time:', endTime);
     event.preventDefault();
-    if (marker && address) {
+    if (
+      marker &&
+      address &&
+      selectedStartDate &&
+      selectedEndDate &&
+      startTime &&
+      endTime
+    ) {
+      const formattedStartDate = formatDate(selectedStartDate);
+      const formattedEndDate = formatDate(selectedEndDate);
+      console.log('Selected Start Date:', formattedStartDate);
+      console.log('Selected End Date:', formattedEndDate);
       const parkingSpotData = {
+        address: address,
         latitude: marker.getPosition().lat(),
         longitude: marker.getPosition().lng(),
-        address: address,
+        startTime: startTime,
+        endTime: endTime,
+        selectedStartDate: formattedStartDate,
+        selectedEndDate: formattedEndDate,
       };
       try {
         let latitude = parkingSpotData.latitude;
         let longitude = parkingSpotData.longitude;
         let address = parkingSpotData.address;
+        let startTime = parkingSpotData.startTime;
+        let endTime = parkingSpotData.endTime;
+        let selectedStartDate = parkingSpotData.selectedStartDate;
+        let selectedEndDate = parkingSpotData.selectedEndDate;
         await axios.post('http://localhost:5000/Lend-A-Spot', {
           latitude,
           longitude,
           address,
+          startTime,
+          endTime,
+          selectedStartDate,
+          selectedEndDate,
           username,
         });
       } catch (error) {
@@ -126,67 +159,111 @@ function LendSpot() {
 
       console.log(parkingSpotData);
 
+      setShowDialogRedirect(false);
       // Show confetti
       setShowConfetti(true);
-      // Reset marker after form submission
-      setShowDialogRedirect(false);
 
       // Hide confetti after 3 seconds
       setTimeout(() => {
         setShowConfetti(false);
         handleRedirect();
       }, 4000);
-    }
+    } else setDialogError(true);
   };
-
+  const formatDate = (date) => {
+    const formattedDate = new Date(date).toLocaleString('en-us', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
+    });
+    return formattedDate;
+  };
   const handleCloseDialogRedirect = () => {
     setShowDialogRedirect(false);
     marker.setMap(null); // Remove the marker from the map
     setMarker(null); // Reset marker state
   };
-
+  const handleCloseDialogError = () => {
+    setDialogError(false);
+  };
   const handleRedirect = () => {
     navigate('/');
   };
 
   return (
     <div>
-      <Dialog open={showDialogRedirect} onClose={handleCloseDialogRedirect}>
+      <Dialog
+        open={showDialogRedirect}
+        onClose={handleCloseDialogRedirect}
+        fullScreen
+      >
         <DialogTitle>{translate('Please_verify_the_address')}</DialogTitle>
         <DialogContent>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <label
+            <label>{translate('pleaseVerify')}</label>
+            <TextField
               multiline
               rows={3}
               type="text"
+              id="address"
+              value={address}
               InputProps={{
                 readOnly: true,
               }}
-            >
-              {translate('pleaseVerify')}
-            </label>
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'space-around',
-              }}
+            />
+            <Stack
+              direction="row"
+              spacing={2}
+              alignItems="center"
+              justifyContent="center"
+              style={{ marginTop: '5%' }}
             >
               <TextField
-                multiline
-                rows={3}
-                type="text"
-                id="address"
-                value={address}
-                InputProps={{
-                  readOnly: true,
+                id="startTime"
+                label="Daily Start Time"
+                type="time"
+                value={startTime}
+                onChange={(e) => setStartTime(e.target.value)}
+                InputLabelProps={{
+                  shrink: true,
                 }}
               />
-
-              <Button onClick={handleSubmit} disabled={!marker}>
-                Save Parking Spot
-              </Button>
-            </div>
+              <TextField
+                id="endTime"
+                label="Daily End Time"
+                type="time"
+                value={endTime}
+                onChange={(e) => setEndTime(e.target.value)}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+            </Stack>
+            <Stack
+              direction="row"
+              spacing={2}
+              alignItems="center"
+              justifyContent="center"
+              style={{ marginTop: '5%' }}
+            >
+              <DatePicker
+                selected={selectedStartDate}
+                onChange={(date) => setSelectedStartDate(date)}
+                selectsStart
+                startDate={selectedStartDate}
+                endDate={selectedEndDate}
+                placeholderText="Start Date"
+              />
+              <DatePicker
+                selected={selectedEndDate}
+                onChange={(date) => setSelectedEndDate(date)}
+                selectsEnd
+                startDate={selectedStartDate}
+                endDate={selectedEndDate}
+                minDate={selectedStartDate}
+                placeholderText="End Date"
+              />
+            </Stack>
           </div>
         </DialogContent>
         <DialogActions
@@ -196,8 +273,41 @@ function LendSpot() {
           }}
         >
           <Button onClick={handleCloseDialogRedirect}>Repick</Button>
+          <Button onClick={handleSubmit} disabled={!marker}>
+            Register Spot
+          </Button>
         </DialogActions>
       </Dialog>
+      {/* Dialog for error */}
+      <Dialog open={dialogError} onClose={handleCloseDialogError}>
+        <DialogTitle
+          style={{ backgroundColor: 'var(--UIColor)', color: 'var(--UIText)' }}
+        >
+          Please complete all the required fields.
+        </DialogTitle>
+        <DialogContent
+          style={{
+            backgroundColor: 'var(--UIColor)',
+            color: 'var(--UIText)',
+          }}
+        >
+          <p>
+            Please complete the time-frame and days for your lending to be
+            successful.You can later modify this with your account settings.
+          </p>
+        </DialogContent>
+        <DialogActions
+          style={{
+            backgroundColor: 'var(--UIColor)',
+            color: 'var(--UIText)',
+            display: 'flex',
+            justifyContent: 'space-around',
+          }}
+        >
+          <Button onClick={handleCloseDialogError}>Close</Button>
+        </DialogActions>
+      </Dialog>
+
       <div style={{ position: 'relative' }}>
         <input
           id="searchInput"
@@ -236,7 +346,6 @@ function LendSpot() {
           gravity={1}
         />
       )}
-      {/* Render confetti if showConfetti is true */}
     </div>
   );
 }
