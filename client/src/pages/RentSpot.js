@@ -16,7 +16,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
-import { Stack } from '@mui/material';
+import { CircularProgress, Stack } from '@mui/material';
 
 function RentSpot() {
   const [address, setAddress] = useState('');
@@ -31,25 +31,20 @@ function RentSpot() {
   const autoCompleteRef = useRef();
   const autoCompleteDialogRef = useRef();
   const inputRef = useRef();
-  const inputDialogRef = useRef();
-  const navigate = useNavigate();
+  const inputDialogRef = useRef(null);
+  const mapRef = useRef(null);
+  const navigate = useNavigate(null);
+  const [mapInstance, setMap] = useState(null)
 
   useEffect(() => {
-    fetchAvailableParkingSpots();
-    initMap();
+      initMap();
+      fetchAvailableParkingSpots();
   }, []);
 
   const initMap = async () => {
-    //acest cOd reZOlva toate prOblemele.
-    autoCompleteDialogRef.current = new window.google.maps.places.Autocomplete(
-      inputDialogRef.current
-    );
-    autoCompleteRef.current = new window.google.maps.places.Autocomplete(
-      inputRef.current
-    );
-    //
-    const mapInstance = new window.google.maps.Map(
-      document.getElementById('map'),
+    console.log("Here")
+    const mapInstanceCurrent = new window.google.maps.Map(
+      mapRef.current,
       {
         center: { lat: 44.415573973386864, lng: 26.102983712003493 },
         zoom: 11,
@@ -57,6 +52,19 @@ function RentSpot() {
         fullscreenControl: false,
       }
     );
+
+    setMap(mapInstanceCurrent)
+
+    console.log({mapInstance})
+
+    autoCompleteDialogRef.current = new window.google.maps.places.Autocomplete(
+      inputDialogRef.current
+    );
+    autoCompleteRef.current = new window.google.maps.places.Autocomplete(
+      inputRef.current
+    );
+    //
+    
 
     const inputDialog = document.getElementById('searchInputDialog');
     const autocompleteDialog = new window.google.maps.places.Autocomplete(
@@ -124,11 +132,12 @@ function RentSpot() {
     });
   };
 
-  const fetchAvailableParkingSpots = async (mapInstance) => {
+  console.log(mapInstance)
+
+  const fetchAvailableParkingSpots = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/Get-Spots');
+      const response = await axios.get('http://localhost:3000/Get-Spots');
       const parkingSpots = response.data;
-      console.log(parkingSpots);
       parkingSpots.forEach((spot) => {
         const location = { lat: spot.latitude, lng: spot.longitude };
         const marker = new window.google.maps.Marker({
@@ -153,7 +162,7 @@ function RentSpot() {
       console.error('Error fetching parking spots:', error);
     }
   };
-  const fetchAvailableParkingSpotsOptions = async (mapInstance) => {
+  const fetchAvailableParkingSpotsOptions = async () => {
     let startRentTime = startTime;
     let endRentTime = endTime;
     let selectedDate = selectedStartDate;
@@ -222,9 +231,8 @@ function RentSpot() {
     setOpenDialogOptions(false);
     fetchAvailableParkingSpotsOptions();
   };
-  if (loading) {
-    return <LoadingSpinner />;
-  } else {
+
+ 
     return (
       <div>
         {/* Dialog for page entry */}
@@ -356,10 +364,9 @@ function RentSpot() {
             }}
           />
         </div>
-        <div id="map" style={{ height: '100vh', width: '100vw' }}></div>
+        <div style={{ height: '100vh', width: '100vw' }} ref={mapRef}></div>
       </div>
     );
-  }
 }
 
 export default RentSpot;
