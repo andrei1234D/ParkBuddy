@@ -74,6 +74,7 @@ const Register = () => {
   const partnerClick = () => {
     setIsRegisterNormalPressed(false);
   };
+
   return (
     <div className="biggestDiv">
       <Dialog open={showDialog} onClose={handleCloseDialog}>

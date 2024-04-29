@@ -80,5 +80,15 @@ const mapStyles = [
     elementType: 'labels.text.stroke',
     stylers: [{ color: '#17263c' }],
   },
+  {
+    featureType: 'poi.business',
+    stylers: [{ visibility: 'off' }],
+  },
+  {
+    featureType: 'transit',
+    elementType: 'labels.icon',
+    stylers: [{ visibility: 'off' }],
+  },
 ];
+
 export default mapStyles;

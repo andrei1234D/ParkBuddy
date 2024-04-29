@@ -1,372 +1,242 @@
-import React, { useState, useEffect, useContext, useRef } from 'react';
-import '../style/RentASpot.css';
-import LoadingSpinner from '../spinner/LoadingSpinner.js';
-import { FaSearch } from 'react-icons/fa';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
-
-import mapStyles from '../styleForMap/mapStyle';
+import { GoogleMap, Marker, InfoWindow } from '@react-google-maps/api';
+import { FaSearch } from 'react-icons/fa';
 import markerImage from '../images/marker1.png';
 import GlobalStatesContext from '../context/GlobalStatesContext';
 import { useNavigate } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
-
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
-import { CircularProgress, Stack } from '@mui/material';
+import LoadingSpinner from '../spinner/LoadingSpinner.js';
+import Autocomplete from 'react-google-autocomplete';
+import mapStyles from '../styleForMap/mapStyle.js';
+import '../style/RentASpot.css';
+const mapContainerStyle = {
+  width: '100%',
+  height: '100vh',
+};
 
-function RentSpot() {
-  const [address, setAddress] = useState('');
-  const [openDialog, setOpenDialog] = useState(false);
-  const [openDialogOptions, setOpenDialogOptions] = useState(true);
-  const [selectedSpot, setSelectedSpot] = useState(null);
-  const [selectedStartDate, setSelectedStartDate] = useState(null);
-  const [startTime, setStartTime] = useState(null); // State for selected start time
-  const [endTime, setEndTime] = useState(null); // State for selected end time
+const center = {
+  lat: 44.415573973386864,
+  lng: 26.102983712003493,
+};
+
+const RentSpot = () => {
+  const [map, setMap] = useState(null);
+  const [spots, setSpots] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedSpot, setSelectedSpot] = useState(null);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [selectedStartDate, setSelectedStartDate] = useState(new Date());
+  const [startTime, setStartTime] = useState(null);
+  const [endTime, setEndTime] = useState(null);
   const { translate, username } = useContext(GlobalStatesContext);
-  const autoCompleteRef = useRef();
-  const autoCompleteDialogRef = useRef();
-  const inputRef = useRef();
-  const inputDialogRef = useRef(null);
-  const mapRef = useRef(null);
-  const navigate = useNavigate(null);
-  const [mapInstance, setMap] = useState(null)
+  const [infoWindowPosition, setInfoWindowPosition] = useState(null);
+  const [infoWindowOpen, setInfoWindowOpen] = useState(false);
+
+  const [selectedLocation, setSelectedLocation] = useState({
+    lat: 44.415573973386864,
+    lng: 26.102983712003493,
+  });
+  const navigate = useNavigate();
 
   useEffect(() => {
-      initMap();
-      fetchAvailableParkingSpots();
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/Get-Spots');
+        setSpots(response.data);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching spots:', error);
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+    return () => {
+      const elementsToHide = document.querySelectorAll(
+        '.gm-style-iw-t, .gm-style-iw-tc, .gm-ui-hover-effect,.gm-style-iw-a,button[tabindex="0"]'
+      );
+      elementsToHide.forEach((element) => {
+        element.style.display = 'none';
+      });
+    };
   }, []);
+  console.log(spots);
+  const handleMarkerClick = (spot) => {
+    console.log('Marker Click Has Been Called Once');
 
-  const initMap = async () => {
-    console.log("Here")
-    const mapInstanceCurrent = new window.google.maps.Map(
-      mapRef.current,
-      {
-        center: { lat: 44.415573973386864, lng: 26.102983712003493 },
-        zoom: 11,
-        styles: mapStyles,
-        fullscreenControl: false,
-      }
-    );
-
-    setMap(mapInstanceCurrent)
-
-    console.log({mapInstance})
-
-    autoCompleteDialogRef.current = new window.google.maps.places.Autocomplete(
-      inputDialogRef.current
-    );
-    autoCompleteRef.current = new window.google.maps.places.Autocomplete(
-      inputRef.current
-    );
-    //
-    
-
-    const inputDialog = document.getElementById('searchInputDialog');
-    const autocompleteDialog = new window.google.maps.places.Autocomplete(
-      inputDialog
-    );
-
-    autocompleteDialog.addListener('place_changed', () => {
-      const place = autocompleteDialog.getPlace();
-
-      const reverseGeocode = (location) => {
-        const geocoder = new window.google.maps.Geocoder();
-        geocoder.geocode({ location: location }, (results, status) => {
-          if (status === 'OK' && results[0]) {
-            setAddress(results[0].formatted_address);
-          } else {
-            setAddress('');
-          }
-        });
-      };
-
-      if (!place.geometry) {
-        window.alert("No details available for input: '" + place.name + "'");
-        return;
-      }
-
-      if (place.geometry.viewport) {
-        mapInstance.fitBounds(place.geometry.viewport);
-      } else {
-        mapInstance.setCenter(place.geometry.location);
-        mapInstance.setZoom(17);
-      }
-
-      reverseGeocode(place.geometry.location);
-    });
-    const input = document.getElementById('searchInput');
-    const autocomplete = new window.google.maps.places.Autocomplete(input);
-
-    autocomplete.addListener('place_changed', () => {
-      const place = autocomplete.getPlace();
-
-      const reverseGeocode = (location) => {
-        const geocoder = new window.google.maps.Geocoder();
-        geocoder.geocode({ location: location }, (results, status) => {
-          if (status === 'OK' && results[0]) {
-            setAddress(results[0].formatted_address);
-          } else {
-            setAddress('');
-          }
-        });
-      };
-
-      if (!place.geometry) {
-        window.alert("No details available for input: '" + place.name + "'");
-        return;
-      }
-
-      if (place.geometry.viewport) {
-        mapInstance.fitBounds(place.geometry.viewport);
-      } else {
-        mapInstance.setCenter(place.geometry.location);
-        mapInstance.setZoom(17);
-      }
-
-      reverseGeocode(place.geometry.location);
-    });
-  };
-
-  console.log(mapInstance)
-
-  const fetchAvailableParkingSpots = async () => {
-    try {
-      const response = await axios.get('http://localhost:3000/Get-Spots');
-      const parkingSpots = response.data;
-      parkingSpots.forEach((spot) => {
-        const location = { lat: spot.latitude, lng: spot.longitude };
-        const marker = new window.google.maps.Marker({
-          position: location,
-          map: mapInstance,
-          draggable: true,
-          icon: {
-            url: markerImage,
-            scaledSize: new window.google.maps.Size(70, 70),
-          },
-          animation: window.google.maps.Animation.DROP,
-          title: spot.address,
-        });
-        //on Marker Click (for the redirect to google directions)
-        marker.addListener('click', () => {
-          handleOpenDialog(spot);
-          console.log(spot);
-        });
+    if (!infoWindowOpen) {
+      setSelectedSpot(spot);
+      setInfoWindowPosition({
+        lat: spot.latitude,
+        lng: spot.longitude,
       });
-      setLoading(false);
-    } catch (error) {
-      console.error('Error fetching parking spots:', error);
-    }
-  };
-  const fetchAvailableParkingSpotsOptions = async () => {
-    let startRentTime = startTime;
-    let endRentTime = endTime;
-    let selectedDate = selectedStartDate;
-    try {
-      const response = await axios.post('http://localhost:5000/Rent-A-Spot', {
-        startRentTime,
-        endRentTime,
-        selectedDate,
-        username,
-      });
-      const parkingSpots = response.data;
-
-      parkingSpots.forEach((spot) => {
-        const location = { lat: spot.latitude, lng: spot.longitude };
-        const marker = new window.google.maps.Marker({
-          position: location,
-          map: mapInstance,
-          draggable: true,
-          icon: {
-            url: markerImage,
-            scaledSize: new window.google.maps.Size(70, 70),
-          },
-          animation: window.google.maps.Animation.DROP,
-          title: spot.address,
-        });
-        marker.addListener('click', () => {
-          handleOpenDialog(spot);
-          console.log(spot);
-        });
-      });
-    } catch (error) {
-      console.error('Error fetching parking spots:', error);
+      setInfoWindowOpen(true);
     }
   };
 
-  const handleRedirect = () => {
-    navigate('/');
+  const handleMarkerExit = () => {
+    setSelectedSpot(null);
+    setInfoWindowPosition(null);
   };
 
-  const handleOpenDialog = (spot) => {
-    setSelectedSpot(spot);
-    setOpenDialog(true);
-  };
-  const handleCloseDialog = () => {
+  const handleDialogClose = () => {
     setOpenDialog(false);
   };
-  const handleCloseDialogOptions = () => {
-    setOpenDialogOptions(false);
+  const handleDialogOpen = () => {
+    setOpenDialog(true);
+  };
+  const handleInfoWindowClose = () => {
+    setSelectedSpot(null);
+    setInfoWindowOpen(false);
   };
 
-  //On marker click
-  const handleRentSpot = async () => {
-    if (selectedSpot) {
-      try {
-        handleCloseDialog(); // Close the dialog
-        const { latitude, longitude } = selectedSpot;
-        const url = `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`;
-        window.location.href = url;
-      } catch (error) {
-        console.error('Error renting spot:', error);
-        // Handle any errors, such as displaying an error message to the user
-      }
+  const handleRentButtonClick = async () => {
+    try {
+      const response = await axios.post('http://localhost:5000/Rent-A-Spot', {
+        startRentTime: startTime,
+        endRentTime: endTime,
+        selectedDate: selectedStartDate,
+        username,
+      });
+      // Assuming response contains directions URL, you can use it to navigate
+      navigate(response.data.directionsUrl);
+    } catch (error) {
+      console.error('Error renting spot:', error);
     }
   };
-  const handleSortParkings = async () => {
-    setOpenDialogOptions(false);
-    fetchAvailableParkingSpotsOptions();
+  const handlePlaceSelect = (place) => {
+    console.log('Place selected:', place.geometry.location.lat);
+    console.log(place.geometry.location);
+    if (!place.geometry) {
+      window.alert("No details available for input: '" + place.name + "'");
+      return;
+    }
+
+    if (map) {
+      if (place.geometry.viewport) {
+        map.fitBounds(place.geometry.viewport);
+      } else {
+        map.setCenter(place.geometry.location);
+        map.setZoom(17); // Zoom in to an appropriate level when searching by place name
+      }
+    } else {
+      console.error('Map is not yet initialized');
+    }
+    setSelectedLocation(place.geometry.location);
   };
-
- 
-    return (
-      <div>
-        {/* Dialog for page entry */}
-        <Dialog
-          open={openDialogOptions}
-          onClose={handleCloseDialogOptions}
-          style={{ zIndex: '99' }}
+  return (
+    <div>
+      {loading ? (
+        <LoadingSpinner />
+      ) : (
+        <GoogleMap
+          mapContainerStyle={mapContainerStyle}
+          zoom={11}
+          center={selectedLocation}
+          options={{ styles: mapStyles, fullscreenControl: false }}
+          onLoad={(map) => setMap(map)}
         >
-          <DialogTitle style={{ alignSelf: 'center' }}>
-            Please fill the requirements
-          </DialogTitle>
-          <DialogContent>
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignItems: 'center',
+          {map && (
+            <Autocomplete
+              apiKey="AIzaSyAbdrtMH-j0086-Itq7lKIhtdviyAPA4fQ"
+              onPlaceSelected={handlePlaceSelect}
+              options={{
+                componentRestrictions: { country: 'ro' },
               }}
-            >
-              <p>Please select the place you want your parking to be at !</p>
-              <input
-                id="searchInputDialog"
-                type="text"
-                placeholder="Search..."
-                style={{
-                  position: 'relative',
-                  top: '10%',
-                  zIndex: '99',
-                  width: '98%',
-                  height: '40px',
-                  paddingRight: '25px',
-                  fontSize: '20px',
-                }}
-                ref={inputDialogRef}
-              />
-              <p>Please select when you want your spot to be available at !</p>
-              <div style={{ alignSelf: 'center' }}>
-                <DatePicker
-                  selected={selectedStartDate}
-                  onChange={(date) => setSelectedStartDate(date)}
-                  placeholderText="Date"
-                />
-              </div>
-              <Stack
-                direction="row"
-                spacing={2}
-                alignItems="center"
-                justifyContent="center"
-                style={{ marginTop: '5%' }}
-              >
-                <p>From</p>
-                <TextField
-                  id="startTime"
-                  type="time"
-                  value={startTime}
-                  onChange={(e) => setStartTime(e.target.value)}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                />
-                <p>Until</p>
-                <TextField
-                  id="endTime"
-                  type="time"
-                  value={endTime}
-                  onChange={(e) => setEndTime(e.target.value)}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                />
-              </Stack>
-            </div>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleCloseDialogOptions} color="primary">
-              Close
-            </Button>
-            <Button onClick={handleSortParkings} color="primary">
-              Confirm
-            </Button>
-          </DialogActions>
-        </Dialog>
+              style={{ width: '100%', position: 'absolute', zIndex: '100' }}
+            />
+          )}
 
-        {/* Dialog for confirmation renting*/}
-        <Dialog open={openDialog} onClose={handleCloseDialog}>
-          <DialogTitle>Rent this spot?</DialogTitle>
-          <DialogContent>
-            {selectedSpot && (
-              <div>
-                <p>{selectedSpot.address}</p>
-                {/* Add any other details of the selected spot */}
+          {spots.map((spot) => (
+            <Marker
+              map={map}
+              key={spot.id}
+              position={{ lat: spot.latitude, lng: spot.longitude }}
+              onClick={() => {
+                handleMarkerClick(spot);
+              }}
+              onCloseClick={handleMarkerExit}
+              icon={{
+                url: markerImage,
+                scaledSize: new window.google.maps.Size(70, 70),
+              }}
+              animation={window.google.maps.Animation.DROP}
+              title={spot.address}
+            />
+          ))}
+          {infoWindowOpen && selectedSpot && (
+            <InfoWindow
+              position={infoWindowPosition}
+              onCloseClick={handleInfoWindowClose}
+            >
+              <div
+                style={{
+                  padding: '5px',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  flexDirection: 'column',
+                }}
+              >
+                <h3>{selectedSpot.address}</h3>
+                <p>Status: {selectedSpot.status} now</p>
+                <p>Availability: {selectedSpot.availability.length}</p>
+                <p>Price: the most you are willing to pay.</p>
+                <p>Owner: {selectedSpot.username}</p>
+                <p>Phone Number: 0721985898</p>
+                <Button onClick={handleDialogOpen}>Rent Now</Button>
               </div>
-            )}
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleCloseDialog} color="primary">
-              No
-            </Button>
-            <Button onClick={handleRentSpot} color="primary">
-              Yes
-            </Button>
-          </DialogActions>
-        </Dialog>
-        <div style={{ position: 'relative' }}>
-          <input
-            id="searchInput"
-            type="text"
-            placeholder="Search..."
-            style={{
-              position: 'relative',
-              top: '10%',
-              zIndex: '1',
-              width: '98%',
-              height: '40px',
-              paddingRight: '25px',
-              fontSize: '20px',
+            </InfoWindow>
+          )}
+        </GoogleMap>
+      )}
+
+      <Dialog open={openDialog} onClose={handleDialogClose} fullScreen={true}>
+        <DialogTitle>{selectedSpot ? selectedSpot.name : ''}</DialogTitle>
+        <DialogContent>
+          <TextField
+            label="Start Time"
+            type="time"
+            value={startTime}
+            onChange={(e) => setStartTime(e.target.value)}
+            InputLabelProps={{
+              shrink: true,
             }}
-            ref={inputRef}
-          />
-          <FaSearch
-            style={{
-              position: 'absolute',
-              top: '20px',
-              right: '1%',
-              transform: 'translateY(-50%)',
-              color: '#555',
-              zIndex: '2',
+            inputProps={{
+              step: 300, // 5 min
             }}
           />
-        </div>
-        <div style={{ height: '100vh', width: '100vw' }} ref={mapRef}></div>
-      </div>
-    );
-}
+          <TextField
+            label="End Time"
+            type="time"
+            value={endTime}
+            onChange={(e) => setEndTime(e.target.value)}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            inputProps={{
+              step: 300, // 5 min
+            }}
+          />
+          <DatePicker
+            selected={selectedStartDate}
+            onChange={(date) => setSelectedStartDate(date)}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleDialogClose}>Cancel</Button>
+          <Button onClick={handleRentButtonClick}>Pay&Go</Button>
+        </DialogActions>
+      </Dialog>
+    </div>
+  );
+};
 
 export default RentSpot;
