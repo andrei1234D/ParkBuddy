@@ -105,7 +105,6 @@ const RentSpot = () => {
         selectedDate: selectedStartDate,
         username,
       });
-      // Assuming response contains directions URL, you can use it to navigate
       navigate(response.data.directionsUrl);
     } catch (error) {
       console.error('Error renting spot:', error);
@@ -124,7 +123,7 @@ const RentSpot = () => {
         map.fitBounds(place.geometry.viewport);
       } else {
         map.setCenter(place.geometry.location);
-        map.setZoom(17); // Zoom in to an appropriate level when searching by place name
+        map.setZoom(17);
       }
     } else {
       console.error('Map is not yet initialized');
