@@ -31,7 +31,7 @@ const RentSpot = () => {
   const [spots, setSpots] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedSpot, setSelectedSpot] = useState(null);
-  const [openDialog, setOpenDialog] = useState(false);
+  const [openDialog, setOpenDialog] = useState(true);
   const [selectedStartDate, setSelectedStartDate] = useState(new Date());
   const [startTime, setStartTime] = useState(null);
   const [endTime, setEndTime] = useState(null);
@@ -97,18 +97,24 @@ const RentSpot = () => {
     setInfoWindowOpen(false);
   };
 
-  const handleRentButtonClick = async () => {
+  const handlePreferencesClick = async () => {
     try {
-      const response = await axios.post('http://localhost:5000/Rent-A-Spot', {
-        startRentTime: startTime,
-        endRentTime: endTime,
-        selectedDate: selectedStartDate,
-        username,
-      });
-      navigate(response.data.directionsUrl);
+      const response = await axios.post(
+        'http://localhost:5000/Preferences-Spots',
+        {
+          startRentTime: startTime,
+          endRentTime: endTime,
+          selectedDate: selectedStartDate,
+          username,
+        }
+      );
+      setSpots(response.data);
+      console.log('response data:');
+      console.log(response.data);
     } catch (error) {
       console.error('Error renting spot:', error);
     }
+    handleDialogClose();
   };
   const handlePlaceSelect = (place) => {
     console.log('Place selected:', place.geometry.location.lat);
@@ -186,7 +192,7 @@ const RentSpot = () => {
               >
                 <h3>{selectedSpot.address}</h3>
                 <p>Status: {selectedSpot.status} now</p>
-                <p>Availability: {selectedSpot.availability.length}</p>
+                <p>Availability: {selectedSpot.endDate}</p>
                 <p>Price: the most you are willing to pay.</p>
                 <p>Owner: {selectedSpot.username}</p>
                 <p>Phone Number: 0721985898</p>
@@ -231,7 +237,7 @@ const RentSpot = () => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleDialogClose}>Cancel</Button>
-          <Button onClick={handleRentButtonClick}>Pay&Go</Button>
+          <Button onClick={handlePreferencesClick}>Check for spots</Button>
         </DialogActions>
       </Dialog>
     </div>

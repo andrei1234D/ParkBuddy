@@ -37,6 +37,8 @@ const partnerSchema = new mongoose.Schema({
       longitude: Number,
       address: String,
       status: String,
+      startDate: Date,
+      endDate: Date,
       availability: [
         {
           day: Date,
@@ -279,49 +281,67 @@ app.get('/Get-Spots', async (req, res) => {
   try {
     const availableSpots = await checkAvailabilityAndSetStatus();
     res.json(availableSpots);
-    console.log(availableSpots);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
-app.post('/Rent-A-Spot', async (req, res) => {
+app.post('/Preferences-Spots', async (req, res) => {
   const { username, selectedDate, startRentTime, endRentTime } = req.body;
   try {
     const parkingSpots = await ParkingSpot.find();
 
-    // Filter available spots
-    const availableSpots = parkingSpots.filter((parkingSpot) => {
-      // Check if the spot is available on the selected date
-      const availabilityOnSelectedDate = parkingSpot.availability.find(
-        (avail) => avail.day === selectedDate
-      );
-      if (!availabilityOnSelectedDate) return false; // Spot not available on the selected date
+    const availableSpots = parkingSpots.filter((spot) => {
+      // Check if the spot has availability for the selected date
+      const availabilityForDate = spot.availability.some((avail) => {
+        const availDate = new Date(avail.day);
+        const selectedDateTime = new Date(selectedDate);
 
-      // Convert day limits to comparable format
-      const dayStartTime = new Date(
-        `${selectedDate}T${availabilityOnSelectedDate.startTime}`
-      );
-      const dayEndTime = new Date(
-        `${selectedDate}T${availabilityOnSelectedDate.endTime}`
-      );
-
-      // Convert startRentTime and endRentTime to comparable format
-      const selectedStartTime = new Date(`${selectedDate}T${startRentTime}`);
-      const selectedEndTime = new Date(`${selectedDate}T${endRentTime}`);
-
-      // Check if user-selected timeframe is within day limits
-      if (selectedStartTime < dayStartTime || selectedEndTime > dayEndTime)
-        return false;
-
-      // Check if any of the available time slots overlap with the user-selected timeframe
-      return !availabilityOnSelectedDate.spotTimes.some((timeSlot) => {
-        const startTime = new Date(`${selectedDate}T${timeSlot.startDayTime}`);
-        const endTime = new Date(`${selectedDate}T${timeSlot.endDayTime}`);
-        return (
-          (selectedStartTime <= endTime && selectedEndTime >= startTime) || // Overlap condition
-          (selectedStartTime >= startTime && selectedEndTime <= endTime)
-        ); // Contained condition
+        // Check if the selected date matches any day in the availability array
+        return selectedDateTime.toDateString() === availDate.toDateString();
       });
+
+      if (availabilityForDate) {
+        // Check if the rent time overlaps with any spot time intervals
+        const overlaps = spot.availability.some((avail) => {
+          return avail.spotTimes.some((spotTime) => {
+            const spotStartTime = new Date(
+              `${selectedDate} ${spotTime.startDayTime}`
+            );
+            const spotEndTime = new Date(
+              `${selectedDate} ${spotTime.endDayTime}`
+            );
+            const rentStartTime = new Date(`${selectedDate} ${startRentTime}`);
+            const rentEndTime = new Date(`${selectedDate} ${endRentTime}`);
+
+            // Check for overlap
+            const timeOverlap =
+              rentStartTime < spotEndTime && rentEndTime > spotStartTime;
+
+            // Check for overlap within the day for each time interval
+            const withinDayOverlap = avail.spotTimes.some((otherSpotTime) => {
+              const otherSpotStartTime = new Date(
+                `${selectedDate} ${otherSpotTime.startDayTime}`
+              );
+              const otherSpotEndTime = new Date(
+                `${selectedDate} ${otherSpotTime.endDayTime}`
+              );
+
+              return (
+                (rentStartTime <= otherSpotEndTime &&
+                  rentEndTime >= otherSpotStartTime) ||
+                (rentStartTime >= otherSpotStartTime &&
+                  rentEndTime <= otherSpotEndTime)
+              );
+            });
+
+            return timeOverlap && withinDayOverlap;
+          });
+        });
+
+        return overlaps;
+      }
+
+      return false;
     });
 
     res.json(availableSpots);
@@ -329,7 +349,6 @@ app.post('/Rent-A-Spot', async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
-
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
