@@ -32,6 +32,7 @@ const RentSpot = () => {
   const [loading, setLoading] = useState(true);
   const [selectedSpot, setSelectedSpot] = useState(null);
   const [openDialog, setOpenDialog] = useState(true);
+  const [openDialogConfirmation, setOpenDialogConfirmation] = useState(false);
   const [selectedStartDate, setSelectedStartDate] = useState(new Date());
   const [startTime, setStartTime] = useState(null);
   const [endTime, setEndTime] = useState(null);
@@ -89,12 +90,20 @@ const RentSpot = () => {
   const handleDialogClose = () => {
     setOpenDialog(false);
   };
-  const handleDialogOpen = () => {
-    setOpenDialog(true);
+  const handleDialogCloseConfirmation = () => {
+    setOpenDialogConfirmation(false);
+  };
+  const handleDialogConfirmationOpen = () => {
+    setOpenDialogConfirmation(true);
   };
   const handleInfoWindowClose = () => {
     setSelectedSpot(null);
     setInfoWindowOpen(false);
+  };
+  const handleClickRedirect = () => {
+    const { latitude, longitude } = selectedSpot;
+    const url = `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`;
+    window.location.href = url;
   };
 
   const handlePreferencesClick = async () => {
@@ -196,7 +205,7 @@ const RentSpot = () => {
                 <p>Price: the most you are willing to pay.</p>
                 <p>Owner: {selectedSpot.username}</p>
                 <p>Phone Number: 0721985898</p>
-                <Button onClick={handleDialogOpen}>Rent Now</Button>
+                <Button onClick={handleDialogConfirmationOpen}>Rent Now</Button>
               </div>
             </InfoWindow>
           )}
@@ -240,6 +249,39 @@ const RentSpot = () => {
           <Button onClick={handlePreferencesClick}>Check for spots</Button>
         </DialogActions>
       </Dialog>
+      {selectedSpot && (
+        <Dialog
+          open={openDialogConfirmation}
+          onClose={handleDialogCloseConfirmation}
+        >
+          <DialogTitle>You Are Almost There !</DialogTitle>
+          <DialogContent>
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <h3>
+                Please verify that the details of your order are <b>correct</b>.
+                We will not issue a refund if you do not use the parking spot
+                during the payed period.{' '}
+              </h3>
+              <p>
+                You will rent the {selectedSpot.address} spot on
+                {selectedStartDate.toString} from {startTime} to {endTime} for
+                0.10RON/minute
+              </p>
+            </div>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleDialogCloseConfirmation}>Cancel</Button>
+            <Button onClick={handleClickRedirect}>Pay & see directions</Button>
+          </DialogActions>
+        </Dialog>
+      )}
     </div>
   );
 };

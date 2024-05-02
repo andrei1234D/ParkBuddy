@@ -265,10 +265,69 @@ app.post('/Lend-A-Spot', async (req, res) => {
 });
 
 app.post('/Your-Spots', async (req, res) => {
-  //add new parking spot to the partner
+  // Add new parking spot to the partner
   const { username } = req.body;
   try {
     const partner = await Partner.findOne({ username });
+
+    // Check each parking spot
+    partner.parkingSpots.forEach((spot) => {
+      const currentTime = new Date();
+      const lastAvailability = spot.availability[spot.availability.length - 1];
+      const endDate = new Date(spot.endDate);
+      const lastEndTime = new Date(
+        `${spot.endDate.toDateString()} ${lastAvailability.endTime}`
+      );
+
+      // Check if current date is after endDate and if current time is after last availability endTime
+      if (currentTime > endDate && currentTime > lastEndTime) {
+        spot.status = 'unavailable';
+      } else {
+        const firstAvailability = spot.availability[0];
+        const startDate = new Date(spot.startDate);
+        const firstStartTime = new Date(
+          `${spot.startDate.toDateString()} ${firstAvailability.startTime}`
+        );
+        const firstEndTime = new Date(
+          `${spot.endDate.toDateString()} ${firstAvailability.endTime}`
+        );
+
+        // Check if current time is between first availability startTime and endTime
+        if (currentTime >= firstStartTime && currentTime <= firstEndTime) {
+          if (
+            !spot.availability.spotTimes ||
+            spot.availability.spotTimes.length === 0
+          ) {
+            spot.status = 'free'; // Set status to 'free' if spotTimes array is undefined or empty
+          } else {
+            const spotTime = spot.availability.spotTimes.find((time) => {
+              const startDateTime = new Date(
+                `${spot.startDate.toDateString()} ${time.startDayTime}`
+              );
+              return currentTime >= startDateTime;
+            });
+
+            if (spotTime) {
+              const endDateTime = new Date(
+                `${spot.endDate.toDateString()} ${spotTime.endDayTime}`
+              );
+              if (currentTime < endDateTime) {
+                spot.status = 'reserved';
+              } else {
+                spot.status = 'occupied';
+              }
+            } else {
+              spot.status = 'free'; // Set status to 'free' if no spot time matches the current time
+            }
+          }
+        } else {
+          spot.status = 'unavailable';
+        }
+      }
+    });
+
+    // Save the updated partner document
+    await partner.save();
 
     // Send back all parking spots of the partner
     res.status(200).json({ parkingSpots: partner.parkingSpots });
