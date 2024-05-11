@@ -8,12 +8,13 @@
   align-items: center;
   justify-content: center;
   border-style: solid;
-  border-color: rgb(4, 71, 18);
+  border-color: white;
   border-radius: 15%;
   margin-right: 10px;
   opacity: 1;
 
-  transition: box-shadow 0.3s ease-in-out, transform 0.4s ease-in-out; /* Add a smooth transition effect */
+  transition: box-shadow 0.3s ease-in-out, transform 0.4s ease-in-out,
+    border-color 0.4s ease-in-out; /* Add border-color to transition properties */
 }
 .settingsText {
   top: 0;
@@ -30,15 +31,16 @@
 
 .settings:hover,
 .settings:active {
-  box-shadow: 0 0 10px 5px #00ff00 inset;
-  transform: scale(0.9); /* Apply scale transformation on hover and click */
+  transform: scale(0.9);
+  border-color: rgb(4, 71, 18);
 }
-
-.settings:active {
-  transform: scale(0.7); /* Apply scale transformation specifically on click */
-  transition: transform 0.02s ease-in-out;
+.settings:hover .settingsIcon,
+.settings:active .settingsIcon {
+  transition: color 0.15s ease-in-out;
+  color: rgb(4, 71, 18); /* Change color of .settingsIcon */
 }
 .settingsIcon {
+  transition: transform 0.4s ease-in-out;
   color: white;
   width: 25px;
   height: 25px;
@@ -52,7 +54,6 @@
 }
 .closeIcon:hover,
 .closeIcon:active {
-  box-shadow: 0 0 10px 5px #00ff00 inset;
   opacity: 1.2;
   transform: scale(0.9); /* Apply scale transformation on hover and click */
 }

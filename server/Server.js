@@ -311,7 +311,7 @@ app.post('/Your-Spots', async (req, res) => {
               const endDateTime = new Date(
                 `${spot.endDate.toDateString()} ${spotTime.endDayTime}`
               );
-              if (currentTime < endDateTime) {
+              if (currentTime <= endDateTime) {
                 spot.status = 'reserved';
               } else {
                 spot.status = 'occupied';

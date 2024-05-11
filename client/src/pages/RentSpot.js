@@ -15,6 +15,7 @@ import Button from '@mui/material/Button';
 import LoadingSpinner from '../spinner/LoadingSpinner.js';
 import Autocomplete from 'react-google-autocomplete';
 import mapStyles from '../styleForMap/mapStyle.js';
+
 import '../style/RentASpot.css';
 const mapContainerStyle = {
   width: '100%',

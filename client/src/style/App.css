@@ -11,6 +11,12 @@
   background-image: var(--btn_background_gradient);
   background-origin: border-box;
   background-clip: padding-box, border-box;
+  border-width: 2px;
+}
+.btn-gradient-border:hover {
+  color: rgb(15, 130, 42);
+  border-color: rgb(15, 130, 42);
+  transform: scale(0.9);
 }
 ::-webkit-scrollbar {
   display: none;
@@ -21,8 +27,7 @@
   --UIColor: black;
   --UIButtonColor: #040720;
   --UIText: white;
-  --btn_background_gradient: linear-gradient(white, white),
-    radial-gradient(circle at left top, rgb(1, 110, 218), rgb(217, 0, 192));
+  --btn_background_gradient: linear-gradient(white, white);
   --btn_text: black;
   --text-shadow: 0 0 80px rgb(192 219 255 / 100%),
     0 0 32px rgb(65 120 255 / 100%);
@@ -33,8 +38,7 @@
   --UIColor: black;
   --UIButtonColor: #040720;
   --UIText: white;
-  --btn_background_gradient: linear-gradient(white, white),
-    radial-gradient(circle at left top, rgb(1, 110, 218), rgb(217, 0, 192));
+  --btn_background_gradient: linear-gradient(white, white);
   --btn_text: black;
   --text-shadow: 0 0 80px rgb(192 219 255 / 100%),
     0 0 32px rgb(65 120 255 / 100%);
@@ -45,8 +49,7 @@
   --UIColor: white;
   --UIButtonColor: #393f44;
   --UIText: black;
-  --btn_background_gradient: linear-gradient(black, black),
-    radial-gradient(circle at left top, rgb(1, 110, 218), rgb(217, 0, 192));
+  --btn_background_gradient: linear-gradient(black, black);
   --btn_text: white;
   --text-shadow: 0 0 80px rgb(27, 162, 43), 0 0 32px rgba(1, 73, 14, 0.4);
 }

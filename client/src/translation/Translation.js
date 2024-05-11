@@ -45,6 +45,8 @@ const translations = {
     latitude: 'Latitude',
     status: 'Status',
     nr: 'NR',
+    catchy1: 'Say goodbye to the chase',
+    catchy2: 'Park it now with grace',
   },
 
   ro: {
@@ -92,6 +94,8 @@ const translations = {
     latitude: 'Latitudine',
     status: 'Statut',
     nr: 'NR',
+    catchy1: 'Adio căutări fără rost,',
+    catchy2: 'Bine ai venit din nou la post',
   },
 
   pl: {
