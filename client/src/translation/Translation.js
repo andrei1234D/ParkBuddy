@@ -47,6 +47,12 @@ const translations = {
     nr: 'NR',
     catchy1: 'Say goodbye to the chase',
     catchy2: 'Park it now with grace',
+    //to romanian
+    Frequently_asked_questions: 'Frequently asked questions',
+    Delete_account: 'Delete account',
+    Privacy_policy: 'Privacy policy',
+    Cookie_policy: 'Cookie policy',
+    Terms_and_Conditions: 'Terms and Conditions',
   },
 
   ro: {

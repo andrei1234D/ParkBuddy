@@ -1,3 +1,24 @@
+.catchy1 {
+  opacity: 0;
+  animation: slideFromTop 0.5s ease-in-out 0.5s forwards;
+}
+
+.catchy2 {
+  color: rgb(15, 130, 42);
+  opacity: 0;
+  animation: slideFromBottom 0.5s ease-in-out 0.7s forwards;
+}
+
+.loginBtn {
+  opacity: 0;
+  animation: slideFromLeft 0.8s ease-in-out 1.5s forwards;
+}
+
+.rentASpot {
+  opacity: 0;
+  animation: slideFromRight 0.8s ease-in-out 1.5s forwards;
+}
+
 .title {
   margin-top: 3%;
   text-align: center;
@@ -77,16 +98,16 @@
   font-size: 7rem;
   text-align: center;
   color: rgb(15, 130, 42);
-  margin-bottom: 1%;
 }
-.appStore {
-  height: 750px;
+.informationContainer {
+  min-height: 850px;
   background-color: var(--UIColor);
   margin-left: 10%;
   align-items: center;
   width: 80%;
   display: flex;
   flex-direction: column;
+  padding: 75px 0px 75px 0;
 }
 
 .cardContainer {
@@ -95,14 +116,13 @@
 
   align-items: center;
   width: 100%;
-  height: 100%;
+  height: 80%;
   justify-content: space-around;
 }
 .card {
   display: flex;
   flex-direction: column;
   align-items: center;
-
   width: 25%;
   height: 80%;
 }
@@ -111,10 +131,11 @@
 .bottomHalf {
   color: var(--UIText);
 }
+
 .middle {
   font-size: 1.5rem;
-  margin-top: 2rem;
-  margin-bottom: 1rem;
+  margin-top: 3rem;
+  margin-bottom: 1.75rem;
   font-weight: bold;
 }
 .imgContainer {
@@ -131,11 +152,11 @@
   width: 80%;
   line-height: 1.5em;
 }
-.footer {
+.footerBenefits {
   color: var(--UIText);
   text-align: center;
-  margin-top: 100px;
-  height: 175px;
+  margin-top: 200px;
+  height: 20%;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -151,7 +172,145 @@
 .clockIcon {
   color: rgb(15, 130, 42);
 }
+.downloadRatingContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding: 75px 50px 75px 50px;
+}
+.downloadRating {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  justify-content: center;
+  align-items: center;
+}
+.downloads {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  justify-content: center;
+  align-items: center;
+}
+.cardReviewContainer {
+  width: 100%;
+  min-height: 850px;
+  display: grid;
+  gap: 80px;
+  grid-template-columns: repeat(2, 1fr); /* Two columns */
+  justify-items: center; /* Center cards horizontally */
+  align-items: center; /* Center cards vertically */
+  justify-content: space-around; /* Distribute remaining space evenly between and around cards */
+  align-content: space-around; /* Distribute remaining space evenly between and around cards */
+}
+.cardReview {
+  width: 310px;
+  height: 550px;
+  color: var(--UIColor);
+  border-radius: 8px;
+  padding: 20px;
+}
+.imgReview {
+  max-width: 100%;
+}
+.hrReviews {
+  margin-top: 7%;
+  border-color: rgb(15, 130, 42);
+  box-shadow: 0 0px 20px 5px rgba(15, 130, 42, 0.7);
+  margin-bottom: 5%;
+}
+.textReviews {
+  color: var(--UIText);
+  flex-wrap: wrap; /* Allows the text to wrap onto multiple lines */
+  text-align: center; /* Centers the text horizontally */
+  font-size: 1.1rem;
+  width: 80%;
+  height: 40%;
+  margin-left: 10%;
+  line-height: 1.5em;
+}
+.rating {
+  height: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.stars {
+  font-size: 24px;
+}
+
+.star {
+  color: gold;
+}
+
+.rating-text {
+  color: var(--UIText);
+}
+
+.footer {
+  width: 100%;
+}
+.sponsors-section {
+  height: auto;
+  background-color: white;
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(7, 1fr); /* Two columns */
+}
+
+.additional-fields {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  background-color: var(--UIColor);
+  color: var(--UIText);
+
+  border-top: 2px solid rgb(15, 130, 42);
+  box-shadow: 0 -5px 15px rgba(15, 130, 42, 0.5);
+}
 /* Media query for resolutions smaller than 800 pixels */
+
+@keyframes slideFromTop {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideFromBottom {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideFromLeft {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideFromRight {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
 @media (max-width: 800px) {
   .options-container {
     flex-direction: column;

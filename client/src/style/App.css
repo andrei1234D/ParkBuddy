@@ -62,3 +62,30 @@ body {
     --body_background
   ); /* Set the overall background color */
 }
+
+.fadeAppear {
+  animation: fadeAppear linear;
+  animation-timeline: view();
+}
+
+@keyframes fadeAppear {
+  from {
+    opacity: 0;
+    transform: translateY(75px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+    transform: translate();
+    transform: translateY(0);
+  }
+  100% {
+    transform: translate();
+  }
+}
