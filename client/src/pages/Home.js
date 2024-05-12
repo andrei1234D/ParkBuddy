@@ -22,12 +22,29 @@ function Home() {
           <p className="catchy2">{translate('catchy2')}</p>
           <div className="options-container">
             <Link to="/login" className="link">
-              <div className="option-box btn-gradient-border loginBtn">
+              <div
+                className="option-box btn-gradient-border loginBtn"
+                style={{
+                  backgroundColor: 'transparent',
+                  fontSize: '3rem',
+                  boxShadow: 'none',
+                  fontWeight: 'bold',
+                }}
+              >
                 {translate('login')}
               </div>
             </Link>
+            <hr className="vertical-hr"></hr>
             <Link to="/Rent-A-Spot" className="link">
-              <div className="option-box btn-gradient-border rentASpot">
+              <div
+                className="option-box btn-gradient-border rentASpot"
+                style={{
+                  backgroundColor: 'transparent',
+                  fontSize: '3rem',
+                  fontWeight: 'bold',
+                  boxShadow: 'none',
+                }}
+              >
                 {translate('rentASpot')}
               </div>
             </Link>

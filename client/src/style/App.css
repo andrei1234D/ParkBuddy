@@ -8,7 +8,7 @@
 }
 .btn-gradient-border {
   border: 2px double transparent;
-  background-image: var(--btn_background_gradient);
+  background-color: var(--btn_background_gradient);
   background-origin: border-box;
   background-clip: padding-box, border-box;
   border-width: 2px;
@@ -27,7 +27,7 @@
   --UIColor: black;
   --UIButtonColor: #040720;
   --UIText: white;
-  --btn_background_gradient: linear-gradient(white, white);
+  --btn_background_gradient: white;
   --btn_text: black;
   --text-shadow: 0 0 80px rgb(192 219 255 / 100%),
     0 0 32px rgb(65 120 255 / 100%);
@@ -38,7 +38,7 @@
   --UIColor: black;
   --UIButtonColor: #040720;
   --UIText: white;
-  --btn_background_gradient: linear-gradient(white, white);
+  --btn_background_gradient: white;
   --btn_text: black;
   --text-shadow: 0 0 80px rgb(192 219 255 / 100%),
     0 0 32px rgb(65 120 255 / 100%);
@@ -49,7 +49,7 @@
   --UIColor: white;
   --UIButtonColor: #393f44;
   --UIText: black;
-  --btn_background_gradient: linear-gradient(black, black);
+  --btn_background_gradient: black;
   --btn_text: white;
   --text-shadow: 0 0 80px rgb(27, 162, 43), 0 0 32px rgba(1, 73, 14, 0.4);
 }

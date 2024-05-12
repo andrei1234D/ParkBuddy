@@ -60,6 +60,7 @@ function FooterHome() {
         <h3>{translate('Privacy_policy')}</h3>
         <h3>{translate('Cookie_policy')}</h3>
         <h3>{translate('Terms_and_Conditions')}</h3>
+        <h3>{translate('Rent_A_Spot')}</h3>
       </div>
     </div>
   );

@@ -29,6 +29,15 @@
   letter-spacing: 10px;
   margin-bottom: 15vh; /* Added margin-bottom for distance from the options container */
 }
+.vertical-hr {
+  border-color: rgb(15, 130, 42);
+  box-shadow: 0 0px 20px 5px rgba(15, 130, 42, 0.7);
+  height: 100px; /* Adjust height as needed */
+  margin: 0 10px; /* Adjust margin as needed */
+  margin: 0 25px 0 25px;
+  opacity: 0;
+  animation: appearStatic 0.8s ease-in-out 1.5s forwards;
+}
 .emptySpace {
   width: 100%;
   height: 300px;
@@ -307,6 +316,14 @@
   }
   to {
     transform: translateX(0);
+    opacity: 1;
+  }
+}
+@keyframes appearStatic {
+  from {
+    opacity: 0;
+  }
+  to {
     opacity: 1;
   }
 }

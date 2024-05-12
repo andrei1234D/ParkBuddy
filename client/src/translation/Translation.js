@@ -4,7 +4,7 @@ const translations = {
     logout: 'Logout',
     username: 'Username',
     password: 'Password',
-    rentASpot: 'Rent A Spot',
+    rentASpot: 'Rent Spot',
     settings: 'Settings',
     welcome: 'WELCOME',
     registerText: "You don't have an account?",
@@ -53,6 +53,7 @@ const translations = {
     Privacy_policy: 'Privacy policy',
     Cookie_policy: 'Cookie policy',
     Terms_and_Conditions: 'Terms and Conditions',
+    Rent_A_Spot: 'Rent A Spot',
   },
 
   ro: {
