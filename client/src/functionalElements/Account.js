@@ -87,7 +87,7 @@ const Account = () => {
       <MdOutlineManageAccounts className="settingsIcon" onClick={handleClick} />
       <Popper
         ref={popperRef}
-        style={{ zIndex: 100 }}
+        style={{ zIndex: 102 }}
         id="spring-popper"
         open={open}
         anchorEl={anchorEl}

@@ -15,7 +15,6 @@
 }
 .btn-gradient-border:hover {
   color: rgb(15, 130, 42);
-  border-color: rgb(15, 130, 42);
   transform: scale(0.9);
 }
 ::-webkit-scrollbar {

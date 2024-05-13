@@ -64,7 +64,7 @@ const Settings = () => {
     <Box className="settings">
       <IoSettings className="settingsIcon" onClick={handleClick} />
       <Popper
-        style={{ zIndex: 100 }}
+        style={{ zIndex: 102 }}
         id={id}
         open={open}
         anchorEl={anchorEl}

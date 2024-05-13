@@ -13,9 +13,10 @@ const ParticlesComp = () => {
 
   const particlesLoaded = useCallback((container) => {}, []);
   const { moveParticles } = useContext(GlobalStatesContext);
+  let particlesBackground = '#040720';
   const particleOptions = {
     background: {
-      color: { value: '#040720' },
+      color: { value: { particlesBackground } },
     },
     fpsLimit: 120,
     interactivity: {
@@ -53,7 +54,7 @@ const ParticlesComp = () => {
         },
       },
       color: {
-        value: '#8b4513',
+        value: '#3fff7a',
         opacity: 1,
       },
       links: {
@@ -89,7 +90,7 @@ const ParticlesComp = () => {
         type: ['circle', 'polygon'],
       },
       size: {
-        value: { min: 1, max: 5 },
+        value: { min: 2, max: 4 },
       },
     },
 
