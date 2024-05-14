@@ -59,7 +59,9 @@
   border-radius: 5px;
 }
 .underlineAnimation {
-  position: relative; /* Add this line */
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
 }
 .underlineAnimation::after {
   content: '';

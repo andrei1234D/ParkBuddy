@@ -19,6 +19,7 @@ export default function MenuItems() {
   ];
 
   const menuItems = [
+    { label: 'Home', link: '/your-spots' },
     { label: 'Get the app', link: '/get-the-app' },
     { label: 'Rent A Spot', link: '/rent-a-spot' },
     { label: 'Lend A Spot', link: '/lend-a-spot' },
