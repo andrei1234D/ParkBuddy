@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import Settings from '../functionalElements/Settings';
-import Account from '../functionalElements/Account';
 
+import MenuIcon from '../functionalElements/designs/MenuIcon';
 import '../style/Nav.css';
 
 import parkBuddy from '../images/parkBuddy.png';
 
 export default function Nav() {
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   useEffect(() => {
     let lastScrollTop = 0;
 
@@ -35,10 +33,6 @@ export default function Nav() {
     };
   }, []); // Empty dependency array ensures that this effect runs only once, like componentDidMount
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
-
   return (
     <div>
       <div
@@ -54,13 +48,7 @@ export default function Nav() {
             ></img>
           </div>
         </Link>
-        <div className="menuContainer" onClick={toggleMenu}>
-          {isMenuOpen ? 'Close' : 'Menu'}
-          <div className={`menuIcon ${isMenuOpen ? 'open' : ''}`}>
-            <div className="line-horizontal"></div>
-            <div className="line-horizontal"></div>
-          </div>
-        </div>
+        <MenuIcon />
       </div>
     </div>
   );

@@ -1,0 +1,173 @@
+.navMenu {
+  position: absolute;
+  margin-top: 40px;
+  min-height: calc(100vh + 2px);
+  width: 500px;
+  background: linear-gradient(30deg, #0b3e27, #197149);
+  z-index: 100;
+  animation-duration: 0.7s;
+  animation-fill-mode: forwards;
+}
+.navMenu.open {
+  animation-name: slideIn;
+}
+.navMenu:not(.open) {
+  animation-name: slideOut;
+}
+.menuContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.menuIcon {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 40px;
+  height: 10px;
+}
+
+.line-horizontal {
+  width: 18px;
+  height: 3px;
+  background-color: white;
+  margin: 0 3px;
+  transition: transform 0.5s; /* Ensure a smooth transition when removing hover */
+}
+
+/* Hover state when menu is not open */
+.menuContainer:not(.open):hover .line-horizontal:nth-child(1) {
+  animation: spin45deg1 0.5s forwards;
+}
+
+.menuContainer:not(.open):hover .line-horizontal:nth-child(2) {
+  animation: spin45deg2 0.5s forwards;
+}
+
+/* Open state animations */
+.menuIcon.open .line-horizontal:nth-child(1) {
+  animation: rotateRightFromInitial 1s forwards;
+}
+
+.menuIcon.open .line-horizontal:nth-child(2) {
+  animation: rotateLeftFromInitial 1s forwards;
+}
+
+/* Transition back to initial state when not open */
+.menuIcon:not(.open) .line-horizontal:nth-child(1) {
+  animation: rotateRightBack 1s forwards;
+}
+
+.menuIcon:not(.open) .line-horizontal:nth-child(2) {
+  animation: rotateLeftBack 1s forwards;
+}
+
+/*Menu box keyframes*/
+@keyframes slideIn {
+  from {
+    right: -500px; /* Start position */
+  }
+  to {
+    right: 0px; /* End position */
+  }
+}
+@keyframes slideOut {
+  from {
+    right: 0px; /* Start position */
+  }
+  to {
+    right: -500px; /* End position */
+  }
+}
+
+/*Menu Icon keyframes*/
+
+@keyframes rotateRightBack {
+  0% {
+    transform: rotate(45deg) translateY(-1px) translateX(-2px);
+  }
+  50% {
+    transform: rotate(0) translateY(5px) translateX(0);
+  }
+  100% {
+    transform: rotate(0) translateY(0) translateX(0);
+  }
+}
+
+@keyframes rotateLeftBack {
+  0% {
+    transform: rotate(45deg) translateY(2px) translateX(-2px);
+  }
+  50% {
+    transform: rotate(0) translateY(-5px) translateX(0);
+  }
+  100% {
+    transform: rotate(0) translateY(0) translateX(0);
+  }
+}
+
+@keyframes spin45deg1 {
+  0% {
+    transform: rotate(0deg) translateY(0) translateX(0);
+  }
+  100% {
+    transform: rotate(45deg) translateY(-1px) translateX(-2px);
+  }
+}
+
+@keyframes spin45deg2 {
+  0% {
+    transform: rotate(0deg) translateY(0px) translateX(0px);
+  }
+  100% {
+    transform: rotate(45deg) translateY(2px) translateX(-2px);
+  }
+}
+
+@keyframes spinBack45deg1 {
+  0% {
+    transform: rotate(45deg) translateY(-1px) translateX(-2px);
+  }
+  100% {
+    transform: rotate(0deg) translateY(0) translateX(0);
+  }
+}
+
+@keyframes spinBack45deg2 {
+  0% {
+    transform: rotate(45deg) translateY(2px) translateX(-2px);
+  }
+  100% {
+    transform: rotate(0deg) translateY(0px) translateX(0px);
+  }
+}
+
+@keyframes rotateRightFromInitial {
+  0% {
+    transform: rotate(45deg) translateY(-1px) translateX(-2px);
+  }
+  50% {
+    transform: rotate(0) translateY(5px) translateX(0);
+  }
+  100% {
+    transform: rotate(0) translateY(0) translateX(0);
+  }
+}
+
+@keyframes rotateLeftFromInitial {
+  0% {
+    transform: rotate(45deg) translateY(2px) translateX(-2px);
+  }
+  50% {
+    transform: rotate(0) translateY(-5px) translateX(0);
+  }
+  100% {
+    transform: rotate(0) translateY(0) translateX(0);
+  }
+}

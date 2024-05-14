@@ -1,0 +1,77 @@
+.menuItemsContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.menuSettingsText {
+  margin-top: 40px;
+  font-weight: 800;
+  font-size: 3rem;
+}
+.menuSettings {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+  margin-top: 60px;
+}
+.hrMenuSettings {
+  width: 80%;
+  margin-top: 7%;
+  border-color: rgb(15, 130, 42);
+  box-shadow: 0 0px 20px 2px rgba(15, 130, 42, 0.7);
+  margin-bottom: 5%;
+}
+.languages {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.flagContainer {
+  width: 100px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.flagImage {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+}
+.additionalMenuItems {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.menuItemLink {
+  text-decoration: none;
+  color: black;
+  font-size: 1.5rem;
+  padding: 10px;
+  border-radius: 5px;
+}
+.underlineAnimation {
+  position: relative; /* Add this line */
+}
+.underlineAnimation::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 2px;
+  background-color: black;
+  transition: width 0.3s ease;
+}
+
+.underlineAnimation:hover::after {
+  width: 100%;
+}

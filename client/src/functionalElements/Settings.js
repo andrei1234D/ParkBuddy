@@ -7,8 +7,7 @@ import Popper from '@mui/material/Popper';
 import { IoSettings } from 'react-icons/io5';
 import { AiOutlineClose } from 'react-icons/ai'; // Import close icon
 import DarkMode from '../DarkMode/DarkMode';
-import LanguageContext from '../context/GlobalStatesContext';
-import translations from '../translation/Translation';
+import GlobalStatesContext from '../context/GlobalStatesContext';
 import { useSpring, animated } from '@react-spring/web';
 import '../style/Settings.css';
 import ParticleMovement from '../particles/ParticleControlButton';
@@ -43,8 +42,8 @@ const Settings = () => {
     { value: 'pl', label: 'Polski' },
   ];
 
-  const { language, toggleLanguage } = useContext(LanguageContext);
-  const translate = (key) => translations[language][key];
+  const { language, toggleLanguage, translate } =
+    useContext(GlobalStatesContext);
 
   const [open, setOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
