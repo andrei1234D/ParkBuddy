@@ -47,6 +47,7 @@ const translations = {
     nr: 'NR',
     catchy1: 'Say goodbye to the chase',
     catchy2: 'Park it now with grace',
+    toPayment: 'To Payment Method',
     //to romanian
     Frequently_asked_questions: 'Frequently asked questions',
     Delete_account: 'Delete account',
@@ -103,6 +104,7 @@ const translations = {
     nr: 'NR',
     catchy1: 'Adio căutări fără rost,',
     catchy2: 'Bine ai venit din nou la post',
+    toPayment: 'Metoda de Plata',
   },
 
   pl: {

@@ -3,6 +3,7 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  height: 650px;
 }
 .menuSettingsText {
   margin-top: 40px;
@@ -18,10 +19,10 @@
 }
 .hrMenuSettings {
   width: 80%;
-  margin-top: 7%;
+  margin-top: 6%;
   border-color: rgb(15, 130, 42);
   box-shadow: 0 0px 20px 2px rgba(15, 130, 42, 0.7);
-  margin-bottom: 5%;
+  margin-bottom: 4%;
 }
 .languages {
   display: flex;
@@ -45,10 +46,23 @@
   object-fit: cover;
 }
 .additionalMenuItems {
-  margin-top: 20px;
+  height: 400px;
   display: flex;
   flex-direction: column;
   gap: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.quickLinks {
+  width: 100%;
+  height: 300px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  text-align: justify;
+  margin-top: 40px;
+  margin-bottom: 10px;
 }
 
 .menuItemLink {
@@ -76,4 +90,13 @@
 
 .underlineAnimation:hover::after {
   width: 100%;
+}
+.scroll-indicator {
+  color: white;
+}
+.downArrow {
+  text-align: center;
+}
+.upArrow {
+  text-align: center;
 }

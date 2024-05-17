@@ -1,12 +1,14 @@
 .navMenu {
   position: absolute;
   margin-top: 40px;
-  min-height: calc(100vh + 2px);
+  min-height: 1000px;
   width: 500px;
   background: linear-gradient(30deg, #0b3e27, #197149);
   z-index: 100;
   animation-duration: 0.7s;
   animation-fill-mode: forwards;
+  display: flex;
+  flex-direction: column;
 }
 .navMenu.open {
   animation-name: slideIn;

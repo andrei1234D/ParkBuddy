@@ -21,13 +21,13 @@
   transform: scale(0.9);
 }
 .emptyHeader {
-  height: 63px;
+  height: 64px;
   width: 100vw;
 }
 .header {
   position: fixed;
   top: 0;
-  height: 63px;
+  height: 64px;
   width: 100%;
   display: flex;
   align-items: center;
@@ -37,7 +37,7 @@
 }
 
 .hide {
-  top: -63px; /* Adjust this value based on your header height */
+  top: -64px; /* Adjust this value based on your header height */
 }
 
 .show {
@@ -45,22 +45,4 @@
 }
 .header > * {
   margin-bottom: 3px;
-}
-/* Nav KeyFrames*/
-@keyframes hideHeader {
-  from {
-    transform: translateY(0%);
-  }
-  to {
-    transform: translateY(-100%);
-  }
-}
-
-@keyframes showHeader {
-  from {
-    transform: translateY(-100%);
-  }
-  to {
-    transform: translateY(0%);
-  }
 }

@@ -50,7 +50,7 @@
   --UIText: black;
   --btn_background_gradient: black;
   --btn_text: white;
-  --text-shadow: 0 0 80px rgb(27, 162, 43), 0 0 32px rgba(1, 73, 14, 0.4);
+  --text-shadow: 0 0 80px rgb(0, 0, 0), 0 0 32px rgb(0, 0, 0);
 }
 body {
   margin: 0;

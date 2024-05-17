@@ -1,11 +1,12 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import '../../style/MenuIcon.css';
 import MenuItems from './MenuItems';
-
+import GlobalStatesContext from '../../context/GlobalStatesContext';
 export default function MenuIcon() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef(null);
   const containerRef = useRef(null);
+  const { toggleLanguage, translate, isMenuOpen, toggleMenu } =
+    useContext(GlobalStatesContext);
 
   const handleClickOutside = (event) => {
     if (
@@ -14,7 +15,7 @@ export default function MenuIcon() {
       containerRef.current &&
       !containerRef.current.contains(event.target)
     ) {
-      setIsMenuOpen(false);
+      toggleMenu();
     }
   };
 
@@ -28,10 +29,6 @@ export default function MenuIcon() {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [isMenuOpen]);
-
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
 
   return (
     <div>

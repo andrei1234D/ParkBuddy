@@ -1,16 +1,18 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import Settings from '../../functionalElements/Settings';
-import Account from '../../functionalElements/Account';
+import SettingsIcon from '../SettingsIcon';
+import AccountIcon from '../AccountIcon';
 import RomanianFlag from '../../images/flags/RomanianFlag.png';
 import EnglishFlag from '../../images/flags/UsaFlag.png';
 import PolishFlag from '../../images/flags/PolishFlag.png';
+import { RiScrollToBottomLine } from 'react-icons/ri';
 
 import GlobalStatesContext from '../../context/GlobalStatesContext';
 import '../../style/MenuItems.css';
 
 export default function MenuItems() {
-  const { toggleLanguage, translate } = useContext(GlobalStatesContext);
+  const { toggleLanguage, translate, toggleMenu } =
+    useContext(GlobalStatesContext);
 
   const languageOptions = [
     { value: 'en', label: 'English', flag: EnglishFlag },
@@ -25,6 +27,7 @@ export default function MenuItems() {
     { label: 'Lend A Spot', link: '/lend-a-spot' },
     { label: 'Login', link: '/login' },
     { label: 'Your Spots', link: '/your-spots' },
+    { label: 'Your Spots', link: '/your-spots' },
   ];
 
   return (
@@ -32,8 +35,8 @@ export default function MenuItems() {
       <div className="menuItemsContainer">
         <div className="menuSettingsText">Settings</div>
         <div className="menuSettings">
-          <Settings />
-          <Account />
+          <SettingsIcon />
+          <AccountIcon />
         </div>
         <hr className="hrMenuSettings" />
         <div className="languages">
@@ -48,13 +51,32 @@ export default function MenuItems() {
             </div>
           ))}
         </div>
-        <hr className="hrMenuSettings" />
-        <div className="additionalMenuItems">
-          {menuItems.map((item) => (
-            <Link key={item.label} to={item.link} className="menuItemLink">
-              <div className="underlineAnimation">{item.label}</div>
-            </Link>
-          ))}
+        <hr className="hrMenuSettings" style={{ marginBottom: '0px' }} />
+        <div className="quickLinks">
+          <div className="scroll-indicator downArrow">
+            <RiScrollToBottomLine style={{ height: '50px', width: '50px' }} />
+          </div>
+          <div className="additionalMenuItems">
+            {menuItems.map((item) => (
+              <Link
+                key={item.label}
+                to={item.link}
+                className="menuItemLink"
+                onClick={toggleMenu}
+              >
+                <div className="underlineAnimation">{item.label}</div>
+              </Link>
+            ))}
+          </div>
+          <div className="scroll-indicator upArrow">
+            <RiScrollToBottomLine
+              style={{
+                height: '50px',
+                width: '50px',
+                transform: 'rotate(180deg)',
+              }}
+            />
+          </div>
         </div>
       </div>
     </div>

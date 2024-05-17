@@ -57,6 +57,11 @@ export const GlobalStatesContextProvider = ({ children }) => {
     setIsLoggedIn(false);
   };
 
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
   return (
     <GlobalStatesContext.Provider
       value={{
@@ -72,6 +77,8 @@ export const GlobalStatesContextProvider = ({ children }) => {
         toggleLogin,
         isLoggedIn,
         toggleLogout,
+        isMenuOpen,
+        toggleMenu,
       }}
     >
       {children}

@@ -6,6 +6,8 @@ import LendSpot from './pages/LendSpot';
 import YourSpots from './pages/YourSpots';
 import RentSpot from './pages/RentSpot';
 import Particles from './particles/ParticlesComp';
+import AccountSettings from './pages/AccountSettings';
+import Settings from './pages/Settings';
 import { GlobalStatesContextProvider } from './context/GlobalStatesContext';
 import './style/App.css';
 // import ProtectedRoutes from '../ProtectedRoutes';
@@ -27,6 +29,11 @@ function App() {
             <Route path="/Lend-A-Spot" element={<LendSpot />} />
             <Route path="/Your-Parking-Spots" element={<YourSpots />} />
             <Route path="/Rent-A-Spot" element={<RentSpot />} />
+            <Route
+              path="/Account-Settings"
+              element={<AccountSettings />}
+            ></Route>
+            <Route path="/Settings" element={<Settings />}></Route>
             {/* <Route path="/search" element={<Search />} />
             <Route element={<ProtectedRoutes />}>
             <Route path="/product/:id" element={<ProductPage />} />
