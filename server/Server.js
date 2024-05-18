@@ -122,6 +122,12 @@ async function checkAvailabilityAndSetStatus() {
     throw error; // Just rethrow the caught error
   }
 }
+
+app.get('/get-google-maps-key', (req, res) => {
+  const apiKey = process.env.GOOGLE_MAPS_API_KEY;
+  res.json({ apiKey });
+});
+
 // Endpoint for user login
 app.post('/login', async (req, res) => {
   const { username, password, role } = req.body;

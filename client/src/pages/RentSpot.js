@@ -28,6 +28,7 @@ const center = {
 };
 
 const RentSpot = () => {
+  const [apiKey, setApiKey] = useState(null);
   const [map, setMap] = useState(null);
   const [spots, setSpots] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -46,29 +47,48 @@ const RentSpot = () => {
     lng: 26.102983712003493,
   });
   const navigate = useNavigate();
-
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchApiKey = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/Get-Spots');
-        setSpots(response.data);
-        setLoading(false);
+        const response = await axios.get(
+          'http://localhost:5000/get-google-maps-key'
+        );
+        setApiKey(response.data.apiKey);
       } catch (error) {
-        console.error('Error fetching spots:', error);
-        setLoading(false);
+        console.error('Error fetching API key:', error);
       }
     };
 
-    fetchData();
-    return () => {
-      const elementsToHide = document.querySelectorAll(
-        '.gm-style-iw-t, .gm-style-iw-tc, .gm-ui-hover-effect,.gm-style-iw-a,button[tabindex="0"]'
-      );
-      elementsToHide.forEach((element) => {
-        element.style.display = 'none';
-      });
-    };
+    fetchApiKey();
   }, []);
+
+  useEffect(() => {
+    if (apiKey) {
+      const fetchData = async () => {
+        try {
+          const response = await axios.get('http://localhost:5000/Get-Spots');
+          setSpots(response.data);
+          setLoading(false);
+        } catch (error) {
+          console.error('Error fetching spots:', error);
+          setLoading(false);
+        }
+      };
+
+      fetchData();
+    }
+  }, [apiKey]);
+
+  useEffect(() => {
+    if (apiKey) {
+      const script = document.createElement('script');
+      script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places&callback=initMap`;
+      script.async = true;
+      script.defer = true;
+      document.head.appendChild(script);
+    }
+  }, [apiKey]);
+
   console.log(spots);
   const handleMarkerClick = (spot) => {
     console.log('Marker Click Has Been Called Once');
@@ -146,11 +166,13 @@ const RentSpot = () => {
     }
     setSelectedLocation(place.geometry.location);
   };
+  if (loading) {
+    return <LoadingSpinner />;
+  }
+
   return (
     <div>
-      {loading ? (
-        <LoadingSpinner />
-      ) : (
+      {apiKey && (
         <GoogleMap
           mapContainerStyle={mapContainerStyle}
           zoom={11}
@@ -160,7 +182,7 @@ const RentSpot = () => {
         >
           {map && (
             <Autocomplete
-              apiKey="AIzaSyAbdrtMH-j0086-Itq7lKIhtdviyAPA4fQ"
+              apiKey={apiKey}
               onPlaceSelected={handlePlaceSelect}
               options={{
                 componentRestrictions: { country: 'ro' },
@@ -212,7 +234,6 @@ const RentSpot = () => {
           )}
         </GoogleMap>
       )}
-
       <Dialog open={openDialog} onClose={handleDialogClose} fullScreen={true}>
         <DialogTitle>{selectedSpot ? selectedSpot.name : ''}</DialogTitle>
         <DialogContent>
