@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 //language translate imports
 import { useContext } from 'react';
 import GlobalStatesContext from '../context/GlobalStatesContext';
-import bannerHome from '../images/bannerBackground.png';
+import carImg from '../images/bannerBackground.png';
 import AppStore from '../functionalElements/designs/AppStore';
 import Reviews from '../functionalElements/designs/Reviews';
 import FooterHome from '../functionalElements/designs/FooterHome';
@@ -16,10 +16,8 @@ function Home() {
   return (
     <div>
       <div className="container">
-        <img src={bannerHome} alt="Banner Home" className="banner-img" />
+        <img src={carImg} alt="Banner Home" className="banner-img" />
         <div className="content-box">
-          <p className="catchy1">{translate('catchy1')}</p>
-          <p className="catchy2">{translate('catchy2')}</p>
           <div className="options-container">
             <Link to="/login" className="link">
               <div

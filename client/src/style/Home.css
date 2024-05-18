@@ -1,22 +1,11 @@
-.catchy1 {
-  opacity: 0;
-  animation: slideFromTop 0.5s ease-in-out 0.5s forwards;
-}
-
-.catchy2 {
-  color: rgb(15, 130, 42);
-  opacity: 0;
-  animation: slideFromBottom 0.5s ease-in-out 0.7s forwards;
-}
-
 .loginBtn {
   opacity: 0;
-  animation: slideFromLeft 0.8s ease-in-out 1.5s forwards;
+  animation: slideFromLeft 1.2s ease-in 2s forwards;
 }
 
 .rentASpot {
   opacity: 0;
-  animation: slideFromRight 0.8s ease-in-out 1.5s forwards;
+  animation: slideFromRight 1.2s ease-in-out 2s forwards;
 }
 
 .title {
@@ -279,26 +268,6 @@
   box-shadow: 0 -5px 15px rgba(15, 130, 42, 0.5);
 }
 /* Media query for resolutions smaller than 800 pixels */
-
-@keyframes slideFromTop {
-  from {
-    transform: translateY(-100%);
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-@keyframes slideFromBottom {
-  from {
-    transform: translateY(100%);
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
 
 @keyframes slideFromLeft {
   from {

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import MenuIcon from '../functionalElements/designs/MenuIcon';
+import NavAnimation from '../functionalElements/designs/NavTextAnimation';
 import '../style/Nav.css';
 
 import parkBuddy from '../images/parkBuddy.png';
@@ -48,6 +49,7 @@ export default function Nav() {
             ></img>
           </div>
         </Link>
+        <NavAnimation />
         <MenuIcon />
       </div>
     </div>

@@ -31,7 +31,7 @@
   width: 100%;
   display: flex;
   align-items: center;
-  background: linear-gradient(90deg, #0b3e27, #197149);
+  background-color: #097b5a;
   justify-content: space-between;
   z-index: 101;
 }
