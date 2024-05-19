@@ -17,37 +17,11 @@ function Home() {
     <div>
       <div className="container">
         <img src={carImg} alt="Banner Home" className="banner-img" />
-        <div className="content-box">
-          <div className="options-container">
-            <Link to="/login" className="link">
-              <div
-                className="option-box btn-gradient-border loginBtn"
-                style={{
-                  backgroundColor: 'transparent',
-                  fontSize: '3rem',
-                  boxShadow: 'none',
-                  fontWeight: 'bold',
-                }}
-              >
-                {translate('login')}
-              </div>
-            </Link>
-            <hr className="vertical-hr"></hr>
-            <Link to="/Rent-A-Spot" className="link">
-              <div
-                className="option-box btn-gradient-border rentASpot"
-                style={{
-                  backgroundColor: 'transparent',
-                  fontSize: '3rem',
-                  fontWeight: 'bold',
-                  boxShadow: 'none',
-                }}
-              >
-                {translate('rentASpot')}
-              </div>
-            </Link>
+        <Link to="/Rent-A-Spot" className="linkHome">
+          <div className="option-box rentASpot rentHomeButton">
+            {translate('rentASpot')}
           </div>
-        </div>
+        </Link>
       </div>
       <div className="emptySpace"></div>
       <Reviews />

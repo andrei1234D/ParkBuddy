@@ -3,6 +3,9 @@
   transition: all 0.3s ease-in-out;
   font-family: 'Josefin Sans';
 }
+::-webkit-scrollbar {
+  display: none;
+}
 .textGlow {
   text-shadow: var(--text-shadow);
 }
@@ -17,9 +20,7 @@
   color: rgb(15, 130, 42);
   transform: scale(0.9);
 }
-::-webkit-scrollbar {
-  display: none;
-}
+
 :root {
   --border_color: rgba(2, 25, 10);
   --body_background: #040720;

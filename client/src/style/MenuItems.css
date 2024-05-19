@@ -1,16 +1,13 @@
 .menuItemsContainer {
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  height: 650px;
   align-items: column;
 }
 .menuSettingsContainer {
   width: 100%;
-  border-color: #fb9202;
-  border-style: solid;
-  border-width: 0px 15px 0px 0px;
 }
 
 .menuSettingsText {
@@ -25,7 +22,7 @@
 .menuSettings {
   row-gap: 30px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   height: 70%;
   justify-content: space-around;
@@ -33,40 +30,8 @@
 .bottomMenu {
   width: 100%;
   display: flex;
-  align-items: row;
-  border-color: #fb9202;
-  border-style: solid;
-  border-width: 15px 0px 0px 0px;
-  margin-top: 30px;
-}
-.menuLanguageContainer {
-  width: 100%;
-  border-color: #fb9202;
-  border-style: solid;
-  border-width: 0px 0px 0px 15px;
-}
-.languages {
-  row-gap: 30px;
-  display: flex;
   flex-direction: column;
-  align-items: center;
-  height: 70%;
-  justify-content: space-around;
-}
-
-.flagContainer {
-  width: 40%;
-  height: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-}
-
-.flagImage {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  margin-top: 30px;
 }
 .additionalMenuItems {
   height: 200px;
@@ -89,25 +54,6 @@
 
   margin-bottom: 10px;
 }
-.downArrowIcon {
-  opacity: 1;
-  height: 50px;
-  width: 50px;
-  position: absolute;
-  top: 1px; /* Adjusted from 'top: 1' to 'top: 1px' */
-  transform: translateX(-48%);
-  transition: opacity 0.3s ease;
-}
-
-.upArrowIcon {
-  opacity: 1;
-  height: 50px;
-  width: 50px;
-  position: absolute;
-  top: 280px;
-  transform: rotate(180deg) translateX(48%);
-  transition: opacity 0.3s ease;
-}
 
 .quickLinks:hover .icon {
   opacity: 0;
@@ -115,10 +61,11 @@
 
 .menuItemLink {
   text-decoration: none;
-  color: white;
-  font-size: 1.5rem;
+  font-weight: bold;
+  font-size: 4rem;
   padding: 10px;
   border-radius: 5px;
+  color: #00ffff;
 }
 .underlineAnimation {
   position: relative;
@@ -132,46 +79,53 @@
   bottom: 0;
   width: 0;
   height: 2px;
-  background-color: white;
+  background-color: #00ffff;
   transition: width 0.3s ease;
 }
 .pagination {
+  margin-top: 25px;
   display: grid;
-  grid-template-columns: repeat(5, 1fr); /* Two columns */
+  grid-template-columns: repeat(3, 1fr); /* Two columns */
   align-items: center;
   justify-content: center;
+  width: 97%;
   gap: 5px;
+  height: auto;
 }
 .pagination button {
-  width: 75px;
+  color: white;
+  width: auto;
   height: 50px;
   margin: 0 5px;
   padding: 5px 10px;
   cursor: pointer;
-  background-color: #fb9202;
+  background-color: #12be8c;
   border-style: none;
   border-radius: 3px;
 }
 
 .pagination button.active {
   background-color: #007bff;
-  color: white;
+  color: black;
   border: 1px solid #007bff;
 }
 
 .pagination button:hover {
   background-color: #0056b3;
+  color: black;
+}
+.arrowButton {
+  cursor: pointer;
+  border-style: none;
   color: white;
+  background-color: #12be8c;
+  width: 25px;
+  height: 50px;
+}
+.arrowButton:hover {
+  background-color: #0056b3;
+  color: black;
 }
 .underlineAnimation:hover::after {
   width: 100%;
-}
-.scroll-indicator {
-  color: white;
-}
-.downArrow {
-  text-align: center;
-}
-.upArrow {
-  text-align: center;
 }

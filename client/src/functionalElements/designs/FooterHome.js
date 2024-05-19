@@ -20,7 +20,7 @@ import VisaLogo from '../../images/sponsorImage/visa.svg';
 import WalmartLogo from '../../images/sponsorImage/walmart.svg';
 
 function FooterHome() {
-  const { translate } = useContext(GlobalStatesContext);
+  const { translate, isDarkMode } = useContext(GlobalStatesContext);
 
   const sponsors = [
     { name: 'adidas', logoUrl: AdidasLogo },
@@ -37,6 +37,14 @@ function FooterHome() {
     { name: 'tesla', logoUrl: TeslaLogo },
     { name: 'visa', logoUrl: VisaLogo },
     { name: 'walmart', logoUrl: WalmartLogo },
+  ];
+  const fields = [
+    'Frequently_asked_questions',
+    'Delete_account',
+    'Privacy_policy',
+    'Cookie_policy',
+    'Terms_and_Conditions',
+    'Rent_A_Spot',
   ];
   const renderSponsors = () => {
     return sponsors.map((sponsor, index) => (
@@ -55,12 +63,9 @@ function FooterHome() {
     <div className="footer">
       <div className="sponsors-section">{renderSponsors()}</div>
       <div className="additional-fields">
-        <h3>{translate('Frequently_asked_questions')}</h3>
-        <h3>{translate('Delete_account')}</h3>
-        <h3>{translate('Privacy_policy')}</h3>
-        <h3>{translate('Cookie_policy')}</h3>
-        <h3>{translate('Terms_and_Conditions')}</h3>
-        <h3>{translate('Rent_A_Spot')}</h3>
+        {fields.map((field, index) => (
+          <h3 key={index}>{translate(field)}</h3>
+        ))}
       </div>
     </div>
   );
