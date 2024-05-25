@@ -57,7 +57,6 @@ function Home() {
                 title={
                   <div style={{ fontSize: '13px' }}>
                     <FaCircle style={{ color: 'green' }} /> FREE <br />
-                    <FaCircle style={{ color: 'yellow' }} /> RESERVED <br />
                     <FaCircle style={{ color: 'blue' }} /> OCCUPIED
                     <br />
                     <FaCircle style={{ color: 'red' }} /> UNAVAILABLE

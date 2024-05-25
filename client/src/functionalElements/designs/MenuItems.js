@@ -24,7 +24,7 @@ const menuItems = [
   { label: 'Get the app', link: '/get-the-app', url: getTheApp },
   { label: 'Rent A Spot', link: '/rent-a-spot', url: rentASpot },
   { label: 'Lend A Spot', link: '/lend-a-spot', url: lendASpot },
-  { label: 'Your Spots', link: '/your-spots', url: yourSpots },
+  { label: 'Your Spots', link: '/Your-Parking-Spots', url: yourSpots },
 ];
 export default function MenuItems() {
   const [currentPage, setCurrentPage] = useState(0);

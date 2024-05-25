@@ -64,15 +64,18 @@
 .rentASpot {
   opacity: 0;
   animation: fadeIn 0.7s ease-in 0.7s forwards;
-  background: linear-gradient(45deg, #2e7d32, #66bb6a);
+  background: linear-gradient(45deg, blue, cyan);
   position: relative; /* For the oblique line effect */
   overflow: hidden;
+  font-size: 50px;
+  width: auto;
+  height: 40px;
 }
 
 .rentASpot::before {
   content: '';
   position: absolute;
-  right: -50%; /* Start from the right */
+  right: 50%; /* Start from the right */
   width: 100%;
   height: 100%;
   background: rgba(
@@ -81,12 +84,12 @@
     255,
     0.2
   ); /* Semi-transparent white for the line */
-  transform: skewX(30deg); /* Oblique line effect */
+  transform: skewX(-30deg); /* Oblique line effect */
   transition: all 0.5s ease; /* Smooth transition */
 }
 
 .rentASpot:hover::before {
-  right: 150%; /* Move the line across on hover */
+  right: -150%; /* Move the line across on hover */
 }
 .loginBtn {
   opacity: 0;
@@ -124,8 +127,8 @@
 
 .rentHomeButton {
   position: absolute;
-  top: 64px;
-  right: 700px;
+  top: 140px;
+  right: 80px;
 }
 
 .linkHome {

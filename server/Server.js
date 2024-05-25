@@ -83,6 +83,8 @@ const ParkingSpotSchema = new mongoose.Schema({
 const Partner = mongoose.model('Partner', partnerSchema);
 const Customer = mongoose.model('Customer', customerSchema);
 const ParkingSpot = mongoose.model('Parking Spot', ParkingSpotSchema);
+
+//decide witch collection to browse
 const getUserModel = (role) => {
   if (role === 'partner') {
     return Partner;
@@ -95,6 +97,7 @@ async function checkAvailabilityAndSetStatus() {
   try {
     const parkingSpots = await ParkingSpot.find();
     const availableSpots = [];
+
     for (const spot of parkingSpots) {
       const startDate = new Date(spot.startDate);
       const endDate = new Date(spot.endDate);
@@ -104,19 +107,46 @@ async function checkAvailabilityAndSetStatus() {
       const endTime = new Date(
         `${endDate.toDateString()} ${spot.availability[0].endTime}`
       );
+
+      // Determine the initial status of the spot based on the general availability
+      let spotStatus = 'unavailable';
       if (
         currentDate >= startDate &&
         currentDate <= endDate &&
         currentDate >= startTime &&
         currentDate <= endTime
       ) {
-        spot.status = 'free';
-        availableSpots.push(spot);
-      } else {
-        spot.status = 'unavailable';
+        spotStatus = 'free';
+
+        // Find today's availability entry based on the exact date
+        const todayAvailability = spot.availability.find(
+          (avail) =>
+            new Date(avail.day).toDateString() === currentDate.toDateString()
+        );
+
+        if (todayAvailability) {
+          // Check all spotTimes for today to see if the spot is occupied
+          for (const timeSlot of todayAvailability.spotTimes) {
+            const spotStartTime = new Date(
+              `${currentDate.toDateString()} ${timeSlot.startDayTime}`
+            );
+            const spotEndTime = new Date(
+              `${currentDate.toDateString()} ${timeSlot.endDayTime}`
+            );
+
+            if (currentDate >= spotStartTime && currentDate <= spotEndTime) {
+              spotStatus = 'occupied';
+              break; // No need to check further if it's already occupied
+            }
+          }
+        }
       }
+
+      spot.status = spotStatus;
+      availableSpots.push(spot);
       await spot.save();
     }
+
     return availableSpots;
   } catch (error) {
     throw error; // Just rethrow the caught error
@@ -317,9 +347,7 @@ app.post('/Your-Spots', async (req, res) => {
               const endDateTime = new Date(
                 `${spot.endDate.toDateString()} ${spotTime.endDayTime}`
               );
-              if (currentTime <= endDateTime) {
-                spot.status = 'reserved';
-              } else {
+              if (currentTime >= endDateTime) {
                 spot.status = 'occupied';
               }
             } else {
@@ -352,20 +380,39 @@ app.get('/Get-Spots', async (req, res) => {
 });
 app.post('/Preferences-Spots', async (req, res) => {
   const { username, selectedDate, startRentTime, endRentTime } = req.body;
+  console.log('Received request with:');
+  console.log('endRentTime:', endRentTime);
+  console.log('startRentTime:', startRentTime);
+  console.log('selectedDate:', selectedDate);
+
   try {
     const parkingSpots = await ParkingSpot.find();
+    console.log('Fetched parking spots:', parkingSpots);
 
     const availableSpots = parkingSpots.filter((spot) => {
+      console.log('Checking spot:', spot);
+
       // Check if the spot has availability for the selected date
       const availabilityForDate = spot.availability.some((avail) => {
         const availDate = new Date(avail.day);
         const selectedDateTime = new Date(selectedDate);
 
+        console.log('Comparing selected date with availability date:');
+        console.log('availDate:', availDate);
+        console.log('selectedDateTime:', selectedDateTime);
+
         // Check if the selected date matches any day in the availability array
         return selectedDateTime.toDateString() === availDate.toDateString();
       });
 
+      console.log('availabilityForDate:', availabilityForDate);
+
       if (availabilityForDate) {
+        // Check if spotTimes is empty, if so, consider the spot available
+        if (spot.availability.length === 0) {
+          return true;
+        }
+
         // Check if the rent time overlaps with any spot time intervals
         const overlaps = spot.availability.some((avail) => {
           return avail.spotTimes.some((spotTime) => {
@@ -378,42 +425,37 @@ app.post('/Preferences-Spots', async (req, res) => {
             const rentStartTime = new Date(`${selectedDate} ${startRentTime}`);
             const rentEndTime = new Date(`${selectedDate} ${endRentTime}`);
 
-            // Check for overlap
+            console.log('Checking time intervals for overlaps:');
+            console.log('spotStartTime:', spotStartTime);
+            console.log('spotEndTime:', spotEndTime);
+            console.log('rentStartTime:', rentStartTime);
+            console.log('rentEndTime:', rentEndTime);
+
+            // Check for overlap in time intervals
             const timeOverlap =
               rentStartTime < spotEndTime && rentEndTime > spotStartTime;
+            console.log('timeOverlap:', timeOverlap);
 
-            // Check for overlap within the day for each time interval
-            const withinDayOverlap = avail.spotTimes.some((otherSpotTime) => {
-              const otherSpotStartTime = new Date(
-                `${selectedDate} ${otherSpotTime.startDayTime}`
-              );
-              const otherSpotEndTime = new Date(
-                `${selectedDate} ${otherSpotTime.endDayTime}`
-              );
-
-              return (
-                (rentStartTime <= otherSpotEndTime &&
-                  rentEndTime >= otherSpotStartTime) ||
-                (rentStartTime >= otherSpotStartTime &&
-                  rentEndTime <= otherSpotEndTime)
-              );
-            });
-
-            return timeOverlap && withinDayOverlap;
+            return timeOverlap;
           });
         });
 
-        return overlaps;
+        console.log('overlaps:', overlaps);
+        // If the spot has availability on the selected date and no overlaps, return true
+        return !overlaps;
+      } else {
+        // If the selected date is not in the spot's available dates return false
+        return false;
       }
-
-      return false;
     });
 
     res.json(availableSpots);
   } catch (error) {
+    console.log('Error:', error.message);
     res.status(500).json({ message: error.message });
   }
 });
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });

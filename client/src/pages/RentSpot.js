@@ -2,29 +2,35 @@ import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { GoogleMap, Marker, InfoWindow } from '@react-google-maps/api';
 import { FaSearch } from 'react-icons/fa';
-import markerImage from '../images/marker1.png';
-import GlobalStatesContext from '../context/GlobalStatesContext';
-import { useNavigate } from 'react-router-dom';
-import DatePicker from 'react-datepicker';
-import TextField from '@mui/material/TextField';
+import Tooltip from '@mui/material/Tooltip';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
+import markerImage from '../images/marker2.png';
+import GlobalStatesContext from '../context/GlobalStatesContext';
+import { useNavigate } from 'react-router-dom';
+import DatePicker from 'react-datepicker';
+
+import 'react-datepicker/dist/react-datepicker.css';
+
+import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import { IconButton } from '@mui/material';
+
 import LoadingSpinner from '../spinner/LoadingSpinner.js';
 import Autocomplete from 'react-google-autocomplete';
 import mapStyles from '../styleForMap/mapStyle.js';
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import CloseIcon from '@mui/icons-material/Close';
+
 import '../style/RentASpot.css';
+
 const mapContainerStyle = {
   width: '100%',
-  height: '100vh',
-};
-
-const center = {
-  lat: 44.415573973386864,
-  lng: 26.102983712003493,
+  height: 'calc(100vh - 110px)',
 };
 
 const RentSpot = () => {
@@ -38,15 +44,17 @@ const RentSpot = () => {
   const [selectedStartDate, setSelectedStartDate] = useState(new Date());
   const [startTime, setStartTime] = useState(null);
   const [endTime, setEndTime] = useState(null);
-  const { translate, username } = useContext(GlobalStatesContext);
   const [infoWindowPosition, setInfoWindowPosition] = useState(null);
   const [infoWindowOpen, setInfoWindowOpen] = useState(false);
-
+  const [error, setError] = useState('');
+  const [showBubble, setShowBubble] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState({
     lat: 44.415573973386864,
     lng: 26.102983712003493,
   });
-  const navigate = useNavigate();
+
+  const { translate, username } = useContext(GlobalStatesContext);
+
   useEffect(() => {
     const fetchApiKey = async () => {
       try {
@@ -64,17 +72,6 @@ const RentSpot = () => {
 
   useEffect(() => {
     if (apiKey) {
-      const fetchData = async () => {
-        try {
-          const response = await axios.get('http://localhost:5000/Get-Spots');
-          setSpots(response.data);
-          setLoading(false);
-        } catch (error) {
-          console.error('Error fetching spots:', error);
-          setLoading(false);
-        }
-      };
-
       fetchData();
     }
   }, [apiKey]);
@@ -88,6 +85,17 @@ const RentSpot = () => {
       document.head.appendChild(script);
     }
   }, [apiKey]);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get('http://localhost:5000/Get-Spots');
+      setSpots(response.data);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching spots:', error);
+      setLoading(false);
+    }
+  };
 
   console.log(spots);
   const handleMarkerClick = (spot) => {
@@ -103,24 +111,29 @@ const RentSpot = () => {
     }
   };
 
-  const handleMarkerExit = () => {
-    setSelectedSpot(null);
-    setInfoWindowPosition(null);
+  const handleDialogClosePreferences = () => {
+    setOpenDialog(false);
+    setShowBubble(true);
+  };
+  const handleDialogCloseNoPreferences = () => {
+    setOpenDialog(false);
+    setShowBubble(true);
+    fetchData();
   };
 
-  const handleDialogClose = () => {
-    setOpenDialog(false);
-  };
   const handleDialogCloseConfirmation = () => {
     setOpenDialogConfirmation(false);
   };
+
   const handleDialogConfirmationOpen = () => {
     setOpenDialogConfirmation(true);
   };
+
   const handleInfoWindowClose = () => {
     setSelectedSpot(null);
     setInfoWindowOpen(false);
   };
+
   const handleClickRedirect = () => {
     const { latitude, longitude } = selectedSpot;
     const url = `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`;
@@ -128,24 +141,40 @@ const RentSpot = () => {
   };
 
   const handlePreferencesClick = async () => {
-    try {
-      const response = await axios.post(
-        'http://localhost:5000/Preferences-Spots',
-        {
-          startRentTime: startTime,
-          endRentTime: endTime,
-          selectedDate: selectedStartDate,
-          username,
-        }
-      );
-      setSpots(response.data);
-      console.log('response data:');
-      console.log(response.data);
-    } catch (error) {
-      console.error('Error renting spot:', error);
+    if (selectedStartDate && startTime && endTime) {
+      try {
+        const response = await axios.post(
+          'http://localhost:5000/Preferences-Spots',
+          {
+            startRentTime: startTime,
+            endRentTime: endTime,
+            selectedDate: selectedStartDate,
+            username,
+          }
+        );
+        setSpots(response.data);
+        console.log('response data:');
+        console.log(response.data);
+        toast.success('Filters Applied', {
+          position: 'top-right',
+          autoClose: 10000,
+          closeOnClick: true,
+        });
+      } catch (error) {
+        console.error('Error renting spot:', error);
+        toast.error('Error applying filters', {
+          position: 'top-right',
+          autoClose: 10000,
+          closeOnClick: true,
+        });
+      }
+      handleDialogClosePreferences();
+    } else {
+      setError('Please fill in all fields');
+      console.log(error);
     }
-    handleDialogClose();
   };
+
   const handlePlaceSelect = (place) => {
     console.log('Place selected:', place.geometry.location.lat);
     console.log(place.geometry.location);
@@ -166,12 +195,40 @@ const RentSpot = () => {
     }
     setSelectedLocation(place.geometry.location);
   };
+
+  const handleErrorClose = () => {
+    setError('');
+  };
+
+  const handleBubbleClick = () => {
+    setShowBubble(false);
+    setOpenDialog(true);
+  };
+
   if (loading) {
     return <LoadingSpinner />;
   }
 
   return (
     <div>
+      <ToastContainer />
+      {map && (
+        <Autocomplete
+          apiKey={apiKey}
+          onPlaceSelected={handlePlaceSelect}
+          options={{
+            componentRestrictions: { country: 'ro' },
+          }}
+          style={{
+            width: '98%',
+            position: 'relative',
+            zIndex: '100',
+            padding: '15px',
+          }}
+          placeholder="Search for a location"
+        />
+      )}
+
       {apiKey && (
         <GoogleMap
           mapContainerStyle={mapContainerStyle}
@@ -180,26 +237,13 @@ const RentSpot = () => {
           options={{ styles: mapStyles, fullscreenControl: false }}
           onLoad={(map) => setMap(map)}
         >
-          {map && (
-            <Autocomplete
-              apiKey={apiKey}
-              onPlaceSelected={handlePlaceSelect}
-              options={{
-                componentRestrictions: { country: 'ro' },
-              }}
-              style={{ width: '100%', position: 'absolute', zIndex: '100' }}
-            />
-          )}
-
           {spots.map((spot) => (
             <Marker
-              map={map}
               key={spot.id}
               position={{ lat: spot.latitude, lng: spot.longitude }}
               onClick={() => {
                 handleMarkerClick(spot);
               }}
-              onCloseClick={handleMarkerExit}
               icon={{
                 url: markerImage,
                 scaledSize: new window.google.maps.Size(70, 70),
@@ -234,43 +278,150 @@ const RentSpot = () => {
           )}
         </GoogleMap>
       )}
-      <Dialog open={openDialog} onClose={handleDialogClose} fullScreen={true}>
-        <DialogTitle>{selectedSpot ? selectedSpot.name : ''}</DialogTitle>
-        <DialogContent>
-          <TextField
-            label="Start Time"
-            type="time"
-            value={startTime}
-            onChange={(e) => setStartTime(e.target.value)}
-            InputLabelProps={{
-              shrink: true,
+
+      {openDialog && (
+        <div className={`custom-dialog ${openDialog ? 'open' : 'close'}`}>
+          <div className="dialog-content">
+            <div className="dialog-header">
+              <div>
+                {selectedSpot
+                  ? selectedSpot.name
+                  : 'Tell us when would you like your spot to be available and we will show you the best spots for your needs'}
+              </div>
+              <IconButton onClick={handleDialogCloseNoPreferences}>
+                <CloseIcon />
+              </IconButton>
+            </div>
+            <div className="dialog-body">
+              <div
+                style={{
+                  height: '100%',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                }}
+              >
+                <div
+                  style={{
+                    height: '100%',
+                    width: '100%',
+                    padding: '10px',
+                    display: 'flex',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'space-evenly ',
+                  }}
+                >
+                  <TextField
+                    label="Start Time"
+                    type="time"
+                    value={startTime}
+                    onChange={(e) => setStartTime(e.target.value)}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    inputProps={{
+                      step: 300, // 5 min
+                    }}
+                  />
+                  <TextField
+                    label="End Time"
+                    type="time"
+                    value={endTime}
+                    onChange={(e) => setEndTime(e.target.value)}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    inputProps={{
+                      step: 300, // 5 min
+                    }}
+                  />
+                </div>
+                <div style={{ display: 'block' }}>
+                  <p style={{ textAlign: 'center', fontSize: '25px' }}> DATE</p>
+                  <DatePicker
+                    selected={selectedStartDate}
+                    onChange={(date) => setSelectedStartDate(date)}
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="dialog-actions">
+              <div
+                style={{
+                  width: '100%',
+                  display: 'flex',
+                  justifyContent: 'space-around',
+                }}
+              >
+                <Button
+                  onClick={handleDialogCloseNoPreferences}
+                  style={{ color: 'red' }}
+                >
+                  Browse all spots
+                </Button>
+                <Button
+                  onClick={handlePreferencesClick}
+                  style={{ color: '#90EE90', fontWeight: '700' }}
+                >
+                  Find your perfect fit
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showBubble && (
+        <Tooltip title={'spot preferences'} arrow placement="top">
+          <div
+            style={{
+              position: 'absolute',
+              bottom: '290px',
+              right: '20px',
+              width: '60px',
+              height: '60px',
+              borderRadius: '50%',
+              backgroundColor: '#007bff',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              cursor: 'pointer',
+              boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
             }}
-            inputProps={{
-              step: 300, // 5 min
-            }}
-          />
-          <TextField
-            label="End Time"
-            type="time"
-            value={endTime}
-            onChange={(e) => setEndTime(e.target.value)}
-            InputLabelProps={{
-              shrink: true,
-            }}
-            inputProps={{
-              step: 300, // 5 min
-            }}
-          />
-          <DatePicker
-            selected={selectedStartDate}
-            onChange={(date) => setSelectedStartDate(date)}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleDialogClose}>Cancel</Button>
-          <Button onClick={handlePreferencesClick}>Check for spots</Button>
-        </DialogActions>
-      </Dialog>
+            onClick={handleBubbleClick}
+          >
+            <FaSearch color="white" size={30} />
+          </div>
+        </Tooltip>
+      )}
+
+      {error && (
+        <div
+          style={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            backgroundColor: '#f8d7da',
+            color: '#721c24',
+            padding: '20px',
+            borderRadius: '10px',
+            boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
+            display: 'flex',
+            alignItems: 'center',
+            zIndex: '1301',
+          }}
+        >
+          <div variant="h6" style={{ flexGrow: 1 }}>
+            {error}
+          </div>
+          <IconButton onClick={handleErrorClose}>
+            <CloseIcon />
+          </IconButton>
+        </div>
+      )}
+
       {selectedSpot && (
         <Dialog
           open={openDialogConfirmation}
@@ -289,11 +440,11 @@ const RentSpot = () => {
               <h3>
                 Please verify that the details of your order are <b>correct</b>.
                 We will not issue a refund if you do not use the parking spot
-                during the payed period.{' '}
+                during the paid period.{' '}
               </h3>
               <p>
                 You will rent the {selectedSpot.address} spot on
-                {selectedStartDate.toString} from {startTime} to {endTime} for
+                {selectedStartDate.toString()} from {startTime} to {endTime} for
                 0.10RON/minute
               </p>
             </div>
