@@ -1,5 +1,5 @@
 .custom-dialog {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
@@ -7,15 +7,37 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: rgba(0, 0, 0, 0);
+  transition: background-color 1s;
+}
+.custom-dialog.open {
   background-color: rgba(0, 0, 0, 0.5);
-  opacity: 0.1;
-  transform: scale(0.8);
-  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+.bubble {
+  opacity: 0;
+  position: absolute;
+  bottom: 290px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #007bff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: opacity 0s ease-in-out 0s;
 }
 
-.custom-dialog.open {
+.bubble.close {
   opacity: 1;
-  transform: scale(1);
+  transition-delay: 1s;
+}
+
+.bubble.open {
+  opacity: 0;
+  transition-delay: 0s;
 }
 
 .dialog-content {
@@ -26,6 +48,20 @@
   max-width: 600px;
   display: flex;
   flex-direction: column;
+}
+.dialog-content.open {
+  animation: Morph 1s forwards;
+  opacity: 1;
+  transform: scale(1);
+}
+
+.dialog-content.close {
+  opacity: 1;
+  transform: scale(1);
+  animation: MorphBack 1s forwards;
+}
+.dialog-content.close > * {
+  opacity: 0;
 }
 
 .dialog-header {
@@ -46,4 +82,38 @@
   border-top: 1px solid #ccc;
   display: flex;
   justify-content: space-between;
+}
+
+@keyframes Morph {
+  0% {
+    transform: translateX(697.5px) translateY(42px);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #007bff;
+  }
+  50% {
+    height: 250px;
+    background-color: white;
+  }
+  100% {
+    transform: translateX(0px);
+  }
+}
+
+@keyframes MorphBack {
+  100% {
+    transform: translateX(697.5px) translateY(42px);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #007bff;
+  }
+  50% {
+    background-color: white;
+    height: 250px;
+  }
+  0% {
+    transform: translateX(0px);
+  }
 }

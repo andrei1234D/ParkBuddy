@@ -110,6 +110,10 @@ const RentSpot = () => {
       setInfoWindowOpen(true);
     }
   };
+  const handleBubbleClick = () => {
+    setShowBubble(false);
+    setOpenDialog(true);
+  };
 
   const handleDialogClosePreferences = () => {
     setOpenDialog(false);
@@ -119,6 +123,11 @@ const RentSpot = () => {
     setOpenDialog(false);
     setShowBubble(true);
     fetchData();
+    toast.success('Browsing without any filters applied', {
+      position: 'top-right',
+      autoClose: 8000,
+      closeOnClick: true,
+    });
   };
 
   const handleDialogCloseConfirmation = () => {
@@ -200,11 +209,6 @@ const RentSpot = () => {
     setError('');
   };
 
-  const handleBubbleClick = () => {
-    setShowBubble(false);
-    setOpenDialog(true);
-  };
-
   if (loading) {
     return <LoadingSpinner />;
   }
@@ -278,123 +282,106 @@ const RentSpot = () => {
           )}
         </GoogleMap>
       )}
-
-      {openDialog && (
-        <div className={`custom-dialog ${openDialog ? 'open' : 'close'}`}>
-          <div className="dialog-content">
-            <div className="dialog-header">
-              <div>
-                {selectedSpot
-                  ? selectedSpot.name
-                  : 'Tell us when would you like your spot to be available and we will show you the best spots for your needs'}
-              </div>
-              <IconButton onClick={handleDialogCloseNoPreferences}>
-                <CloseIcon />
-              </IconButton>
+      {/* MORPHING DIALOG */}
+      <div className={`custom-dialog ${openDialog ? 'open' : 'close'}`}>
+        <div className={`dialog-content ${openDialog ? 'open' : 'close'}`}>
+          <div className="dialog-header">
+            <div>
+              Tell us when would you like your spot to be available and we will
+              show you the best spots for your needs
             </div>
-            <div className="dialog-body">
+            <IconButton onClick={handleDialogCloseNoPreferences}>
+              <CloseIcon />
+            </IconButton>
+          </div>
+          <div className="dialog-body">
+            <div
+              style={{
+                height: '100%',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+              }}
+            >
               <div
                 style={{
                   height: '100%',
+                  width: '100%',
+                  padding: '10px',
                   display: 'flex',
-                  flexDirection: 'column',
+                  flexDirection: 'row',
                   alignItems: 'center',
+                  justifyContent: 'space-evenly ',
                 }}
               >
-                <div
-                  style={{
-                    height: '100%',
-                    width: '100%',
-                    padding: '10px',
-                    display: 'flex',
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    justifyContent: 'space-evenly ',
+                <TextField
+                  label="Start Time"
+                  type="time"
+                  value={startTime}
+                  onChange={(e) => setStartTime(e.target.value)}
+                  InputLabelProps={{
+                    shrink: true,
                   }}
-                >
-                  <TextField
-                    label="Start Time"
-                    type="time"
-                    value={startTime}
-                    onChange={(e) => setStartTime(e.target.value)}
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                    inputProps={{
-                      step: 300, // 5 min
-                    }}
-                  />
-                  <TextField
-                    label="End Time"
-                    type="time"
-                    value={endTime}
-                    onChange={(e) => setEndTime(e.target.value)}
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                    inputProps={{
-                      step: 300, // 5 min
-                    }}
-                  />
-                </div>
-                <div style={{ display: 'block' }}>
-                  <p style={{ textAlign: 'center', fontSize: '25px' }}> DATE</p>
-                  <DatePicker
-                    selected={selectedStartDate}
-                    onChange={(date) => setSelectedStartDate(date)}
-                  />
-                </div>
+                  inputProps={{
+                    step: 300, // 5 min
+                  }}
+                />
+                <TextField
+                  label="End Time"
+                  type="time"
+                  value={endTime}
+                  onChange={(e) => setEndTime(e.target.value)}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  inputProps={{
+                    step: 300, // 5 min
+                  }}
+                />
+              </div>
+              <div style={{ display: 'block' }}>
+                <p style={{ textAlign: 'center', fontSize: '25px' }}> DATE</p>
+                <DatePicker
+                  selected={selectedStartDate}
+                  onChange={(date) => setSelectedStartDate(date)}
+                />
               </div>
             </div>
-            <div className="dialog-actions">
-              <div
-                style={{
-                  width: '100%',
-                  display: 'flex',
-                  justifyContent: 'space-around',
-                }}
+          </div>
+          <div className="dialog-actions">
+            <div
+              style={{
+                width: '100%',
+                display: 'flex',
+                justifyContent: 'space-around',
+              }}
+            >
+              <Button
+                onClick={handleDialogCloseNoPreferences}
+                style={{ color: 'red' }}
               >
-                <Button
-                  onClick={handleDialogCloseNoPreferences}
-                  style={{ color: 'red' }}
-                >
-                  Browse all spots
-                </Button>
-                <Button
-                  onClick={handlePreferencesClick}
-                  style={{ color: '#90EE90', fontWeight: '700' }}
-                >
-                  Find your perfect fit
-                </Button>
-              </div>
+                Browse all spots
+              </Button>
+              <Button
+                onClick={handlePreferencesClick}
+                style={{ color: '#90EE90', fontWeight: '700' }}
+              >
+                Find your perfect fit
+              </Button>
             </div>
           </div>
         </div>
-      )}
+      </div>
 
-      {showBubble && (
-        <Tooltip title={'spot preferences'} arrow placement="top">
-          <div
-            style={{
-              position: 'absolute',
-              bottom: '290px',
-              right: '20px',
-              width: '60px',
-              height: '60px',
-              borderRadius: '50%',
-              backgroundColor: '#007bff',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              cursor: 'pointer',
-              boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-            }}
-            onClick={handleBubbleClick}
-          >
-            <FaSearch color="white" size={30} />
-          </div>
-        </Tooltip>
-      )}
+      {/* BUBBLE */}
+      <Tooltip title={'spot preferences'} arrow placement="top">
+        <div
+          className={`bubble ${openDialog ? 'open' : 'close'} `}
+          onClick={handleBubbleClick}
+        >
+          <FaSearch color="white" size={30} />
+        </div>
+      </Tooltip>
 
       {error && (
         <div
