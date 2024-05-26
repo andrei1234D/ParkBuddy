@@ -36,6 +36,7 @@ const mapContainerStyle = {
 const RentSpot = () => {
   const [apiKey, setApiKey] = useState(null);
   const [map, setMap] = useState(null);
+  const [mapInitialized, setMapInitialized] = useState(false);
   const [spots, setSpots] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedSpot, setSelectedSpot] = useState(null);
@@ -47,6 +48,8 @@ const RentSpot = () => {
   const [infoWindowPosition, setInfoWindowPosition] = useState(null);
   const [infoWindowOpen, setInfoWindowOpen] = useState(false);
   const [error, setError] = useState('');
+  const [errorRent, setErrorRent] = useState('');
+
   const [showBubble, setShowBubble] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState({
     lat: 44.415573973386864,
@@ -77,11 +80,12 @@ const RentSpot = () => {
   }, [apiKey]);
 
   useEffect(() => {
-    if (apiKey) {
+    if (apiKey && !window.google) {
       const script = document.createElement('script');
       script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places&callback=initMap`;
       script.async = true;
       script.defer = true;
+      script.onload = () => setMapInitialized(true);
       document.head.appendChild(script);
     }
   }, [apiKey]);
@@ -97,22 +101,16 @@ const RentSpot = () => {
     }
   };
 
-  console.log(spots);
   const handleMarkerClick = (spot) => {
     console.log('Marker Click Has Been Called Once');
-
-    if (!infoWindowOpen) {
-      setSelectedSpot(spot);
-      setInfoWindowPosition({
-        lat: spot.latitude,
-        lng: spot.longitude,
-      });
-      setInfoWindowOpen(true);
-    }
+    setSelectedSpot(spot);
+    setInfoWindowPosition({ lat: spot.latitude, lng: spot.longitude });
+    setInfoWindowOpen(true);
   };
   const handleBubbleClick = () => {
     setShowBubble(false);
     setOpenDialog(true);
+    setErrorRent('');
   };
 
   const handleDialogClosePreferences = () => {
@@ -135,7 +133,11 @@ const RentSpot = () => {
   };
 
   const handleDialogConfirmationOpen = () => {
-    setOpenDialogConfirmation(true);
+    if (startTime === null || endTime === null) {
+      setErrorRent('Please specify your rental start and end times!');
+    } else {
+      setOpenDialogConfirmation(true);
+    }
   };
 
   const handleInfoWindowClose = () => {
@@ -208,6 +210,9 @@ const RentSpot = () => {
   const handleErrorClose = () => {
     setError('');
   };
+  const handleErrorRentClose = () => {
+    setErrorRent('');
+  };
 
   if (loading) {
     return <LoadingSpinner />;
@@ -268,6 +273,7 @@ const RentSpot = () => {
                   justifyContent: 'center',
                   alignItems: 'center',
                   flexDirection: 'column',
+                  zIndex: '105',
                 }}
               >
                 <h3>{selectedSpot.address}</h3>
@@ -374,7 +380,14 @@ const RentSpot = () => {
       </div>
 
       {/* BUBBLE */}
-      <Tooltip title={'spot preferences'} arrow placement="top">
+
+      <div className={`${errorRent ? 'shrink' : ''}`}></div>
+      <Tooltip
+        title={'spot preferences '}
+        className={`bubbleToolTip ${openDialog ? 'open' : 'close'} `}
+        arrow
+        placement="top"
+      >
         <div
           className={`bubble ${openDialog ? 'open' : 'close'} `}
           onClick={handleBubbleClick}
@@ -430,9 +443,9 @@ const RentSpot = () => {
                 during the paid period.{' '}
               </h3>
               <p>
-                You will rent the {selectedSpot.address} spot on
-                {selectedStartDate.toString()} from {startTime} to {endTime} for
-                0.10RON/minute
+                You will rent the {selectedSpot.address} spot on{' '}
+                {selectedStartDate.toLocaleDateString()} from {startTime} to{' '}
+                {endTime} for 0.10RON/minute
               </p>
             </div>
           </DialogContent>
@@ -441,6 +454,31 @@ const RentSpot = () => {
             <Button onClick={handleClickRedirect}>Pay & see directions</Button>
           </DialogActions>
         </Dialog>
+      )}
+      {errorRent && (
+        <div
+          style={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            backgroundColor: '#f8d7da',
+            color: '#721c24',
+            padding: '20px',
+            borderRadius: '10px',
+            boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
+            display: 'flex',
+            alignItems: 'center',
+            zIndex: '1301',
+          }}
+        >
+          <div variant="h6" style={{ flexGrow: 1 }}>
+            {errorRent}
+          </div>
+          <IconButton onClick={handleErrorRentClose}>
+            <CloseIcon />
+          </IconButton>
+        </div>
       )}
     </div>
   );
