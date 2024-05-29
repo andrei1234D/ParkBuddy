@@ -3,6 +3,8 @@ const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
+const sendConfirmationEmail = require('./mailer');
+
 const mongoose = require('mongoose');
 
 require('dotenv').config();
@@ -26,11 +28,19 @@ db.once('open', () => console.log('Connected to MongoDB'));
 const customerSchema = new mongoose.Schema({
   username: String,
   passwordHash: String,
+  firstName: String,
+  lastName: String,
+  carPlate: String,
+  email: String,
 });
 
 const partnerSchema = new mongoose.Schema({
   username: String,
   passwordHash: String,
+  firstName: String,
+  lastName: String,
+  carPlate: String,
+  email: String,
   parkingSpots: [
     {
       latitude: Number,
@@ -190,7 +200,8 @@ app.post('/login', async (req, res) => {
 
 // Endpoint for user registration
 app.post('/register', async (req, res) => {
-  const { username, password, role } = req.body;
+  const { firstName, lastName, carPlate, email, username, password, role } =
+    req.body;
   try {
     const existingUser = await getUserModel(role).findOne({ username });
     if (existingUser) {
@@ -198,12 +209,28 @@ app.post('/register', async (req, res) => {
     }
     const passwordHash = await bcrypt.hash(password, 10);
     if (role === 'partner') {
-      const newPartner = new Partner({ username, passwordHash });
+      const newPartner = new Partner({
+        firstName,
+        lastName,
+        carPlate,
+        email,
+        username,
+        passwordHash,
+      });
       await newPartner.save();
     } else if (role === 'customer') {
-      const newCustomer = new Customer({ username, passwordHash });
+      const newCustomer = new Customer({
+        firstName,
+        lastName,
+        carPlate,
+        email,
+        username,
+        passwordHash,
+      });
       await newCustomer.save();
     }
+    sendConfirmationEmail(firstName, email, role);
+
     res.json({ message: 'User registered successfully' });
   } catch (error) {
     res.status(500).json({ message: 'Internal server error' });

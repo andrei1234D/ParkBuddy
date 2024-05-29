@@ -17,6 +17,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { IconButton } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 
 import LoadingSpinner from '../spinner/LoadingSpinner.js';
 import Autocomplete from 'react-google-autocomplete';
@@ -24,7 +25,6 @@ import mapStyles from '../styleForMap/mapStyle.js';
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import CloseIcon from '@mui/icons-material/Close';
 
 import '../style/RentASpot.css';
 
@@ -181,7 +181,7 @@ const RentSpot = () => {
       }
       handleDialogClosePreferences();
     } else {
-      setError('Please fill in all fields');
+      setError(translate('fillAllError'));
       console.log(error);
     }
   };
@@ -381,7 +381,7 @@ const RentSpot = () => {
 
       {/* BUBBLE */}
 
-      <div className={`${errorRent ? 'shrink' : ''}`}></div>
+      <div className={`${errorRent ? 'shrink-animation' : ''}`}></div>
       <Tooltip
         title={'spot preferences '}
         className={`bubbleToolTip ${openDialog ? 'open' : 'close'} `}
@@ -399,7 +399,7 @@ const RentSpot = () => {
       {error && (
         <div
           style={{
-            position: 'absolute',
+            position: 'fixed',
             top: '50%',
             left: '50%',
             transform: 'translate(-50%, -50%)',
@@ -458,7 +458,7 @@ const RentSpot = () => {
       {errorRent && (
         <div
           style={{
-            position: 'absolute',
+            position: 'fixed  ',
             top: '50%',
             left: '50%',
             transform: 'translate(-50%, -50%)',

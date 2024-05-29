@@ -55,8 +55,15 @@ const translations = {
     Cookie_policy: 'Cookie policy',
     Terms_and_Conditions: 'Terms and Conditions',
     Rent_A_Spot: 'Rent A Spot',
+    carPlate: 'Your car plate',
+    carPlateError: 'Please verify your car Plate and try again.',
+    fillAllError: 'Please fill in all fields',
+    firstName: 'First Name',
+    lastName: 'Last Name',
+    email: 'E-MAIL',
+    emailError: 'Please verify your Email and try again.',
+    emailSent: 'We have sent an E-mail !',
   },
-
   ro: {
     login: 'Conecteaza-te',
     logout: 'Delogheaza-te',

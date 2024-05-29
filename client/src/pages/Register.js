@@ -18,44 +18,81 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
 
+import { IconButton } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
+
 const Register = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [carPlate, setCarPlate] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+
+  const [error, setError] = useState('');
+
   const [isRegisterNormalPressed, setIsRegisterNormalPressed] = useState(null);
   const [showDialog, setShowDialog] = useState(false);
   const [showDialogRedirect, setShowDialogRedirect] = useState(false);
   const [dialogText, setDialogText] = useState('');
   const { isDarkMode, translate } = useContext(GlobalStatesContext);
   const navigate = useNavigate();
+
+  const regexCarPlate = /^[A-Z]{1,2}\d{2}[A-Z]{3}$/;
+  const regexPassword = /[!@#$%^&*]/;
+  const regexEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
   const handleRegister = async () => {
     let role;
+
     isRegisterNormalPressed ? (role = 'customer') : (role = 'partner');
 
     try {
-      if (password.length < 7 || !/[!@#$%^&*]/.test(password)) {
-        setDialogText(translate('passwordVerify'));
-        setShowDialog(true);
-        return;
-      }
-      if (username.length < 5) {
-        setDialogText(translate('userLength'));
-        setShowDialog(true);
-        return;
-      }
+      if (password && username && carPlate && firstName && lastName && email) {
+        if (password.length < 7 || !regexPassword.test(password)) {
+          setDialogText(translate('passwordVerify'));
+          setShowDialog(true);
+          return;
+        }
+        if (username.length < 5) {
+          setDialogText(translate('userLength'));
+          setShowDialog(true);
+          return;
+        }
+        if (!regexCarPlate.test(carPlate)) {
+          setDialogText(translate('carPlateError'));
+          setShowDialog(true);
+          return;
+        }
+        if (!regexEmail.test(email)) {
+          setDialogText(translate('emailError'));
+          setShowDialog(true);
+          return;
+        }
 
-      // Make a POST request to your server for user registration
-      const response = await axios.post('http://localhost:5000/register', {
-        username,
-        password,
-        role,
-      });
-      //SUCCESSFUL REGISTRATION
-      setDialogText(translate('registrationSuccessful'));
-      setShowDialogRedirect(true);
+        // Make a POST request to your server for user registration
+        const response = await axios.post('http://localhost:5000/register', {
+          firstName,
+          lastName,
+          carPlate,
+          email,
+          username,
+          password,
+          role,
+        });
+
+        // Successful registration
+        setDialogText(
+          translate('registrationSuccessful') + '\n' + translate('emailSent')
+        );
+        setShowDialogRedirect(true);
+      } else {
+        setError(translate('fillAllError'));
+      }
     } catch (error) {
       console.error('Registration failed:', error.response.data.message);
       setDialogText(translate('userAlreadyExists'));
-      setShowDialog(true); // Open dialog on registration failure
+      setShowDialog(true);
     }
   };
 
@@ -73,6 +110,13 @@ const Register = () => {
   };
   const partnerClick = () => {
     setIsRegisterNormalPressed(false);
+  };
+
+  const handleCarPlateChange = (e) => {
+    setCarPlate(e.target.value.toUpperCase());
+  };
+  const handleErrorClose = () => {
+    setError('');
   };
 
   return (
@@ -120,6 +164,31 @@ const Register = () => {
           <Button onClick={handleRedirect}>TO LOGIN</Button>
         </DialogActions>
       </Dialog>
+      {error && (
+        <div
+          style={{
+            position: 'fixed',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            backgroundColor: '#f8d7da',
+            color: '#721c24',
+            padding: '20px',
+            borderRadius: '10px',
+            boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
+            display: 'flex',
+            alignItems: 'center',
+            zIndex: '1301',
+          }}
+        >
+          <div variant="h6" style={{ flexGrow: 1 }}>
+            {error}
+          </div>
+          <IconButton onClick={handleErrorClose}>
+            <CloseIcon />
+          </IconButton>
+        </div>
+      )}
       <div id="bigContainer" style={{ borderRadius: '15%' }}>
         <div className="welcomeContainer">
           {isRegisterNormalPressed === null ? (
@@ -151,7 +220,46 @@ const Register = () => {
             //IF IT S TRUE
 
             <div className="formNormalAlign">
-              <h2 className=" headerLogin">{translate('welcome')}</h2>
+              <p
+                style={{
+                  color: 'var(--UIText)',
+                  fontSize: '3em',
+                  textAlign: 'center',
+                  textTransform: 'uppercase',
+                  letterSpacing: '2px',
+                }}
+              >
+                CUSTOMER LOGIN
+              </p>
+              <p className="textLogin">{translate('firstName')}</p>
+              <input
+                className="inputLogin"
+                type="text"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+              />
+              <p className="textLogin">{translate('lastName')}</p>
+              <input
+                className="inputLogin"
+                type="text"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+              />
+              <p className="textLogin">{translate('carPlate')}</p>
+              <input
+                className="inputLogin"
+                type="text"
+                value={carPlate}
+                onChange={(e) => handleCarPlateChange(e)}
+                placeholder="e.g., AB12CDE"
+              />
+              <p className="textLogin">{translate('email')}</p>
+              <input
+                className="inputLogin"
+                type="text"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
               <p className="textLogin">{translate('username')}</p>
               <input
                 className="inputLogin"
@@ -166,6 +274,7 @@ const Register = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
+
               <button
                 type="button"
                 style={{ fontWeight: '1000', fontSize: '25px' }}
@@ -186,12 +295,46 @@ const Register = () => {
           ) : (
             //IF IT S FALSE
             <div className="formNormalAlign">
-              <div
-                style={{ color: 'pink', fontSize: '30px', fontWeight: '1000' }}
+              <p
+                style={{
+                  color: 'var(--UIText)',
+                  fontSize: '3em',
+                  textAlign: 'center',
+                  textTransform: 'uppercase',
+                  letterSpacing: '2px',
+                }}
               >
                 PARTNER LOGIN
-              </div>
-              <h2 className=" headerLogin">{translate('welcome')}</h2>
+              </p>
+              <p className="textLogin">{translate('firstName')}</p>
+              <input
+                className="inputLogin"
+                type="text"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+              />
+              <p className="textLogin">{translate('lastName')}</p>
+              <input
+                className="inputLogin"
+                type="text"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+              />
+              <p className="textLogin">{translate('carPlate')}</p>
+              <input
+                className="inputLogin"
+                type="text"
+                value={carPlate}
+                onChange={(e) => handleCarPlateChange(e)}
+                placeholder="e.g., AB12CDE"
+              />
+              <p className="textLogin">{translate('email')}</p>
+              <input
+                className="inputLogin"
+                type="text"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
               <p className="textLogin">{translate('username')}</p>
               <input
                 className="inputLogin"
@@ -206,6 +349,7 @@ const Register = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
+
               <button
                 type="button"
                 style={{ fontWeight: '1000', fontSize: '25px' }}
@@ -231,68 +375,3 @@ const Register = () => {
 };
 
 export default Register;
-{
-  /* <div
-              id="customerLogin"
-              className="containerForm textGlow "
-              style={{
-                borderRadius: '0% 0% 0% 0%',
-                width: '50%',
-              }}
-            >
-              {isRegisterNormalPressed ? (
-                <div className="formNormalAlign">
-                  <div style={{ color: 'pink' }}>PARTNER LOGIN </div>
-                  <h2 className=" headerLogin">{translate('welcome')}</h2>
-                  <p className="textLogin">Username</p>
-                  <input
-                    className="inputLogin"
-                    type="text"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                  />
-                  <p className="textLogin">Password</p>
-                  <input
-                    className="inputLogin"
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                  <button
-                    type="button"
-                    style={{ fontWeight: '1000', fontSize: '25px' }}
-                    onClick={handleRegister}
-                    className="buttonLogin btn-gradient-border textGlow"
-                  >
-                    {translate('login')}
-                  </button>
-                </div>
-              ) : (
-                <div className="formNormalAlign">
-                  <h2 className=" headerLogin">{translate('welcome')}</h2>
-                  <p className="textLogin">Username</p>
-                  <input
-                    className="inputLogin"
-                    type="text"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                  />
-                  <p className="textLogin">Password</p>
-                  <input
-                    className="inputLogin"
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                  <button
-                    type="button"
-                    style={{ fontWeight: '1000', fontSize: '25px' }}
-                    onClick={handleRegister}
-                    className="buttonLogin btn-gradient-border textGlow"
-                  >
-                    {translate('login')}
-                  </button>
-                </div>
-              )}
-            </div> */
-}

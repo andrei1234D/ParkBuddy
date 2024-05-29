@@ -146,13 +146,23 @@ const Login = () => {
           </div>
         </div>
       ) : isRegisterNormalPressed ? (
-        //                            Customer Login
+        // Customer Login
         <div className="formDiv">
-          <div id="bigContainer">
+          <p
+            style={{
+              color: 'var(--UIText)',
+              fontSize: '3em',
+              textAlign: 'center',
+              textTransform: 'uppercase',
+              letterSpacing: '2px',
+            }}
+          >
+            CUSTOMER LOGIN
+          </p>
+          <div id="bigContainer" style={{ width: '100%' }}>
             <div className="welcomeContainer">
               <div className="containerLogin">
                 <div className="containerForm textGlow highlight-on-hover">
-                  <h2 className=" headerLogin">{translate('welcome')}</h2>
                   <p className="textLogin">{translate('username')}</p>
                   <input
                     className="inputLogin"
@@ -199,19 +209,28 @@ const Login = () => {
               onClick={partnerClick}
               src={isDarkMode ? partnerDark : partner}
               style={{ width: '100%', height: '100%' }}
-              alt="customerImg"
+              alt="partnerImg"
             />
           </div>
         </div>
       ) : (
-        //                            Partner Login
+        // Partner Login
         <div className="formDiv">
-          <div id="bigContainer">
-            <p style={{ color: 'pink' }}>PARTNER LOGIN</p>
+          <p
+            style={{
+              color: 'var(--UIText)',
+              fontSize: '3em',
+              textAlign: 'center',
+              textTransform: 'uppercase',
+              letterSpacing: '2px',
+            }}
+          >
+            PARTNER LOGIN
+          </p>
+          <div id="bigContainer" style={{ width: '100%' }}>
             <div className="welcomeContainer">
               <div className="containerLogin">
-                <div className="containerForm textGlow">
-                  <h2 className=" headerLogin">{translate('welcome')}</h2>
+                <div className="containerForm textGlow highlight-on-hover">
                   <p className="textLogin">{translate('username')}</p>
                   <input
                     className="inputLogin"
@@ -253,7 +272,7 @@ const Login = () => {
               </div>
             </div>
           </div>
-          <div className="customerIcon" style={{ alignItems: 'center' }}>
+          <div className="customerIcon">
             <img
               onClick={customerClick}
               src={isDarkMode ? customerDark : customer}
