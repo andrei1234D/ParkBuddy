@@ -73,7 +73,8 @@
   justify-content: space-around;
   flex-direction: column;
   color: white;
-  width: 500px;
+  min-width: 500px;
+  padding: 20px;
   height: 80%;
   background-color: var(--UIColor);
   row-gap: 20px;

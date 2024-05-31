@@ -80,7 +80,6 @@ const AccountSettings = () => {
         <Link to="/paymentMethod">
           <Button
             variant="contained"
-            onClick={handleLogout}
             style={{
               color: 'var(--UIColor)',
               backgroundColor: 'var(--UIText)',

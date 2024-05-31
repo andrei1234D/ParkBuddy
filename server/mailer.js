@@ -13,7 +13,7 @@ const sendConfirmationEmail = (firstName, email, role) => {
     from: process.env.GMAIL,
     to: email,
     subject: 'Registration Successful',
-    text: `Hello ${firstName},\n\nThank you for registering on our platform with a ${role} account.\nSafe driving!\n\nBest Regards,\nPark Buddy`,
+    text: `Hello ${firstName},\n\nThank you for registering on our platform with a ${role} account.\nSafe driving!\n\nBest Regards,\nPark Buddy Team`,
   };
 
   transporter.sendMail(mailOptions, (error, info) => {

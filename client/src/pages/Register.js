@@ -38,7 +38,7 @@ const Register = () => {
   const { isDarkMode, translate } = useContext(GlobalStatesContext);
   const navigate = useNavigate();
 
-  const regexCarPlate = /^[A-Z]{1,2}\d{2}[A-Z]{3}$/;
+  const regexCarPlate = /^[A-Z]{2}-\d{2}-[A-Z]{3}$/;
   const regexPassword = /[!@#$%^&*]/;
   const regexEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
@@ -105,15 +105,32 @@ const Register = () => {
   const handleRedirect = () => {
     navigate('/login');
   };
-  const customerClick = () => {
-    setIsRegisterNormalPressed(true);
-  };
   const partnerClick = () => {
     setIsRegisterNormalPressed(false);
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
+  const customerClick = () => {
+    setIsRegisterNormalPressed(true);
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
   };
 
   const handleCarPlateChange = (e) => {
-    setCarPlate(e.target.value.toUpperCase());
+    let input = e.target.value.toUpperCase().replace(/-/g, '');
+
+    if (input.length > 2) {
+      input = input.slice(0, 2) + '-' + input.slice(2);
+    }
+    if (input.length > 5) {
+      input = input.slice(0, 5) + '-' + input.slice(5);
+    }
+
+    setCarPlate(input);
   };
   const handleErrorClose = () => {
     setError('');
@@ -222,14 +239,14 @@ const Register = () => {
             <div className="formNormalAlign">
               <p
                 style={{
-                  color: 'var(--UIText)',
+                  color: '#097b5a',
                   fontSize: '3em',
                   textAlign: 'center',
                   textTransform: 'uppercase',
                   letterSpacing: '2px',
                 }}
               >
-                CUSTOMER LOGIN
+                CUSTOMER REGISTER
               </p>
               <p className="textLogin">{translate('firstName')}</p>
               <input
@@ -297,14 +314,14 @@ const Register = () => {
             <div className="formNormalAlign">
               <p
                 style={{
-                  color: 'var(--UIText)',
+                  color: '#097b5a',
                   fontSize: '3em',
                   textAlign: 'center',
                   textTransform: 'uppercase',
                   letterSpacing: '2px',
                 }}
               >
-                PARTNER LOGIN
+                PARTNER REGISTER
               </p>
               <p className="textLogin">{translate('firstName')}</p>
               <input

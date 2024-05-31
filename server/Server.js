@@ -32,6 +32,18 @@ const customerSchema = new mongoose.Schema({
   lastName: String,
   carPlate: String,
   email: String,
+  paymentMethods: [
+    {
+      details: {
+        bankName: String,
+        cardNumber: String,
+        expiryDate: String,
+        cvv: String,
+        cardHolderName: String,
+      },
+      isActive: { type: Boolean, default: false },
+    },
+  ],
 });
 
 const partnerSchema = new mongoose.Schema({
@@ -62,6 +74,16 @@ const partnerSchema = new mongoose.Schema({
           ],
         },
       ],
+    },
+  ],
+  paymentMethods: [
+    {
+      bankName: String,
+      cardNumber: String,
+      expiryDate: String,
+      cvv: String,
+      cardHolderName: String,
+      isActive: { type: Boolean, default: false },
     },
   ],
 });
@@ -168,6 +190,78 @@ app.get('/get-google-maps-key', (req, res) => {
   res.json({ apiKey });
 });
 
+app.post('/addPaymentMethod', async (req, res) => {
+  const { username, role, newPaymentMethod } = req.body;
+
+  try {
+    const User = getUserModel(role);
+    const user = await User.findOne({ username });
+
+    if (!user) {
+      return res.status(404).send({ message: 'User not found' });
+    }
+
+    // Set all existing payment methods' isDefault to false
+    user.paymentMethods.forEach((method) => {
+      method.isActive = false;
+    });
+
+    // Set the new payment method's isDefault to true
+    user.paymentMethods.push(newPaymentMethod);
+
+    console.log(user.paymentMethods);
+
+    await user.save();
+
+    console.log(user.paymentMethods);
+
+    res.status(200).send({ message: 'Payment method added successfully' });
+  } catch (error) {
+    console.error('Error adding payment method:', error);
+    res.status(500).send({ message: 'Internal server error' });
+  }
+});
+
+app.post('/changeActivePaymentMethod', async (req, res) => {
+  const { username, role, paymentMethodIndex } = req.body;
+
+  try {
+    const User = getUserModel(role);
+    const user = await User.findOne({ username });
+
+    if (!user) {
+      return res.status(404).send({ message: 'User not found' });
+    }
+    user.paymentMethods.forEach((method, index) => {
+      method.isActive = index === paymentMethodIndex;
+    });
+
+    await user.save();
+    res
+      .status(200)
+      .send({ message: 'Active payment method changed successfully' });
+  } catch (error) {
+    console.error('Error changing active payment method:', error);
+    res.status(500).send({ message: 'Internal server error' });
+  }
+});
+app.post('/fetchPaymentMethods', async (req, res) => {
+  const { username, role } = req.body;
+  console.log(username, role);
+  try {
+    const User = getUserModel(role);
+    const user = await User.findOne({ username });
+
+    if (!user) {
+      return res.status(404).send({ message: 'User not found' });
+    } else {
+      return res.json({ paymentMethods: user.paymentMethods });
+    }
+  } catch (error) {
+    console.error('Error fetching payment methods:', error);
+    res.status(500).send({ message: 'Internal server error' });
+  }
+});
 // Endpoint for user login
 app.post('/login', async (req, res) => {
   const { username, password, role } = req.body;

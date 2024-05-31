@@ -30,12 +30,19 @@ const Login = () => {
   const [dialogText, setDialogText] = useState('');
   const [showDialog, setShowDialog] = useState(false);
   const [isRegisterNormalPressed, setIsRegisterNormalPressed] = useState(null);
-
-  const customerClick = () => {
-    setIsRegisterNormalPressed(true);
-  };
   const partnerClick = () => {
     setIsRegisterNormalPressed(false);
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
+  const customerClick = () => {
+    setIsRegisterNormalPressed(true);
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
   };
 
   const navigate = useNavigate();
@@ -78,6 +85,7 @@ const Login = () => {
   const navigateToHome = () => {
     navigate('/');
   };
+
   return (
     <div className="biggestDiv">
       <Dialog open={showDialog} onClose={handleCloseDialog}>
@@ -150,7 +158,7 @@ const Login = () => {
         <div className="formDiv">
           <p
             style={{
-              color: 'var(--UIText)',
+              color: '#097b5a',
               fontSize: '3em',
               textAlign: 'center',
               textTransform: 'uppercase',
@@ -218,7 +226,7 @@ const Login = () => {
         <div className="formDiv">
           <p
             style={{
-              color: 'var(--UIText)',
+              color: '#097b5a',
               fontSize: '3em',
               textAlign: 'center',
               textTransform: 'uppercase',
