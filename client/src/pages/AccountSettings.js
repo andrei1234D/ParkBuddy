@@ -53,52 +53,62 @@ const AccountSettings = () => {
             </Link>
           </div>
         )}
-        {role === 'partner' && (
-          <div style={{ textAlign: 'center' }}>
-            <p>{translate('lendASpotWhenever')}</p>
+        <div
+          style={{
+            textAlign: 'center',
+            rowGap: '20px',
+            display: 'flex',
+            flexDirection: 'column',
+          }}
+        >
+          {role === 'partner' && (
+            <div>
+              <p>{translate('lendASpotWhenever')}</p>
+              <Button
+                variant="contained"
+                style={{
+                  color: 'var(--UIColor)',
+                  backgroundColor: 'var(--UIText)',
+                }}
+                onClick={handleToLendASpot}
+              >
+                {translate('lend')}
+              </Button>
+            </div>
+          )}
+          <Button
+            onClick={handleToYourParkingSpots}
+            style={{
+              color: 'var(--UIColor)',
+              backgroundColor: 'var(--UIText)',
+            }}
+          >
+            {translate('seeYourParkingSpots')}
+          </Button>
+          <Link to="/paymentMethod">
             <Button
               variant="contained"
               style={{
                 color: 'var(--UIColor)',
                 backgroundColor: 'var(--UIText)',
               }}
-              onClick={handleToLendASpot}
             >
-              {translate('lend')}
+              {translate('toPayment')}{' '}
+              <IoWallet size="25px" style={{ marginLeft: '8px' }} />
             </Button>
-          </div>
-        )}
-        <Button
-          onClick={handleToYourParkingSpots}
-          style={{
-            color: 'var(--UIColor)',
-            backgroundColor: 'var(--UIText)',
-          }}
-        >
-          {translate('seeYourParkingSpots')}
-        </Button>
-        <Link to="/paymentMethod">
+          </Link>
+
           <Button
             variant="contained"
+            onClick={handleLogout}
             style={{
               color: 'var(--UIColor)',
               backgroundColor: 'var(--UIText)',
             }}
           >
-            {translate('toPayment')}{' '}
-            <IoWallet size="25px" style={{ marginLeft: '8px' }} />
+            {translate('logout')} <AiOutlineLogout size="25px" />
           </Button>
-        </Link>
-        <Button
-          variant="contained"
-          onClick={handleLogout}
-          style={{
-            color: 'var(--UIColor)',
-            backgroundColor: 'var(--UIText)',
-          }}
-        >
-          {translate('logout')} <AiOutlineLogout size="25px" />
-        </Button>
+        </div>
       </div>
     </div>
   );

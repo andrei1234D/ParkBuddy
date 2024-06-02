@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { GoogleMap } from '@react-google-maps/api';
+import { GoogleMap, Marker, InfoWindow } from '@react-google-maps/api';
 import GlobalStatesContext from '../context/GlobalStatesContext';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -19,6 +19,7 @@ import '../style/LendASpot.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import CloseIcon from '@mui/icons-material/Close';
+import markerImage from '../images/marker2.png';
 
 const mapContainerStyle = {
   width: '100vw',
@@ -42,6 +43,11 @@ const LendSpot = () => {
   const [apiKey, setApiKey] = useState(null);
   const [map, setMap] = useState(null);
   const [spots, setSpots] = useState([]);
+  const [selectedSpot, setSelectedSpot] = useState(null);
+
+  const [infoWindowPosition, setInfoWindowPosition] = useState(null);
+  const [infoWindowOpen, setInfoWindowOpen] = useState(false);
+
   const [loading, setLoading] = useState(true);
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedStartDate, setSelectedStartDate] = useState(new Date());
@@ -53,7 +59,7 @@ const LendSpot = () => {
   const [error, setError] = useState('');
   const [loginError, setLoginError] = useState(false); // New state for login error message
 
-  const { translate, username, isLoggedIn, role } =
+  const { translate, username, isLoggedIn, role, firstName } =
     useContext(GlobalStatesContext);
   const navigate = useNavigate();
 
@@ -72,12 +78,18 @@ const LendSpot = () => {
     fetchApiKey();
   }, []);
 
+  //MODDIFY TO GEET THEE ACCTUAL PARTNER OWNED SPOTS.
   useEffect(() => {
     if (apiKey) {
       const fetchData = async () => {
         try {
-          const response = await axios.get('http://localhost:5000/Get-Spots');
-          setSpots(response.data);
+          const response = await axios.post(
+            'http://localhost:5000/Your-Spots',
+            {
+              username,
+            }
+          );
+          setSpots(response.data.parkingSpots);
           setLoading(false);
         } catch (error) {
           console.error('Error fetching spots:', error);
@@ -122,13 +134,16 @@ const LendSpot = () => {
   const handleMapClick = (e) => {
     const lat = e.latLng.lat();
     const lng = e.latLng.lng();
-    setNewSpot({ lat, lng });
+    const newSpot = { lat, lng };
+    setNewSpot(newSpot);
+    setSpots((prevSpots) => [...prevSpots, newSpot]);
     geocodeLatLng(lat, lng);
     setOpenDialog(true);
   };
 
   const handleDialogClose = () => {
     setOpenDialog(false);
+    setSpots((prevSpots) => prevSpots.slice(0, -1));
     setNewSpot(null);
     setError('');
   };
@@ -185,6 +200,7 @@ const LendSpot = () => {
           toast.success('Parking spot registered successfully!', {
             position: 'top-right',
             autoClose: 10000,
+            closeButton: false,
             closeOnClick: true,
           });
         } catch (error) {
@@ -233,6 +249,16 @@ const LendSpot = () => {
   const handleNavigateToLogin = () => {
     navigate('/login');
   };
+  const handleMarkerClick = (spot) => {
+    console.log('Marker Click Has Been Called Once');
+    setSelectedSpot(spot);
+    setInfoWindowPosition({ lat: spot.latitude, lng: spot.longitude });
+    setInfoWindowOpen(true);
+  };
+  const handleInfoWindowClose = () => {
+    setSelectedSpot(null);
+    setInfoWindowOpen(false);
+  };
 
   if (loading) {
     return <LoadingSpinner />;
@@ -264,7 +290,64 @@ const LendSpot = () => {
           options={{ styles: mapStyles, fullscreenControl: false }}
           onLoad={(map) => setMap(map)}
           onClick={handleMapClick}
-        ></GoogleMap>
+        >
+          {spots.map((spot) => (
+            <Marker
+              key={spot.id || `${spot.lat}-${spot.lng}`}
+              position={{
+                lat: spot.latitude || spot.lat,
+                lng: spot.longitude || spot.lng,
+              }}
+              onClick={() => {
+                handleMarkerClick(spot);
+              }}
+              icon={{
+                url: markerImage,
+                scaledSize: new window.google.maps.Size(70, 70),
+              }}
+              animation={window.google.maps.Animation.DROP}
+              title={spot.address}
+            />
+          ))}
+          {infoWindowOpen && selectedSpot && (
+            <InfoWindow
+              position={infoWindowPosition}
+              onCloseClick={handleInfoWindowClose}
+            >
+              <div
+                style={{
+                  padding: '5px',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  flexDirection: 'column',
+                  zIndex: '105',
+                }}
+              >
+                <h3>{selectedSpot.address}</h3>
+                <p>Status: {selectedSpot.status} now</p>
+                <p>
+                  Availability:
+                  {new Date(selectedSpot.startDate).toLocaleDateString()} -{' '}
+                  {new Date(selectedSpot.endDate).toLocaleDateString()}
+                </p>
+                <p>Price: the most you are willing to pay.</p>
+                <p>Owner: {firstName}</p>
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <div> Rating:</div>
+                  <div className="stars">
+                    <span className="star">&#9733;</span>
+                    <span className="star">&#9733;</span>
+                    <span className="star">&#9733;</span>
+                    <span className="star">&#9733;</span>
+                    <span className="star">&#9733;</span>
+                  </div>
+                  <div>5/5</div>
+                </div>
+              </div>
+            </InfoWindow>
+          )}
+        </GoogleMap>
       )}
       <Dialog open={openDialog} onClose={handleDialogClose} fullScreen>
         <DialogTitle>{translate('Please_verify_the_address')}</DialogTitle>
@@ -361,7 +444,10 @@ const LendSpot = () => {
             <div variant="h6" style={{ flexGrow: 1 }}>
               {error}
             </div>
-            <IconButton onClick={handleErrorClose}>
+            <IconButton
+              onClick={handleErrorClose}
+              style={{ width: '30px', height: '30px' }}
+            >
               <CloseIcon />
             </IconButton>
           </div>

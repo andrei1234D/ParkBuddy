@@ -18,7 +18,7 @@ const PaymentMethod = () => {
   const [successMessage, setSuccessMessage] = useState(false);
   const [showPayments, setShowPayments] = useState(false);
   const [currentPaymentMethod, setCurrentPaymentMethod] = useState({});
-  const { username, role } = useContext(GlobalStatesContext);
+  const { username, role, firstName } = useContext(GlobalStatesContext);
 
   useEffect(() => {
     async function fetchPaymentMethods() {
@@ -46,7 +46,7 @@ const PaymentMethod = () => {
 
     fetchPaymentMethods();
   }, [username, role]);
-
+  console.log(firstName);
   // Validation functions
   const validateCardNumber = (number) => {
     const re = /^\d{16}$/;

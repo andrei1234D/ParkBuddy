@@ -56,7 +56,7 @@ const RentSpot = () => {
     lng: 26.102983712003493,
   });
 
-  const { translate, username } = useContext(GlobalStatesContext);
+  const { translate, username, role } = useContext(GlobalStatesContext);
 
   useEffect(() => {
     const fetchApiKey = async () => {
@@ -146,9 +146,25 @@ const RentSpot = () => {
   };
 
   const handleClickRedirect = () => {
-    const { latitude, longitude } = selectedSpot;
-    const url = `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`;
-    window.location.href = url;
+    try {
+      const spotAddress = selectedSpot.address;
+      const spotUsername = selectedSpot.username;
+      axios.post('http://localhost:5000/addParkingRentalTimes', {
+        startTime,
+        endTime,
+        spotAddress,
+        spotUsername,
+        selectedStartDate,
+        username,
+        role,
+      });
+      const { latitude, longitude } = selectedSpot;
+      const url = `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`;
+      console.log(url);
+      window.location.href = url;
+    } catch (error) {
+      console.error('error adding spot:', error);
+    }
   };
 
   const handlePreferencesClick = async () => {
@@ -176,6 +192,7 @@ const RentSpot = () => {
         toast.error('Error applying filters', {
           position: 'top-right',
           autoClose: 10000,
+          closeButton: false,
           closeOnClick: true,
         });
       }
@@ -282,6 +299,7 @@ const RentSpot = () => {
                 <p>Price: the most you are willing to pay.</p>
                 <p>Owner: {selectedSpot.username}</p>
                 <p>Phone Number: 0721985898</p>
+                <p>Rating:</p>
                 <Button onClick={handleDialogConfirmationOpen}>Rent Now</Button>
               </div>
             </InfoWindow>
@@ -296,7 +314,10 @@ const RentSpot = () => {
               Tell us when would you like your spot to be available and we will
               show you the best spots for your needs
             </div>
-            <IconButton onClick={handleDialogCloseNoPreferences}>
+            <IconButton
+              onClick={handleDialogCloseNoPreferences}
+              style={{ width: '30px', height: '30px' }}
+            >
               <CloseIcon />
             </IconButton>
           </div>
@@ -416,7 +437,10 @@ const RentSpot = () => {
           <div variant="h6" style={{ flexGrow: 1 }}>
             {error}
           </div>
-          <IconButton onClick={handleErrorClose}>
+          <IconButton
+            onClick={handleErrorClose}
+            style={{ width: '30px', height: '30px' }}
+          >
             <CloseIcon />
           </IconButton>
         </div>
@@ -475,7 +499,10 @@ const RentSpot = () => {
           <div variant="h6" style={{ flexGrow: 1 }}>
             {errorRent}
           </div>
-          <IconButton onClick={handleErrorRentClose}>
+          <IconButton
+            onClick={handleErrorRentClose}
+            style={{ width: '30px', height: '30px' }}
+          >
             <CloseIcon />
           </IconButton>
         </div>

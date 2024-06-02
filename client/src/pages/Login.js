@@ -9,6 +9,7 @@ import customerDark from '../images/customerDark.png';
 import partner from '../images/vipDark.png';
 import partnerDark from '../images/vipLight.png';
 import { useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
 
 //language translate imports
 import GlobalStatesContext from '../context/GlobalStatesContext';
@@ -58,11 +59,13 @@ const Login = () => {
         role,
       });
       const token = response.data.token;
-      localStorage.setItem('token', token);
+      const firstName = response.data.firstName;
 
-      setDialogText('Successfully Loggeed In');
+      setDialogText('Successfully Logged In');
       setShowDialogRedirect(true);
-      toggleLogin();
+
+      const decodedToken = jwtDecode(token);
+      toggleLogin(decodedToken, firstName);
     } catch (error) {
       if (error.response.data.message === 'User not found') {
         setDialogText(translate('userNotFound'));

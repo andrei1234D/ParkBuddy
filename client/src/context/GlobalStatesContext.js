@@ -1,6 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
 import translations from '../translation/Translation';
-import { jwtDecode } from 'jwt-decode';
 
 const GlobalStatesContext = createContext();
 
@@ -20,6 +19,7 @@ export const GlobalStatesContextProvider = ({ children }) => {
   const [role, setRole] = useState(null);
   const [username, setUsername] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [firstName, setFirstName] = useState(null);
 
   useEffect(() => {
     localStorage.setItem('language', language);
@@ -43,15 +43,15 @@ export const GlobalStatesContextProvider = ({ children }) => {
     setMoveParticles(!moveParticles);
   };
 
-  const toggleLogin = () => {
-    let token = localStorage.getItem('token');
-    const decodedToken = jwtDecode(token);
+  const toggleLogin = (decodedToken, firstName) => {
     const { userName, userRole } = decodedToken;
     setUsername(userName);
     setRole(userRole);
+    setFirstName(firstName);
     setIsLoggedIn(true);
   };
   const toggleLogout = () => {
+    setFirstName(null);
     setUsername(null);
     setRole(null);
     setIsLoggedIn(false);
@@ -74,6 +74,7 @@ export const GlobalStatesContextProvider = ({ children }) => {
         toggleParticles,
         role,
         username,
+        firstName,
         toggleLogin,
         isLoggedIn,
         toggleLogout,

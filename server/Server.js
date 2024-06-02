@@ -3,7 +3,10 @@ const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
+const moment = require('moment');
+
 const sendConfirmationEmail = require('./mailer');
+const { Customer, Partner, ParkingSpot } = require('./schemas');
 
 const mongoose = require('mongoose');
 
@@ -23,98 +26,6 @@ const db = mongoose.connection;
 
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 db.once('open', () => console.log('Connected to MongoDB'));
-
-// Define schemas for partner and customer collections
-const customerSchema = new mongoose.Schema({
-  username: String,
-  passwordHash: String,
-  firstName: String,
-  lastName: String,
-  carPlate: String,
-  email: String,
-  paymentMethods: [
-    {
-      details: {
-        bankName: String,
-        cardNumber: String,
-        expiryDate: String,
-        cvv: String,
-        cardHolderName: String,
-      },
-      isActive: { type: Boolean, default: false },
-    },
-  ],
-});
-
-const partnerSchema = new mongoose.Schema({
-  username: String,
-  passwordHash: String,
-  firstName: String,
-  lastName: String,
-  carPlate: String,
-  email: String,
-  parkingSpots: [
-    {
-      latitude: Number,
-      longitude: Number,
-      address: String,
-      status: String,
-      startDate: Date,
-      endDate: Date,
-      availability: [
-        {
-          day: Date,
-          startTime: String, // Beginning time
-          endTime: String, // End time
-          spotTimes: [
-            {
-              startDayTime: String,
-              endDayTime: String,
-            },
-          ],
-        },
-      ],
-    },
-  ],
-  paymentMethods: [
-    {
-      bankName: String,
-      cardNumber: String,
-      expiryDate: String,
-      cvv: String,
-      cardHolderName: String,
-      isActive: { type: Boolean, default: false },
-    },
-  ],
-});
-const ParkingSpotSchema = new mongoose.Schema({
-  latitude: Number,
-  longitude: Number,
-  address: String,
-  username: String,
-  status: String,
-  startTime: String,
-  startDate: Date,
-  endDate: Date,
-  availability: [
-    {
-      day: Date,
-      startTime: String, // Beginning time
-      endTime: String, // End time
-      spotTimes: [
-        {
-          startDayTime: String,
-          endDayTime: String,
-        },
-      ],
-    },
-  ],
-});
-
-// Models for partner and customer collections
-const Partner = mongoose.model('Partner', partnerSchema);
-const Customer = mongoose.model('Customer', customerSchema);
-const ParkingSpot = mongoose.model('Parking Spot', ParkingSpotSchema);
 
 //decide witch collection to browse
 const getUserModel = (role) => {
@@ -286,7 +197,7 @@ app.post('/login', async (req, res) => {
         expiresIn: '1h',
       }
     );
-    res.json({ token });
+    res.json({ token, firstName: user.firstName });
   } catch (error) {
     res.status(500).json({ message: 'Internal server error' });
   }
@@ -576,7 +487,107 @@ app.post('/Preferences-Spots', async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
+app.post('/addParkingRentalTimes', async (req, res) => {
+  try {
+    const {
+      startTime,
+      endTime,
+      spotAddress,
+      spotUsername,
+      selectedStartDate,
+      username,
+      role,
+    } = req.body;
 
+    // Find the partner who owns the parking spot
+    const partner = await Partner.findOne({ username: spotUsername });
+    if (!partner) {
+      return res.status(404).json({ message: 'Partner not found' });
+    }
+
+    // Find the parking spot within the partner's parking spots
+    const parkingSpot = partner.parkingSpots.find(
+      (spot) => spot.address === spotAddress
+    );
+    if (!parkingSpot) {
+      return res.status(404).json({ message: 'Parking spot not found' });
+    }
+
+    // Calculate the rental duration in minutes
+
+    const startDateTime = moment.utc(
+      `${selectedStartDate.split('T')[0]}T${startTime}`
+    );
+    const endDateTime = moment.utc(
+      `${selectedStartDate.split('T')[0]}T${endTime}`
+    );
+    let durationMinutes;
+    if (startDateTime.isValid() && endDateTime.isValid()) {
+      // Calculate duration in minutes
+      durationMinutes = endDateTime.diff(startDateTime, 'minutes');
+    } else {
+      console.error('Invalid date or time format');
+    }
+    const price = 0.3 * durationMinutes;
+
+    // Update partner's parking history
+    partner.spotParkingHistory = partner.spotParkingHistory || [];
+    partner.spotParkingHistory.push({
+      spotAddress,
+      price,
+      spotStartTime: startTime,
+      spotEndTime: endTime,
+      spotDay: new Date(selectedStartDate),
+    });
+
+    // Save the updated partner document
+    await partner.save();
+
+    // Update customer's parking history
+    const userModel = getUserModel(role);
+    const user = await userModel.findOne({ username });
+    if (user) {
+      user.spotParkingHistory = user.spotParkingHistory || [];
+      user.spotParkingHistory.push({
+        spotAddress,
+        price,
+        spotStartTime: startTime,
+        spotEndTime: endTime,
+        spotDay: new Date(selectedStartDate),
+      });
+
+      // Save the updated customer document
+      await user.save();
+    } else {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    // Update ParkingSpot's parking history
+    const parkingSpotDoc = await ParkingSpot.findOne({ address: spotAddress });
+    if (parkingSpotDoc) {
+      parkingSpotDoc.parkingHistory = parkingSpotDoc.parkingHistory || [];
+      parkingSpotDoc.parkingHistory.push({
+        price,
+        spotStartTime: startTime,
+        spotEndTime: endTime,
+        spotDay: new Date(selectedStartDate),
+      });
+
+      // Save the updated ParkingSpot document
+      await parkingSpotDoc.save();
+    } else {
+      return res
+        .status(404)
+        .json({ message: 'Parking spot document not found' });
+    }
+
+    return res
+      .status(200)
+      .json({ message: 'Parking rental time added successfully' });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+});
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
