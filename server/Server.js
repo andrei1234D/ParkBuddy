@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
 const moment = require('moment');
 
-const sendConfirmationEmail = require('./mailer');
+const { sendRentalDetails, sendConfirmationEmail } = require('./mailer');
 const { Customer, Partner, ParkingSpot } = require('./schemas');
 
 const mongoose = require('mongoose');
@@ -197,7 +197,7 @@ app.post('/login', async (req, res) => {
         expiresIn: '1h',
       }
     );
-    res.json({ token, firstName: user.firstName });
+    res.json({ token, firstName: user.firstName, email: user.email });
   } catch (error) {
     res.status(500).json({ message: 'Internal server error' });
   }
@@ -412,32 +412,19 @@ app.get('/Get-Spots', async (req, res) => {
 });
 app.post('/Preferences-Spots', async (req, res) => {
   const { username, selectedDate, startRentTime, endRentTime } = req.body;
-  console.log('Received request with:');
-  console.log('endRentTime:', endRentTime);
-  console.log('startRentTime:', startRentTime);
-  console.log('selectedDate:', selectedDate);
 
   try {
     const parkingSpots = await ParkingSpot.find();
-    console.log('Fetched parking spots:', parkingSpots);
 
     const availableSpots = parkingSpots.filter((spot) => {
-      console.log('Checking spot:', spot);
-
       // Check if the spot has availability for the selected date
       const availabilityForDate = spot.availability.some((avail) => {
         const availDate = new Date(avail.day);
         const selectedDateTime = new Date(selectedDate);
 
-        console.log('Comparing selected date with availability date:');
-        console.log('availDate:', availDate);
-        console.log('selectedDateTime:', selectedDateTime);
-
         // Check if the selected date matches any day in the availability array
         return selectedDateTime.toDateString() === availDate.toDateString();
       });
-
-      console.log('availabilityForDate:', availabilityForDate);
 
       if (availabilityForDate) {
         // Check if spotTimes is empty, if so, consider the spot available
@@ -457,22 +444,14 @@ app.post('/Preferences-Spots', async (req, res) => {
             const rentStartTime = new Date(`${selectedDate} ${startRentTime}`);
             const rentEndTime = new Date(`${selectedDate} ${endRentTime}`);
 
-            console.log('Checking time intervals for overlaps:');
-            console.log('spotStartTime:', spotStartTime);
-            console.log('spotEndTime:', spotEndTime);
-            console.log('rentStartTime:', rentStartTime);
-            console.log('rentEndTime:', rentEndTime);
-
             // Check for overlap in time intervals
             const timeOverlap =
               rentStartTime < spotEndTime && rentEndTime > spotStartTime;
-            console.log('timeOverlap:', timeOverlap);
 
             return timeOverlap;
           });
         });
 
-        console.log('overlaps:', overlaps);
         // If the spot has availability on the selected date and no overlaps, return true
         return !overlaps;
       } else {
@@ -497,8 +476,11 @@ app.post('/addParkingRentalTimes', async (req, res) => {
       selectedStartDate,
       username,
       role,
+      firstName,
+      email,
     } = req.body;
-
+    console.log('startTime:', startTime, 'endTime', endTime);
+    console.log(typeof startTime, typeof endTime);
     // Find the partner who owns the parking spot
     const partner = await Partner.findOne({ username: spotUsername });
     if (!partner) {
@@ -574,6 +556,15 @@ app.post('/addParkingRentalTimes', async (req, res) => {
 
       // Save the updated ParkingSpot document
       await parkingSpotDoc.save();
+      sendRentalDetails(
+        firstName,
+        email,
+        startTime,
+        endTime,
+        startDateTime,
+        spotAddress,
+        price
+      );
     } else {
       return res
         .status(404)

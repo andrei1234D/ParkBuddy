@@ -56,7 +56,8 @@ const RentSpot = () => {
     lng: 26.102983712003493,
   });
 
-  const { translate, username, role } = useContext(GlobalStatesContext);
+  const { translate, username, role, firstName, email } =
+    useContext(GlobalStatesContext);
 
   useEffect(() => {
     const fetchApiKey = async () => {
@@ -125,6 +126,7 @@ const RentSpot = () => {
       position: 'top-right',
       autoClose: 8000,
       closeOnClick: true,
+      closeButton: false,
     });
   };
 
@@ -150,13 +152,15 @@ const RentSpot = () => {
       const spotAddress = selectedSpot.address;
       const spotUsername = selectedSpot.username;
       axios.post('http://localhost:5000/addParkingRentalTimes', {
-        startTime,
-        endTime,
+        startTime: formatTime(startTime),
+        endTime: formatTime(endTime),
         spotAddress,
         spotUsername,
         selectedStartDate,
         username,
         role,
+        firstName,
+        email,
       });
       const { latitude, longitude } = selectedSpot;
       const url = `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`;
@@ -185,6 +189,7 @@ const RentSpot = () => {
         toast.success('Filters Applied', {
           position: 'top-right',
           autoClose: 10000,
+          closeButton: false,
           closeOnClick: true,
         });
       } catch (error) {
@@ -230,11 +235,21 @@ const RentSpot = () => {
   const handleErrorRentClose = () => {
     setErrorRent('');
   };
+  const getMinEndTime = () => {
+    if (!startTime) return new Date();
+    const time = new Date(startTime);
+    time.setMinutes(time.getMinutes() + 1);
+    return time;
+  };
+  const formatTime = (date) => {
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    return `${hours}:${minutes}`;
+  };
 
   if (loading) {
     return <LoadingSpinner />;
   }
-
   return (
     <div>
       <ToastContainer />
@@ -341,30 +356,48 @@ const RentSpot = () => {
                   justifyContent: 'space-evenly ',
                 }}
               >
-                <TextField
-                  label="Start Time"
-                  type="time"
-                  value={startTime}
-                  onChange={(e) => setStartTime(e.target.value)}
-                  InputLabelProps={{
-                    shrink: true,
+                <div>
+                  <p style={{ textAlign: 'center', fontSize: '25px' }}>
+                    Start Time
+                  </p>
+                  <DatePicker
+                    title={startTime}
+                    selected={startTime}
+                    onChange={(date) => setStartTime(date)}
+                    showTimeSelect
+                    showTimeSelectOnly
+                    timeIntervals={10}
+                    timeCaption="Time"
+                    dateFormat="HH:mm"
+                  />
+                </div>
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    flexDirection: 'column',
                   }}
-                  inputProps={{
-                    step: 300, // 5 min
-                  }}
-                />
-                <TextField
-                  label="End Time"
-                  type="time"
-                  value={endTime}
-                  onChange={(e) => setEndTime(e.target.value)}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  inputProps={{
-                    step: 300, // 5 min
-                  }}
-                />
+                >
+                  <p
+                    style={{
+                      textAlign: 'center',
+                      fontSize: '25px',
+                    }}
+                  >
+                    End Time
+                  </p>
+                  <DatePicker
+                    selected={endTime}
+                    onChange={(date) => setEndTime(date)}
+                    showTimeSelect
+                    showTimeSelectOnly
+                    timeIntervals={10}
+                    timeCaption="Time"
+                    dateFormat="HH:mm"
+                    minTime={getMinEndTime()}
+                    maxTime={new Date().setHours(23, 59, 59, 999)}
+                  />
+                </div>
               </div>
               <div style={{ display: 'block' }}>
                 <p style={{ textAlign: 'center', fontSize: '25px' }}> DATE</p>
@@ -468,8 +501,9 @@ const RentSpot = () => {
               </h3>
               <p>
                 You will rent the {selectedSpot.address} spot on{' '}
-                {selectedStartDate.toLocaleDateString()} from {startTime} to{' '}
-                {endTime} for 0.10RON/minute
+                {selectedStartDate.toLocaleDateString()} from{' '}
+                {startTime.toLocaleDateString()} to{' '}
+                {endTime.toLocaleDateString()} for 0.30 RON/minute
               </p>
             </div>
           </DialogContent>

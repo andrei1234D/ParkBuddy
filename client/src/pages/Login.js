@@ -60,12 +60,13 @@ const Login = () => {
       });
       const token = response.data.token;
       const firstName = response.data.firstName;
+      const email = response.data.email;
 
       setDialogText('Successfully Logged In');
       setShowDialogRedirect(true);
 
       const decodedToken = jwtDecode(token);
-      toggleLogin(decodedToken, firstName);
+      toggleLogin(decodedToken, firstName, email);
     } catch (error) {
       if (error.response.data.message === 'User not found') {
         setDialogText(translate('userNotFound'));

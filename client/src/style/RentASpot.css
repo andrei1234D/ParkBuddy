@@ -9,6 +9,7 @@
   align-items: center;
   transition: background-color 0.7s visibility 0.7s;
   visibility: hidden;
+  overflow: visible; /* Allow overflow visibility */
 }
 .custom-dialog.open {
   background-color: rgba(0, 0, 0, 0.5);
@@ -62,7 +63,7 @@
   flex-direction: column;
 }
 .dialog-content.open {
-  animation: Morph 0.7s forwards;
+  animation: Morph 0.7s forwards, DelayOverflow 0s 0.7s forwards;
   opacity: 1;
   transform: scale(1);
 }
@@ -141,5 +142,10 @@
     right: -25px;
     width: 150px; /* 60px for the circle + 10px padding on each side */
     height: 150px; /* 60px for the circle + 10px padding on each side */
+  }
+}
+@keyframes DelayOverflow {
+  to {
+    overflow: visible; /* Set overflow to visible at the end of the animation */
   }
 }

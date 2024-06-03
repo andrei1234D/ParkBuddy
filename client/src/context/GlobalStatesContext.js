@@ -20,6 +20,7 @@ export const GlobalStatesContextProvider = ({ children }) => {
   const [username, setUsername] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [firstName, setFirstName] = useState(null);
+  const [email, setEmail] = useState(null);
 
   useEffect(() => {
     localStorage.setItem('language', language);
@@ -43,17 +44,19 @@ export const GlobalStatesContextProvider = ({ children }) => {
     setMoveParticles(!moveParticles);
   };
 
-  const toggleLogin = (decodedToken, firstName) => {
+  const toggleLogin = (decodedToken, firstName, email) => {
     const { userName, userRole } = decodedToken;
     setUsername(userName);
     setRole(userRole);
     setFirstName(firstName);
     setIsLoggedIn(true);
+    setEmail(email);
   };
   const toggleLogout = () => {
     setFirstName(null);
     setUsername(null);
     setRole(null);
+    setEmail(null);
     setIsLoggedIn(false);
   };
 
@@ -75,6 +78,7 @@ export const GlobalStatesContextProvider = ({ children }) => {
         role,
         username,
         firstName,
+        email,
         toggleLogin,
         isLoggedIn,
         toggleLogout,

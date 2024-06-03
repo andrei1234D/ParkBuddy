@@ -24,4 +24,32 @@ const sendConfirmationEmail = (firstName, email, role) => {
     }
   });
 };
-module.exports = sendConfirmationEmail;
+
+const sendRentalDetails = (
+  firstName,
+  email,
+  startTime,
+  endTime,
+  date,
+  address,
+  price
+) => {
+  const mailOptions = {
+    from: process.env.GMAIL,
+    to: email,
+    subject: 'Spot rental',
+    text: `Hello ${firstName},\n\nThank you for purchasing your spot at the ${address}.\nYour renting time starts at ${startTime} and ends at ${endTime} on ${date}
+    for ${price}RON
+    \nPlease don't overstay as this might imply additional costs \nSafe driving!\n\nBest Regards,\nPark Buddy Team`,
+  };
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.log('Error sending Rental Details email:', error);
+    } else {
+      console.log('Rental Details Email sent:', info.response);
+    }
+  });
+};
+
+module.exports = { sendConfirmationEmail, sendRentalDetails };

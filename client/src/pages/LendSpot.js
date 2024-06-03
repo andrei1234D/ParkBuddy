@@ -110,7 +110,7 @@ const LendSpot = () => {
       document.head.appendChild(script);
     }
   }, [apiKey]);
-
+  console.log(spots);
   const geocodeLatLng = async (lat, lng) => {
     try {
       const response = await axios.get(
@@ -170,7 +170,6 @@ const LendSpot = () => {
           selectedStartDate: formattedStartDate,
           selectedEndDate: formattedEndDate,
         };
-        console.log(parkingSpotData);
         try {
           const {
             latitude,
@@ -187,8 +186,8 @@ const LendSpot = () => {
               latitude,
               longitude,
               address,
-              startTime,
-              endTime,
+              startTime: formatTime(startTime),
+              endTime: formatTime(endTime),
               selectedStartDate,
               selectedEndDate,
               username,
@@ -259,7 +258,17 @@ const LendSpot = () => {
     setSelectedSpot(null);
     setInfoWindowOpen(false);
   };
-
+  const getMinEndTime = () => {
+    if (!startTime) return new Date();
+    const time = new Date(startTime);
+    time.setMinutes(time.getMinutes() + 1);
+    return time;
+  };
+  const formatTime = (date) => {
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    return `${hours}:${minutes}`;
+  };
   if (loading) {
     return <LoadingSpinner />;
   }
@@ -364,34 +373,60 @@ const LendSpot = () => {
                 readOnly: true,
               }}
             />
-            <Stack
-              direction="row"
-              spacing={2}
-              alignItems="center"
-              justifyContent="center"
-              style={{ marginTop: '5%' }}
+            <div
+              style={{
+                height: '100%',
+                width: '100%',
+                padding: '10px',
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-evenly ',
+              }}
             >
-              <TextField
-                id="startTime"
-                label="Daily Start Time"
-                type="time"
-                value={startTime}
-                onChange={(e) => setStartTime(e.target.value)}
-                InputLabelProps={{
-                  shrink: true,
+              <div>
+                <p style={{ textAlign: 'center', fontSize: '25px' }}>
+                  Start Time
+                </p>
+                <DatePicker
+                  title={startTime}
+                  selected={startTime}
+                  onChange={(date) => setStartTime(date)}
+                  showTimeSelect
+                  showTimeSelectOnly
+                  timeIntervals={10}
+                  timeCaption="Time"
+                  dateFormat="HH:mm"
+                />
+              </div>
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  flexDirection: 'column',
                 }}
-              />
-              <TextField
-                id="endTime"
-                label="Daily End Time"
-                type="time"
-                value={endTime}
-                onChange={(e) => setEndTime(e.target.value)}
-                InputLabelProps={{
-                  shrink: true,
-                }}
-              />
-            </Stack>
+              >
+                <p
+                  style={{
+                    textAlign: 'center',
+                    fontSize: '25px',
+                  }}
+                >
+                  End Time
+                </p>
+                <DatePicker
+                  selected={endTime}
+                  onChange={(date) => setEndTime(date)}
+                  showTimeSelect
+                  showTimeSelectOnly
+                  timeIntervals={10}
+                  timeCaption="Time"
+                  dateFormat="HH:mm"
+                  minTime={getMinEndTime()}
+                  maxTime={new Date().setHours(23, 59, 59, 999)}
+                />
+              </div>
+            </div>
             <Stack
               direction="row"
               spacing={2}
