@@ -10,6 +10,7 @@ import AccountSettings from './pages/AccountSettings';
 import Settings from './pages/Settings';
 import PaymentMethod from './pages/PaymentMethod';
 import { GlobalStatesContextProvider } from './context/GlobalStatesContext';
+import ProtectedRoutes from './ProtectedRoutes';
 import './style/App.css';
 // import ProtectedRoutes from '../ProtectedRoutes';
 
@@ -27,24 +28,17 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/" element={<Home />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/Lend-A-Spot" element={<LendSpot />} />
-            <Route path="/Your-Parking-Spots" element={<YourSpots />} />
             <Route path="/Rent-A-Spot" element={<RentSpot />} />
-            <Route path="/paymentMethod" element={<PaymentMethod />} />
-            <Route
-              path="/Account-Settings"
-              element={<AccountSettings />}
-            ></Route>
-            <Route path="/Settings" element={<Settings />}></Route>
-            {/* <Route path="/search" element={<Search />} />
             <Route element={<ProtectedRoutes />}>
-            <Route path="/product/:id" element={<ProductPage />} />
-            <Route path="/product/:id/:url" element={<ProductImage />} />
-            <Route path="/account" element={<Account />} />
-            <Route path="/productDetails" element={<ProductDetails />} />
-            <Route path="/Cart" element={<Cart />} />
-            <Route path="/Payment" element={<Payment />} />
-          </Route> */}
+              <Route path="/paymentMethod" element={<PaymentMethod />} />
+              <Route
+                path="/Account-Settings"
+                element={<AccountSettings />}
+              ></Route>
+              <Route path="/Lend-A-Spot" element={<LendSpot />} />
+              <Route path="/Your-Parking-Spots" element={<YourSpots />} />
+            </Route>
+            <Route path="/Settings" element={<Settings />}></Route>
           </Routes>
         </GlobalStatesContextProvider>
       </Router>

@@ -1,10 +1,7 @@
 import React, { useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import SettingsIcon from '../SettingsIcon';
 import AccountIcon from '../AccountIcon';
-import RomanianFlag from '../../images/flags/RomanianFlag.png';
-import EnglishFlag from '../../images/flags/UsaFlag.png';
-import PolishFlag from '../../images/flags/PolishFlag.png';
 
 import getTheApp from '../../images/linksImages/getTheApp.jpg';
 import home from '../../images/linksImages/home.jpg';
@@ -13,24 +10,25 @@ import lendASpot from '../../images/linksImages/lendASpot.jpg';
 import yourSpots from '../../images/linksImages/yourSpots.jpg';
 import reviews from '../../images/linksImages/reviews.jpg';
 
-import { RiScrollToBottomLine } from 'react-icons/ri';
-
 import GlobalStatesContext from '../../context/GlobalStatesContext';
 import '../../style/MenuItems.css';
+
 const itemsPerPage = 1;
 const menuItems = [
-  { label: 'Home', link: '/', url: home },
-  { label: 'Reviews', link: '/', url: reviews },
-  { label: 'Get the app', link: '/get-the-app', url: getTheApp },
-  { label: 'Rent A Spot', link: '/rent-a-spot', url: rentASpot },
-  { label: 'Lend A Spot', link: '/lend-a-spot', url: lendASpot },
-  { label: 'Your Spots', link: '/Your-Parking-Spots', url: yourSpots },
+  { label: 'Home', link: '#home', urlImg: home },
+  { label: 'Reviews', link: '#reviews', urlImg: reviews },
+  { label: 'Get the app', link: '#getTheApp', urlImg: getTheApp },
+  { label: 'Rent A Spot', link: '/rent-a-spot', urlImg: rentASpot },
+  { label: 'Lend A Spot', link: '/lend-a-spot', urlImg: lendASpot },
+  { label: 'Your Spots', link: '/Your-Parking-Spots', urlImg: yourSpots },
 ];
+
 export default function MenuItems() {
   const [currentPage, setCurrentPage] = useState(0);
+  const navigate = useNavigate();
 
   const totalPages = Math.ceil(menuItems.length / itemsPerPage);
-  console.log(totalPages);
+
   const handlePrevious = () => {
     setCurrentPage((prev) => (prev > 0 ? prev - 1 : totalPages - 1));
   };
@@ -43,27 +41,44 @@ export default function MenuItems() {
     setCurrentPage(pageIndex);
   };
 
-  const { toggleLanguage, translate, toggleMenu } =
-    useContext(GlobalStatesContext);
+  const { toggleMenu } = useContext(GlobalStatesContext);
 
   const startIndex = currentPage * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const itemsToDisplay = menuItems.slice(startIndex, endIndex);
+
+  const handleNavigation = (link) => {
+    toggleMenu();
+    if (link.startsWith('#')) {
+      // If the link is a hash, navigate to the home route and scroll to the section
+      navigate('/');
+      setTimeout(() => {
+        const element = document.querySelector(link);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    } else {
+      navigate(link);
+    }
+  };
+
   return (
     <div>
       <div className="menuItemsContainer">
         {itemsToDisplay.map((item) => (
           <div
             style={{
-              backgroundImage: `url(${item.url})`,
+              backgroundImage: `url(${item.urlImg})`,
               width: '100%',
               height: 'auto',
-              backgroundSize: 'cover', // Makes the background image cover the entire div
-              backgroundRepeat: 'no-repeat', // Prevents the background image from repeating
-              backgroundPosition: 'center', // Centers the background image
+              backgroundSize: 'cover',
+              backgroundRepeat: 'no-repeat',
+              backgroundPosition: 'center',
               transition: '0s',
             }}
             id="12"
+            key={item.label}
           >
             <div
               style={{ display: 'flex', flexDirection: 'column', width: '97%' }}
@@ -90,14 +105,12 @@ export default function MenuItems() {
                       &lt;
                     </button>
                     <div className="additionalMenuItems">
-                      <Link
-                        key={item.label}
-                        to={item.link}
+                      <div
                         className="menuItemLink"
-                        onClick={toggleMenu}
+                        onClick={() => handleNavigation(item.link)}
                       >
                         <div className="underlineAnimation">{item.label}</div>
-                      </Link>
+                      </div>
                     </div>
                     <button onClick={handleNext} className="arrowButton">
                       &gt;

@@ -1,207 +1,39 @@
 import React from 'react';
 import { useContext } from 'react';
+
+import reviews from './Arrays/reviews';
+
 import GlobalStatesContext from '../../context/GlobalStatesContext';
-import studentReview from '../../images/reviewPhotos/studentReview.png';
+
 import '../../style/Home.css';
 function Reviews() {
   const { translate } = useContext(GlobalStatesContext);
-
+  console.log(reviews);
   return (
     <div>
       <div className="informationContainer">
         <div className="cardReviewContainer">
-          <div class="cardReview">
-            <img
-              src={studentReview}
-              alt="studentPhoto"
-              className="imgReview fadeAppear"
-            ></img>
-
-            <hr className="hrReviews fadeAppear"></hr>
-            <div className="textReviews fadeAppear">
-              As a student, Park Buddy made parking a breeze! Its user-friendly
-              interface and helpful features improved significantly my campus
-              routine. Highly recommended!
-            </div>
-            <div className="rating fadeAppear">
-              <div className="stars">
-                <span className="star">&#9733;</span>
-                <span className="star">&#9733;</span>
-                <span className="star">&#9733;</span>
-                <span className="star">&#9733;</span>
-                <span className="star">&#9733;</span>
+          {reviews.map((review, index) => (
+            <div className="cardReview" key={index}>
+              <img
+                src={review.imgSrc}
+                alt="studentPhoto"
+                className="imgReview fadeAppear"
+              />
+              <hr className="hrReviews fadeAppear" />
+              <div className="textReviews fadeAppear">{review.text}</div>
+              <div className="rating fadeAppear">
+                <div className="stars">
+                  {[...Array(review.rating)].map((star, i) => (
+                    <span key={i} className="star">
+                      &#9733;
+                    </span>
+                  ))}
+                </div>
+                <div className="rating-text">{review.rating}/5</div>
               </div>
-              <div className="rating-text">5/5</div>
             </div>
-          </div>
-          <div class="cardReview">
-            <img
-              src={studentReview}
-              alt="studentPhoto"
-              className="imgReview fadeAppear"
-            ></img>
-
-            <hr className="hrReviews fadeAppear"></hr>
-            <div className="textReviews fadeAppear">
-              As a student, Park Buddy made parking a breeze! Its user-friendly
-              interface and helpful features improved significantly my campus
-              routine. Highly recommended!
-            </div>
-            <div className="rating fadeAppear">
-              <div className="stars">
-                <span className="star">&#9733;</span>
-                <span className="star">&#9733;</span>
-                <span className="star">&#9733;</span>
-                <span className="star">&#9733;</span>
-                <span className="star">&#9733;</span>
-              </div>
-              <div className="rating-text">5/5</div>
-            </div>
-          </div>
-          <div class="cardReview">
-            <img
-              src={studentReview}
-              alt="studentPhoto"
-              className="imgReview fadeAppear"
-            ></img>
-
-            <hr className="hrReviews fadeAppear"></hr>
-            <div className="textReviews fadeAppear">
-              As a student, Park Buddy made parking a breeze! Its user-friendly
-              interface and helpful features improved significantly my campus
-              routine. Highly recommended!
-            </div>
-            <div className="rating fadeAppear">
-              <div className="stars">
-                <span className="star">&#9733;</span>
-                <span className="star">&#9733;</span>
-                <span className="star">&#9733;</span>
-                <span className="star">&#9733;</span>
-                <span className="star">&#9733;</span>
-              </div>
-              <div className="rating-text">5/5</div>
-            </div>
-          </div>
-          <div class="cardReview">
-            <img
-              src={studentReview}
-              alt="studentPhoto"
-              className="imgReview fadeAppear"
-            ></img>
-
-            <hr className="hrReviews fadeAppear"></hr>
-            <div className="textReviews fadeAppear">
-              As a student, Park Buddy made parking a breeze! Its user-friendly
-              interface and helpful features improved significantly my campus
-              routine. Highly recommended!
-            </div>
-            <div className="rating fadeAppear">
-              <div className="stars">
-                <span className="star">&#9733;</span>
-                <span className="star">&#9733;</span>
-                <span className="star">&#9733;</span>
-                <span className="star">&#9733;</span>
-                <span className="star">&#9733;</span>
-              </div>
-              <div className="rating-text">5/5</div>
-            </div>
-          </div>
-          <div class="cardReview">
-            <img
-              src={studentReview}
-              alt="studentPhoto"
-              className="imgReview fadeAppear"
-            ></img>
-
-            <hr className="hrReviews fadeAppear"></hr>
-            <div className="textReviews fadeAppear">
-              As a student, Park Buddy made parking a breeze! Its user-friendly
-              interface and helpful features improved significantly my campus
-              routine. Highly recommended!
-            </div>
-            <div className="rating fadeAppear">
-              <div className="stars">
-                <span className="star">&#9733;</span>
-                <span className="star">&#9733;</span>
-                <span className="star">&#9733;</span>
-                <span className="star">&#9733;</span>
-                <span className="star">&#9733;</span>
-              </div>
-              <div className="rating-text">5/5</div>
-            </div>
-          </div>
-          <div class="cardReview">
-            <img
-              src={studentReview}
-              alt="studentPhoto"
-              className="imgReview fadeAppear"
-            ></img>
-
-            <hr className="hrReviews fadeAppear"></hr>
-            <div className="textReviews fadeAppear">
-              As a student, Park Buddy made parking a breeze! Its user-friendly
-              interface and helpful features improved significantly my campus
-              routine. Highly recommended!
-            </div>
-            <div className="rating fadeAppear">
-              <div className="stars">
-                <span className="star">&#9733;</span>
-                <span className="star">&#9733;</span>
-                <span className="star">&#9733;</span>
-                <span className="star">&#9733;</span>
-                <span className="star">&#9733;</span>
-              </div>
-              <div className="rating-text">5/5</div>
-            </div>
-          </div>
-          <div class="cardReview">
-            <img
-              src={studentReview}
-              alt="studentPhoto"
-              className="imgReview fadeAppear"
-            ></img>
-
-            <hr className="hrReviews fadeAppear"></hr>
-            <div className="textReviews fadeAppear">
-              As a student, Park Buddy made parking a breeze! Its user-friendly
-              interface and helpful features improved significantly my campus
-              routine. Highly recommended!
-            </div>
-            <div className="rating fadeAppear">
-              <div className="stars">
-                <span className="star">&#9733;</span>
-                <span className="star">&#9733;</span>
-                <span className="star">&#9733;</span>
-                <span className="star">&#9733;</span>
-                <span className="star">&#9733;</span>
-              </div>
-              <div className="rating-text">5/5</div>
-            </div>
-          </div>
-          <div class="cardReview">
-            <img
-              src={studentReview}
-              alt="studentPhoto"
-              className="imgReview fadeAppear"
-            ></img>
-
-            <hr className="hrReviews fadeAppear"></hr>
-            <div className="textReviews fadeAppear">
-              As a student, Park Buddy made parking a breeze! Its user-friendly
-              interface and helpful features improved significantly my campus
-              routine. Highly recommended!
-            </div>
-            <div className="rating fadeAppear">
-              <div className="stars">
-                <span className="star">&#9733;</span>
-                <span className="star">&#9733;</span>
-                <span className="star">&#9733;</span>
-                <span className="star">&#9733;</span>
-                <span className="star">&#9733;</span>
-              </div>
-              <div className="rating-text">5/5</div>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </div>

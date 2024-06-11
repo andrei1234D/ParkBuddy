@@ -502,8 +502,17 @@ const RentSpot = () => {
               <p>
                 You will rent the {selectedSpot.address} spot on{' '}
                 {selectedStartDate.toLocaleDateString()} from{' '}
-                {startTime.toLocaleDateString()} to{' '}
-                {endTime.toLocaleDateString()} for 0.30 RON/minute
+                {startTime ? (
+                  <>{startTime.toLocaleDateString()}</>
+                ) : (
+                  <>'Not selected'</>
+                )}{' '}
+                {endTime ? (
+                  <>{endTime.toLocaleDateString()}</>
+                ) : (
+                  <>Not selected</>
+                )}{' '}
+                for 0.30 RON/minute
               </p>
             </div>
           </DialogContent>

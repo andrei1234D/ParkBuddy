@@ -13,7 +13,7 @@ import GlobalStatesContext from '../context/GlobalStatesContext';
 
 import '../style/YourSpots.css';
 
-function Home() {
+function YourSpots() {
   const { translate, username } = useContext(GlobalStatesContext);
   const [parkingSpots, setParkingSpots] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -107,4 +107,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default YourSpots;
