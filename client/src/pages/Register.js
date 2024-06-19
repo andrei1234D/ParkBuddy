@@ -201,7 +201,10 @@ const Register = () => {
           <div variant="h6" style={{ flexGrow: 1 }}>
             {error}
           </div>
-          <IconButton onClick={handleErrorClose}>
+          <IconButton
+            onClick={handleErrorClose}
+            style={{ width: '25px', paddingLeft: '10px' }}
+          >
             <CloseIcon />
           </IconButton>
         </div>

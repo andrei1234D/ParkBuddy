@@ -503,12 +503,24 @@ const RentSpot = () => {
                 You will rent the {selectedSpot.address} spot on{' '}
                 {selectedStartDate.toLocaleDateString()} from{' '}
                 {startTime ? (
-                  <>{startTime.toLocaleDateString()}</>
+                  <>
+                    {startTime.toLocaleTimeString('en-US', {
+                      hour: '2-digit',
+                      minute: '2-digit',
+                      hour12: true,
+                    })}
+                  </>
                 ) : (
                   <>'Not selected'</>
                 )}{' '}
                 {endTime ? (
-                  <>{endTime.toLocaleDateString()}</>
+                  <>
+                    {endTime.toLocaleTimeString('en-US', {
+                      hour: '2-digit',
+                      minute: '2-digit',
+                      hour12: true,
+                    })}
+                  </>
                 ) : (
                   <>Not selected</>
                 )}{' '}
