@@ -19,7 +19,7 @@ const menuItems = [
   { label: 'Reviews', link: '#reviews', urlImg: reviews },
   { label: 'Get the app', link: '#getTheApp', urlImg: getTheApp },
   { label: 'Rent A Spot', link: '/rent-a-spot', urlImg: rentASpot },
-  { label: 'Lend A Spot', link: '/lend-a-spot', urlImg: lendASpot },
+  { label: 'Lend A Spot', link: '/Lend-A-Spot', urlImg: lendASpot },
   { label: 'Your Spots', link: '/Your-Parking-Spots', urlImg: yourSpots },
 ];
 

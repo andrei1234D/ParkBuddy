@@ -5,7 +5,11 @@ const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
 const moment = require('moment');
 
-const { sendRentalDetails, sendConfirmationEmail } = require('./mailer');
+const {
+  sendRentalDetailsCustomer,
+  sendRentalDetailsPartner,
+  sendConfirmationEmail,
+} = require('./mailer');
 const { Customer, Partner, ParkingSpot } = require('./schemas');
 
 const mongoose = require('mongoose');
@@ -412,7 +416,6 @@ app.get('/Get-Spots', async (req, res) => {
 });
 app.post('/Preferences-Spots', async (req, res) => {
   const { username, selectedDate, startRentTime, endRentTime } = req.body;
-
   try {
     const parkingSpots = await ParkingSpot.find();
 
@@ -432,18 +435,30 @@ app.post('/Preferences-Spots', async (req, res) => {
           return true;
         }
 
+        // Extract time parts from startRentTime and endRentTime
+        const rentStartTimeParts = startRentTime.split('T')[1];
+        const rentEndTimeParts = endRentTime.split('T')[1];
+
         // Check if the rent time overlaps with any spot time intervals
         const overlaps = spot.availability.some((avail) => {
           return avail.spotTimes.some((spotTime) => {
-            const spotStartTime = new Date(
-              `${selectedDate} ${spotTime.startDayTime}`
-            );
-            const spotEndTime = new Date(
-              `${selectedDate} ${spotTime.endDayTime}`
-            );
-            const rentStartTime = new Date(`${selectedDate} ${startRentTime}`);
-            const rentEndTime = new Date(`${selectedDate} ${endRentTime}`);
+            const spotStartTimeString = `${selectedDate.split('T')[0]}T${
+              spotTime.startDayTime
+            }`;
+            const spotEndTimeString = `${selectedDate.split('T')[0]}T${
+              spotTime.endDayTime
+            }`;
+            const rentStartTimeString = `${
+              selectedDate.split('T')[0]
+            }T${rentStartTimeParts}`;
+            const rentEndTimeString = `${
+              selectedDate.split('T')[0]
+            }T${rentEndTimeParts}`;
 
+            const spotStartTime = new Date(spotStartTimeString);
+            const spotEndTime = new Date(spotEndTimeString);
+            const rentStartTime = new Date(rentStartTimeString);
+            const rentEndTime = new Date(rentEndTimeString);
             // Check for overlap in time intervals
             const timeOverlap =
               rentStartTime < spotEndTime && rentEndTime > spotStartTime;
@@ -466,6 +481,7 @@ app.post('/Preferences-Spots', async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
+
 app.post('/addParkingRentalTimes', async (req, res) => {
   try {
     const {
@@ -479,14 +495,17 @@ app.post('/addParkingRentalTimes', async (req, res) => {
       firstName,
       email,
     } = req.body;
-    console.log('startTime:', startTime, 'endTime', endTime);
-    console.log(typeof startTime, typeof endTime);
+    let startDate = new Date(selectedStartDate);
+
     // Find the partner who owns the parking spot
     const partner = await Partner.findOne({ username: spotUsername });
     if (!partner) {
       return res.status(404).json({ message: 'Partner not found' });
     }
-
+    const spotSchema = await ParkingSpot.findOne({ address: spotAddress });
+    if (!spotSchema) {
+      return res.status(404).json({ message: 'Spot Not Found' });
+    }
     // Find the parking spot within the partner's parking spots
     const parkingSpot = partner.parkingSpots.find(
       (spot) => spot.address === spotAddress
@@ -496,7 +515,6 @@ app.post('/addParkingRentalTimes', async (req, res) => {
     }
 
     // Calculate the rental duration in minutes
-
     const startDateTime = moment.utc(
       `${selectedStartDate.split('T')[0]}T${startTime}`
     );
@@ -522,9 +540,29 @@ app.post('/addParkingRentalTimes', async (req, res) => {
       spotDay: new Date(selectedStartDate),
     });
 
+    // Update partner's parking spot availability
+    const partnerAvailability = parkingSpot.availability.find(
+      (avail) => avail.day.toDateString() === startDate.toDateString()
+    );
+    if (partnerAvailability) {
+      partnerAvailability.spotTimes.push({
+        startDayTime: startTime,
+        endDayTime: endTime,
+      });
+    }
+
     // Save the updated partner document
     await partner.save();
-
+    const spotSchemaAvailability = spotSchema.availability.find(
+      (avail) => avail.day.toDateString() === startDate.toDateString()
+    );
+    if (spotSchemaAvailability) {
+      spotSchemaAvailability.spotTimes.push({
+        startDayTime: startTime,
+        endDayTime: endTime,
+      });
+    }
+    await spotSchema.save();
     // Update customer's parking history
     const userModel = getUserModel(role);
     const user = await userModel.findOne({ username });
@@ -543,6 +581,7 @@ app.post('/addParkingRentalTimes', async (req, res) => {
     } else {
       return res.status(404).json({ message: 'User not found' });
     }
+
     // Update ParkingSpot's parking history
     const parkingSpotDoc = await ParkingSpot.findOne({ address: spotAddress });
     if (parkingSpotDoc) {
@@ -554,11 +593,40 @@ app.post('/addParkingRentalTimes', async (req, res) => {
         spotDay: new Date(selectedStartDate),
       });
 
+      // Update ParkingSpot availability
+      const spotAvailability = parkingSpotDoc.availability.find((avail) =>
+        moment(avail.day).isSame(new Date(selectedStartDate), 'day')
+      );
+      if (spotAvailability) {
+        spotAvailability.spotTimes.push({
+          startDayTime: startTime,
+          endDayTime: endTime,
+        });
+      } else {
+        parkingSpotDoc.availability.push({
+          day: new Date(selectedStartDate),
+          startTime: startTime,
+          endTime: endTime,
+          spotTimes: [{ startDayTime: startTime, endDayTime: endTime }],
+        });
+      }
+
       // Save the updated ParkingSpot document
       await parkingSpotDoc.save();
-      sendRentalDetails(
+
+      sendRentalDetailsCustomer(
         firstName,
         email,
+        startTime,
+        endTime,
+        startDateTime,
+        spotAddress,
+        price
+      );
+
+      sendRentalDetailsPartner(
+        partner.firstName,
+        partner.email,
         startTime,
         endTime,
         startDateTime,

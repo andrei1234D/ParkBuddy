@@ -44,9 +44,8 @@ const AccountSettings = () => {
           <div style={{ textAlign: 'center' }}>
             <p>
               {translate('loggedInA')}{' '}
-              <b style={{ fontSize: '20px' }}>{translate('partner')}</b>{' '}
-              {translate('account')}
-              {translate('ifUWantToLend')}
+              <b style={{ fontSize: '20px' }}>{translate('customer')}</b>{' '}
+              {translate('account')}, {translate('ifUWantToLend')}
             </p>
             <Link to="/register">
               <Button>{translate('upgradeNow')}</Button>

@@ -11,6 +11,9 @@ import Settings from './pages/Settings';
 import PaymentMethod from './pages/PaymentMethod';
 import { GlobalStatesContextProvider } from './context/GlobalStatesContext';
 import ProtectedRoutes from './ProtectedRoutes';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import './style/App.css';
 // import ProtectedRoutes from '../ProtectedRoutes';
 
@@ -31,15 +34,13 @@ function App() {
             <Route path="/Rent-A-Spot" element={<RentSpot />} />
             <Route element={<ProtectedRoutes />}>
               <Route path="/paymentMethod" element={<PaymentMethod />} />
-              <Route
-                path="/Account-Settings"
-                element={<AccountSettings />}
-              ></Route>
+              <Route path="/Account-Settings" element={<AccountSettings />} />
               <Route path="/Lend-A-Spot" element={<LendSpot />} />
               <Route path="/Your-Parking-Spots" element={<YourSpots />} />
             </Route>
-            <Route path="/Settings" element={<Settings />}></Route>
+            <Route path="/Settings" element={<Settings />} />
           </Routes>
+          <ToastContainer />
         </GlobalStatesContextProvider>
       </Router>
     </div>
