@@ -27,7 +27,6 @@ const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const [showDialogRedirect, setShowDialogRedirect] = useState(false);
   const [dialogText, setDialogText] = useState('');
   const [showDialog, setShowDialog] = useState(false);
   const [isRegisterNormalPressed, setIsRegisterNormalPressed] = useState(null);
@@ -62,11 +61,9 @@ const Login = () => {
       const firstName = response.data.firstName;
       const email = response.data.email;
 
-      setDialogText('Successfully Logged In');
-      setShowDialogRedirect(true);
-
       const decodedToken = jwtDecode(token);
       toggleLogin(decodedToken, firstName, email);
+      navigate('/');
     } catch (error) {
       if (error.response.data.message === 'User not found') {
         setDialogText(translate('userNotFound'));
@@ -80,14 +77,8 @@ const Login = () => {
   const handleCloseDialog = () => {
     setShowDialog(false);
   };
-  const handleCloseDialogRedirect = () => {
-    setShowDialogRedirect(false);
-  };
   const navigateToRegister = () => {
     navigate('/register');
-  };
-  const navigateToHome = () => {
-    navigate('/');
   };
 
   return (
@@ -109,27 +100,7 @@ const Login = () => {
           <Button onClick={handleCloseDialog}>Close</Button>
         </DialogActions>
       </Dialog>
-      <Dialog open={showDialogRedirect} onClose={handleCloseDialogRedirect}>
-        <DialogContent
-          style={{
-            backgroundColor: 'var(--UIColor)',
-            color: 'var(--UIText)',
-          }}
-        >
-          <p>{dialogText}</p>
-        </DialogContent>
-        <DialogActions
-          style={{
-            backgroundColor: 'var(--UIColor)',
-            color: 'var(--UIText)',
-            display: 'flex',
-            justifyContent: 'space-around',
-          }}
-        >
-          <Button onClick={handleCloseDialogRedirect}>Close</Button>
-          <Button onClick={navigateToHome}>TO HOME</Button>
-        </DialogActions>
-      </Dialog>
+
       {isRegisterNormalPressed === null ? (
         <div className="containerLogin">
           <div className="customerDiv" onClick={customerClick}>

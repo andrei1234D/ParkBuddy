@@ -78,7 +78,7 @@ const sendRentalDetailsPartner = (
   const mailOptions = {
     from: process.env.GMAIL,
     to: email,
-    subject: 'Spot rental',
+    subject: `Spot at ${address} has been rented`,
     text: `Hello ${firstName},\n\nYour spot at the ${address} has been rented on ${formatDate(
       date
     )} from ${startTime} until ${endTime}.\n

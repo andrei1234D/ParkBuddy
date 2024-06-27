@@ -38,9 +38,7 @@ function Home() {
           <Reviews />
         </section>
         <div className="emptySpace"></div>
-        <section id="getTheApp">
-          <AppStore />
-        </section>
+        <AppStore />
         <div className="emptySpace"></div>
         <FooterHome />
       </div>

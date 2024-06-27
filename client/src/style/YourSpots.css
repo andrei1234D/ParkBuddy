@@ -3,7 +3,7 @@
   flex-direction: column;
   width: 60%;
   max-height: 500px;
-  background-color: var(--UIColor);
+  background-color: #097b5a;
   color: var(--UIText);
   margin: 0 auto;
   margin-top: 50px;
@@ -19,8 +19,8 @@
 
   width: 100%;
   align-items: center;
-  color: var(--UIColor);
-  background-color: var(--UIText);
+  color: var(--UIText);
+  background-color: var(--UIColor);
   border-radius: 15px;
 }
 .containerHeaderSpots {
@@ -31,7 +31,7 @@
 
   width: 100%;
   align-items: center;
-  color: var(--UIText);
+  color: var(--UIColor);
   border-radius: 15px;
 
   padding-bottom: 25px;

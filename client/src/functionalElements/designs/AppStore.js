@@ -58,39 +58,41 @@ function AppStore() {
         </div>
 
         <div className="footerBenefits">
-          <div className="downloadRatingContainer fadeAppear">
-            <div className="downloadRating">
-              <div
-                style={{
-                  display: 'flex',
-                  fontSize: '1.5rem',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  fontWeight: 'bold',
-                }}
-              >
-                4,7
-                <div className="stars star" style={{ display: 'flex' }}>
-                  &#9733;
+          <section id="getTheApp">
+            <div className="downloadRatingContainer fadeAppear">
+              <div className="downloadRating">
+                <div
+                  style={{
+                    display: 'flex',
+                    fontSize: '1.5rem',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    fontWeight: 'bold',
+                  }}
+                >
+                  4,7
+                  <div className="stars star" style={{ display: 'flex' }}>
+                    &#9733;
+                  </div>
                 </div>
+                <div style={{ fontSize: '0.7rem' }}>150 K reviews</div>
               </div>
-              <div style={{ fontSize: '0.7rem' }}>150 K reviews</div>
-            </div>
-            <div className="downloads">
-              <div
-                style={{
-                  display: 'flex',
-                  fontSize: '1.5rem',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  fontWeight: 'bold',
-                }}
-              >
-                10 mil. +
+              <div className="downloads">
+                <div
+                  style={{
+                    display: 'flex',
+                    fontSize: '1.5rem',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    fontWeight: 'bold',
+                  }}
+                >
+                  10 mil. +
+                </div>
+                <div style={{ fontSize: '0.7rem' }}>Downloads</div>
               </div>
-              <div style={{ fontSize: '0.7rem' }}>Downloads</div>
             </div>
-          </div>
+          </section>
           <div className="fadeAppear">Download for free</div>
 
           <div className="stores fadeAppear">

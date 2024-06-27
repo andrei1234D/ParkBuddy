@@ -72,12 +72,13 @@
   align-items: center;
   justify-content: space-around;
   flex-direction: column;
-  color: white;
+  color: var(--UIColor);
   min-width: 500px;
   padding: 20px;
   height: 80%;
-  background-color: var(--UIColor);
+  background-color: #097b5a;
   row-gap: 20px;
   word-wrap: break-word;
   white-space: normal;
+  border-radius: 5%;
 }

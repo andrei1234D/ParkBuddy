@@ -12,9 +12,9 @@ import GlobalStatesContext from '../context/GlobalStatesContext';
 import { useNavigate } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 
+import Confetti from 'react-confetti';
 import 'react-datepicker/dist/react-datepicker.css';
 
-import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
@@ -37,6 +37,8 @@ const RentSpot = () => {
   const [apiKey, setApiKey] = useState(null);
   const [map, setMap] = useState(null);
   const [mapInitialized, setMapInitialized] = useState(false);
+
+  const [showConfetti, setShowConfetti] = useState(false);
   const [spots, setSpots] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedSpot, setSelectedSpot] = useState(null);
@@ -90,7 +92,17 @@ const RentSpot = () => {
       document.head.appendChild(script);
     }
   }, [apiKey]);
+  useEffect(() => {
+    if (showConfetti) {
+      // Set a timer to turn off confetti after 3 seconds (3000 milliseconds)
+      const timer = setTimeout(() => {
+        setShowConfetti(false);
+      }, 3000);
 
+      // Cleanup the timer if the component is unmounted or showConfetti changes
+      return () => clearTimeout(timer);
+    }
+  }, [showConfetti]);
   const fetchData = async () => {
     try {
       const response = await axios.get('http://localhost:5000/Get-Spots');
@@ -164,8 +176,10 @@ const RentSpot = () => {
       });
       const { latitude, longitude } = selectedSpot;
       const url = `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`;
-      console.log(url);
-      window.location.href = url;
+      setShowConfetti(true);
+      setTimeout(() => {
+        window.location.href = url;
+      }, 3500);
     } catch (error) {
       console.error('error adding spot:', error);
     }
@@ -561,6 +575,16 @@ const RentSpot = () => {
             <CloseIcon />
           </IconButton>
         </div>
+      )}
+      {showConfetti && (
+        <Confetti
+          width={window.innerWidth}
+          height={window.innerHeight * 1.2}
+          numberOfPieces={600}
+          recycle={false}
+          origin={{ x: 0, y: 1 }}
+          gravity={1}
+        />
       )}
     </div>
   );

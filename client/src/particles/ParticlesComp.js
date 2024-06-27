@@ -54,15 +54,15 @@ const ParticlesComp = () => {
         },
       },
       color: {
-        value: '#3fff7a',
+        value: '#097b5a',
         opacity: 1,
       },
       links: {
-        color: '#66b2b2',
+        color: '#097b5a',
         distance: 165,
         enable: true,
         opacity: 0.6,
-        width: 1.3,
+        width: 1.4,
       },
       move: {
         enable: moveParticles,

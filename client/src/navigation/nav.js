@@ -14,7 +14,7 @@ import GlobalStatesContext from '../context/GlobalStatesContext';
 export default function Nav() {
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
 
-  const { toggleLanguage, translate, toggleMenu } =
+  const { toggleLanguage, translate, isLoggedIn } =
     useContext(GlobalStatesContext);
 
   const languageOptions = [
@@ -70,11 +70,13 @@ export default function Nav() {
             alignItems: 'center',
           }}
         >
-          <Link to="/login" className="linkHome">
-            <div className="option-box loginBtn loginHomeButton">
-              {translate('login')}
-            </div>
-          </Link>
+          {!isLoggedIn && (
+            <Link to="/login" className="linkHome">
+              <div className="option-box loginBtn loginHomeButton">
+                {translate('login')}
+              </div>
+            </Link>
+          )}
           <div className="menuLanguageContainer">
             <div className="languages">
               {languageOptions.map((option) => (

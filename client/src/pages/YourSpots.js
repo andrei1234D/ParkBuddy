@@ -6,6 +6,8 @@ import { FaCircle } from 'react-icons/fa';
 import { CiCircleQuestion } from 'react-icons/ci';
 import IconButton from '@mui/material/IconButton';
 
+import LoadingSpinner from '../spinner/LoadingSpinner.js';
+
 import Tooltip from '@mui/material/Tooltip';
 //context import
 
@@ -35,10 +37,8 @@ function YourSpots() {
     fetchParkingSpots();
   }, [username]);
 
-  console.log(parkingSpots);
-
   if (loading) {
-    return <div>Loading...</div>;
+    return <LoadingSpinner />;
   }
   return (
     <div>
@@ -68,12 +68,16 @@ function YourSpots() {
               >
                 <IconButton
                   style={{
-                    color: 'var(--UIText)',
-                    fontSize: '1rem',
+                    width: 'auto',
+                    height: 'auto',
                   }}
                 >
                   <CiCircleQuestion
-                    style={{ color: 'var(--UIText)', marginLeft: '5px' }}
+                    style={{
+                      color: 'var(--UIColor)',
+                      width: 'fit-content',
+                      height: 'fit-content',
+                    }}
                   />
                 </IconButton>
               </Tooltip>

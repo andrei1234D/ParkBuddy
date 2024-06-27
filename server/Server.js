@@ -352,11 +352,11 @@ app.post('/Your-Spots', async (req, res) => {
       );
 
       // Check if current date is after endDate and if current time is after last availability endTime
-      if (currentTime > endDate && currentTime > lastEndTime) {
+      if (currentTime > endDate || currentTime > lastEndTime) {
         spot.status = 'unavailable';
       } else {
         const firstAvailability = spot.availability[0];
-        const startDate = new Date(spot.startDate);
+
         const firstStartTime = new Date(
           `${spot.startDate.toDateString()} ${firstAvailability.startTime}`
         );

@@ -35,7 +35,7 @@ const AccountSettings = () => {
           </div>
         </div>
 
-        <p style={{ color: 'var(--UIText)' }}>
+        <p>
           {translate('loggedInA')} <b style={{ fontSize: '20px' }}>{role}</b>{' '}
           {translate('account')}
         </p>
@@ -66,8 +66,8 @@ const AccountSettings = () => {
               <Button
                 variant="contained"
                 style={{
-                  color: 'var(--UIColor)',
-                  backgroundColor: 'var(--UIText)',
+                  color: 'var(--UIText)',
+                  backgroundColor: 'var(--UIColor)',
                 }}
                 onClick={handleToLendASpot}
               >
@@ -78,8 +78,8 @@ const AccountSettings = () => {
           <Button
             onClick={handleToYourParkingSpots}
             style={{
-              color: 'var(--UIColor)',
-              backgroundColor: 'var(--UIText)',
+              color: 'var(--UIText)',
+              backgroundColor: 'var(--UIColor)',
             }}
           >
             {translate('seeYourParkingSpots')}
@@ -88,8 +88,8 @@ const AccountSettings = () => {
             <Button
               variant="contained"
               style={{
-                color: 'var(--UIColor)',
-                backgroundColor: 'var(--UIText)',
+                color: 'var(--UIText)',
+                backgroundColor: 'var(--UIColor)',
               }}
             >
               {translate('toPayment')}{' '}
@@ -101,8 +101,8 @@ const AccountSettings = () => {
             variant="contained"
             onClick={handleLogout}
             style={{
-              color: 'var(--UIColor)',
-              backgroundColor: 'var(--UIText)',
+              color: 'var(--UIText)',
+              backgroundColor: 'var(--UIColor)',
             }}
           >
             {translate('logout')} <AiOutlineLogout size="25px" />

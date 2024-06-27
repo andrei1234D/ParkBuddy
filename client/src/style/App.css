@@ -34,7 +34,7 @@
 }
 [data-theme='dark'] {
   --border_color: rgba(2, 25, 10);
-  --body_background: #040720;
+  --body_background: black;
   --UIColor: black;
   --UIButtonColor: #040720;
   --UIText: white;
@@ -45,7 +45,7 @@
 }
 [data-theme='light'] {
   --border_color: rgba(255, 255, 255);
-  --body_background: #454545;
+  --body_background: white;
   --UIColor: white;
   --UIButtonColor: #393f44;
   --UIText: black;

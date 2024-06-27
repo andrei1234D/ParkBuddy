@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
+
+import Confetti from 'react-confetti';
 import { useNavigate } from 'react-router-dom';
 import { GoogleMap, Marker, InfoWindow } from '@react-google-maps/api';
 import GlobalStatesContext from '../context/GlobalStatesContext';
@@ -48,6 +50,7 @@ const LendSpot = () => {
   const [infoWindowPosition, setInfoWindowPosition] = useState(null);
   const [infoWindowOpen, setInfoWindowOpen] = useState(false);
 
+  const [showConfetti, setShowConfetti] = useState(false);
   const [loading, setLoading] = useState(true);
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedStartDate, setSelectedStartDate] = useState(new Date());
@@ -130,6 +133,17 @@ const LendSpot = () => {
       setAddress('Geocode error');
     }
   };
+  useEffect(() => {
+    if (showConfetti) {
+      // Set a timer to turn off confetti after 3 seconds (3000 milliseconds)
+      const timer = setTimeout(() => {
+        setShowConfetti(false);
+      }, 3000);
+
+      // Cleanup the timer if the component is unmounted or showConfetti changes
+      return () => clearTimeout(timer);
+    }
+  }, [showConfetti]);
 
   const handleMapClick = (e) => {
     const lat = e.latLng.lat();
@@ -202,6 +216,7 @@ const LendSpot = () => {
             closeButton: false,
             closeOnClick: true,
           });
+          setShowConfetti(true);
         } catch (error) {
           console.log(error);
           toast.error('Error registering parking spot!', {
@@ -521,6 +536,16 @@ const LendSpot = () => {
           </div>
         )}
       </Dialog>
+      {showConfetti && (
+        <Confetti
+          width={window.innerWidth}
+          height={window.innerHeight * 1.2}
+          numberOfPieces={600}
+          recycle={false}
+          origin={{ x: 0, y: 1 }}
+          gravity={1}
+        />
+      )}
     </div>
   );
 };

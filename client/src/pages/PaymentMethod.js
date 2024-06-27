@@ -4,6 +4,7 @@ import noPaymentOptions from '../images/paymentMethods/noPaymentOptions.png';
 import Checkbox from '@mui/material/Checkbox';
 import GlobalStatesContext from '../context/GlobalStatesContext';
 import '../style/PaymentMethod.css';
+import LoadingSpinner from '../spinner/LoadingSpinner.js';
 
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
@@ -18,6 +19,7 @@ const PaymentMethod = () => {
   const [successMessage, setSuccessMessage] = useState(false);
   const [showPayments, setShowPayments] = useState(false);
   const [currentPaymentMethod, setCurrentPaymentMethod] = useState({});
+  const [loading, setLoading] = useState(true);
   const { username, role, firstName } = useContext(GlobalStatesContext);
 
   useEffect(() => {
@@ -39,8 +41,10 @@ const PaymentMethod = () => {
         if (activeMethod) {
           setCurrentPaymentMethod(activeMethod);
         }
+        setLoading(false);
       } catch (error) {
         console.error('Error fetching payment methods:', error);
+        setLoading(false);
       }
     }
 
@@ -160,6 +164,10 @@ const PaymentMethod = () => {
     const methodIndex = paymentMethods.findIndex((m) => m === method);
     handleChangeActivePaymentMethod(methodIndex);
   };
+
+  if (loading) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <div>
