@@ -657,5 +657,5 @@ app.post('/addParkingRentalTimes', async (req, res) => {
   }
 });
 app.listen(process.env.PORT || port, () => {
-  console.log(`Server is running on port ${port}`);
+  console.log(`Server is running on port: ${port}`);
 });
