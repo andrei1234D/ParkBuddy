@@ -29,7 +29,7 @@ function App() {
           <Nav />
           <Routes>
             <Route path="/login" element={<Login />} />
-            <Route path="/" element={<Home />} />
+            <Route path="/ParkBuddy" element={<Home />} />
             <Route path="/register" element={<Register />} />
             <Route path="/Rent-A-Spot" element={<RentSpot />} />
             <Route element={<ProtectedRoutes />}>
