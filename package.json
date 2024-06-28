@@ -50,7 +50,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "node server/server.js",
     "heroku-postbuild": "cd client && npm install && npm run build",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
