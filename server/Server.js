@@ -100,6 +100,14 @@ async function checkAvailabilityAndSetStatus() {
   }
 }
 
+// Serve static files from the 'client/build' directory
+app.use(express.static(path.join(__dirname, '../client/build')));
+
+// Handle React routing, return all requests to React app
+app.get('*', function (req, res) {
+  res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
+});
+
 app.get('/get-google-maps-key', (req, res) => {
   const apiKey = process.env.GOOGLE_MAPS_API_KEY;
   res.json({ apiKey });
