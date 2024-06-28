@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
@@ -655,6 +656,6 @@ app.post('/addParkingRentalTimes', async (req, res) => {
     return res.status(500).json({ message: 'Internal server error' });
   }
 });
-app.listen(port, () => {
+app.listen(process.env.PORT || port, () => {
   console.log(`Server is running on port ${port}`);
 });
