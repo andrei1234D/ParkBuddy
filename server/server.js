@@ -18,9 +18,14 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 
 const app = express();
-const port = 5000;
+const PORT = process.env.PORT || 5000;
 
-app.use(cors());
+const corsOptions = {
+  origin: 'https://andrei1234d.github.io',
+  optionsSuccessStatus: 200,
+};
+
+app.use(cors(corsOptions));
 app.use(bodyParser.json());
 
 // Secret key for JWT
@@ -656,7 +661,6 @@ app.post('/addParkingRentalTimes', async (req, res) => {
     return res.status(500).json({ message: 'Internal server error' });
   }
 });
-const PORT = process.env.PORT || port;
 console.log(`the hekoru port is: ${process.env.PORT}`);
 app.listen(PORT, () => {
   console.log(`Server is running on port: ${PORT}`);
