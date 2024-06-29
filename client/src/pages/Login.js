@@ -13,7 +13,6 @@ import { jwtDecode } from 'jwt-decode';
 
 //language translate imports
 import GlobalStatesContext from '../context/GlobalStatesContext';
-import api from '../api';
 
 //REACT MUI
 import Dialog from '@mui/material/Dialog';
@@ -53,7 +52,7 @@ const Login = () => {
     isRegisterNormalPressed ? (role = 'customer') : (role = 'partner');
     try {
       // Make a POST request to your server for user login
-      const response = await api.post('/login', {
+      const response = await axios.post('http://localhost:5000/login', {
         username,
         password,
         role,
