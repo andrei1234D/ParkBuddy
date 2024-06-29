@@ -15,6 +15,8 @@ import GlobalStatesContext from '../context/GlobalStatesContext';
 
 import '../style/YourSpots.css';
 
+import api from '../api.js';
+
 function YourSpots() {
   const { translate, username } = useContext(GlobalStatesContext);
   const [parkingSpots, setParkingSpots] = useState([]);
@@ -22,7 +24,7 @@ function YourSpots() {
   useEffect(() => {
     async function fetchParkingSpots() {
       try {
-        const response = await axios.post('http://localhost:5000/Your-Spots', {
+        const response = await api.post('/Your-Spots', {
           username,
         });
         setParkingSpots(response.data.parkingSpots);

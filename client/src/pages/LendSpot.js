@@ -23,6 +23,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import CloseIcon from '@mui/icons-material/Close';
 import markerImage from '../images/marker2.png';
 
+import api from '../api.js';
+
 const mapContainerStyle = {
   width: '100vw',
   height: 'calc(100vh - 110px)',
@@ -69,9 +71,7 @@ const LendSpot = () => {
   useEffect(() => {
     const fetchApiKey = async () => {
       try {
-        const response = await axios.get(
-          'http://localhost:5000/get-google-maps-key'
-        );
+        const response = await api.get('/get-google-maps-key');
         setApiKey(response.data.apiKey);
       } catch (error) {
         console.error('Error fetching API key:', error);
@@ -81,17 +81,13 @@ const LendSpot = () => {
     fetchApiKey();
   }, []);
 
-  //MODDIFY TO GEET THEE ACCTUAL PARTNER OWNED SPOTS.
   useEffect(() => {
     if (apiKey) {
       const fetchData = async () => {
         try {
-          const response = await axios.post(
-            'http://localhost:5000/Your-Spots',
-            {
-              username,
-            }
-          );
+          const response = await api.post('/Your-Spots', {
+            username,
+          });
           setSpots(response.data.parkingSpots);
           setLoading(false);
         } catch (error) {
@@ -194,19 +190,16 @@ const LendSpot = () => {
             selectedStartDate,
             selectedEndDate,
           } = parkingSpotData;
-          const response = await axios.post(
-            'http://localhost:5000/Lend-A-Spot',
-            {
-              latitude,
-              longitude,
-              address,
-              startTime: formatTime(startTime),
-              endTime: formatTime(endTime),
-              selectedStartDate,
-              selectedEndDate,
-              username,
-            }
-          );
+          const response = await api.post('/Lend-A-Spot', {
+            latitude,
+            longitude,
+            address,
+            startTime: formatTime(startTime),
+            endTime: formatTime(endTime),
+            selectedStartDate,
+            selectedEndDate,
+            username,
+          });
           setSpots([...spots, response.data]);
           setOpenDialog(false);
           setNewSpot(null);

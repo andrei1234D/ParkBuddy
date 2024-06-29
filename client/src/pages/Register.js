@@ -21,6 +21,8 @@ import Button from '@mui/material/Button';
 import { IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 
+import api from '../api.js';
+
 const Register = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -71,7 +73,7 @@ const Register = () => {
         }
 
         // Make a POST request to your server for user registration
-        const response = await axios.post('http://localhost:5000/register', {
+        const response = await api.post('/register', {
           firstName,
           lastName,
           carPlate,

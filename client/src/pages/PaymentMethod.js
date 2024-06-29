@@ -6,6 +6,8 @@ import GlobalStatesContext from '../context/GlobalStatesContext';
 import '../style/PaymentMethod.css';
 import LoadingSpinner from '../spinner/LoadingSpinner.js';
 
+import api from '../api.js';
+
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
 const PaymentMethod = () => {
@@ -25,13 +27,10 @@ const PaymentMethod = () => {
   useEffect(() => {
     async function fetchPaymentMethods() {
       try {
-        const response = await axios.post(
-          'http://localhost:5000/fetchPaymentMethods',
-          {
-            username,
-            role,
-          }
-        );
+        const response = await api.post('/fetchPaymentMethods', {
+          username,
+          role,
+        });
         setPaymentMethods(response.data.paymentMethods);
 
         // Set initial current payment method to the first active method
@@ -122,14 +121,11 @@ const PaymentMethod = () => {
       setTimeout(() => setSuccessMessage(false), 3000);
 
       try {
-        const response = await axios.post(
-          'http://localhost:5000/addPaymentMethod',
-          {
-            username,
-            role,
-            newPaymentMethod,
-          }
-        );
+        const response = await api.post('/addPaymentMethod', {
+          username,
+          role,
+          newPaymentMethod,
+        });
         console.log('Payment method added:', response.data.message);
       } catch (error) {
         console.error('Payment add failed', error.response?.data?.message);
@@ -139,14 +135,11 @@ const PaymentMethod = () => {
 
   const handleChangeActivePaymentMethod = async (paymentMethodIndex) => {
     try {
-      const response = await axios.post(
-        'http://localhost:5000/changeActivePaymentMethod',
-        {
-          username,
-          role,
-          paymentMethodIndex,
-        }
-      );
+      const response = await api.post('/changeActivePaymentMethod', {
+        username,
+        role,
+        paymentMethodIndex,
+      });
 
       console.log('Active payment method changed:', response.data.message);
     } catch (error) {

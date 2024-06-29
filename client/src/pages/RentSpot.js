@@ -28,6 +28,8 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import '../style/RentASpot.css';
 
+import api from '../api.js';
+
 const mapContainerStyle = {
   width: '100%',
   height: 'calc(100vh - 110px)',
@@ -64,9 +66,7 @@ const RentSpot = () => {
   useEffect(() => {
     const fetchApiKey = async () => {
       try {
-        const response = await axios.get(
-          'http://localhost:5000/get-google-maps-key'
-        );
+        const response = await api.get('/get-google-maps-key');
         setApiKey(response.data.apiKey);
       } catch (error) {
         console.error('Error fetching API key:', error);
@@ -105,7 +105,7 @@ const RentSpot = () => {
   }, [showConfetti]);
   const fetchData = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/Get-Spots');
+      const response = await api.get('/Get-Spots');
       setSpots(response.data);
       setLoading(false);
     } catch (error) {
@@ -163,7 +163,7 @@ const RentSpot = () => {
     try {
       const spotAddress = selectedSpot.address;
       const spotUsername = selectedSpot.username;
-      axios.post('http://localhost:5000/addParkingRentalTimes', {
+      api.post('/addParkingRentalTimes', {
         startTime: formatTime(startTime),
         endTime: formatTime(endTime),
         spotAddress,
@@ -188,15 +188,12 @@ const RentSpot = () => {
   const handlePreferencesClick = async () => {
     if (selectedStartDate && startTime && endTime) {
       try {
-        const response = await axios.post(
-          'http://localhost:5000/Preferences-Spots',
-          {
-            startRentTime: startTime,
-            endRentTime: endTime,
-            selectedDate: selectedStartDate,
-            username,
-          }
-        );
+        const response = await api.post('/Preferences-Spots', {
+          startRentTime: startTime,
+          endRentTime: endTime,
+          selectedDate: selectedStartDate,
+          username,
+        });
         setSpots(response.data);
         console.log('response data:');
         console.log(response.data);
