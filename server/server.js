@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
 const moment = require('moment');
+const path = require('path');
 
 const {
   sendRentalDetailsCustomer,
@@ -15,6 +16,12 @@ const { Customer, Partner, ParkingSpot } = require('./schemas');
 const mongoose = require('mongoose');
 
 require('dotenv').config();
+
+app.use(express.static(path.join(__dirname, 'client/build')));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+});
 
 const app = express();
 const port = 5000;
