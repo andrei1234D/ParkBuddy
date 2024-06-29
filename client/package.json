@@ -2,7 +2,6 @@
   "name": "park-buddy",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://andrei1234D.github.io/ParkBuddy",
   "dependencies": {
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
@@ -42,10 +41,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "heroku-postbuild": "npm run build",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
@@ -71,8 +67,5 @@
   "license": "ISC",
   "devDependencies": {
     "gh-pages": "^6.1.1"
-  },
-  "engines": {
-    "node": "20.11.1"
   }
 }

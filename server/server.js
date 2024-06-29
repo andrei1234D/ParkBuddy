@@ -1,6 +1,5 @@
 const express = require('express');
 const cors = require('cors');
-const path = require('path');
 const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
@@ -101,14 +100,6 @@ async function checkAvailabilityAndSetStatus() {
   }
 }
 
-// Serve static files from the React app
-app.use(express.static(path.join(__dirname, '../client/build')));
-
-// The "catchall" handler: for any request that doesn't
-// match one above, send back React's index.html file.
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
-});
 app.get('/get-google-maps-key', (req, res) => {
   const apiKey = process.env.GOOGLE_MAPS_API_KEY;
   res.json({ apiKey });
@@ -656,8 +647,6 @@ app.post('/addParkingRentalTimes', async (req, res) => {
     return res.status(500).json({ message: 'Internal server error' });
   }
 });
-const PORT = process.env.PORT || port;
-console.log(`the hekoru port is: ${process.env.PORT}`);
-app.listen(PORT, () => {
-  console.log(`Server is running on port: ${PORT}`);
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
 });
