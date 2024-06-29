@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.77b437a1.css",
-    "main.js": "/static/js/main.1cf0c549.js",
+    "main.js": "/static/js/main.e6158b53.js",
     "static/media/bannerBackground.png": "/static/media/bannerBackground.39e09c70d89bb313de9c.png",
     "static/media/studentReview.png": "/static/media/studentReview.afe8a99d4b5388816d49.png",
     "static/media/familyWoods.png": "/static/media/familyWoods.ba306856409f8b5b52ed.png",
@@ -47,10 +47,10 @@
     "static/media/tesla.svg": "/static/media/tesla.683548cb3e6cedbe7403c0b8e7ba0f5f.svg",
     "static/media/bugatti.svg": "/static/media/bugatti.fc105dadc57c70d1dd3b6fef577aa027.svg",
     "main.77b437a1.css.map": "/static/css/main.77b437a1.css.map",
-    "main.1cf0c549.js.map": "/static/js/main.1cf0c549.js.map"
+    "main.e6158b53.js.map": "/static/js/main.e6158b53.js.map"
   },
   "entrypoints": [
     "static/css/main.77b437a1.css",
-    "static/js/main.1cf0c549.js"
+    "static/js/main.e6158b53.js"
   ]
 }
