@@ -17,14 +17,8 @@ const mongoose = require('mongoose');
 
 require('dotenv').config();
 
-app.use(express.static(path.join(__dirname, 'client/build')));
-
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-});
-
 const app = express();
-const port = 5000;
+const PORT = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -106,6 +100,12 @@ async function checkAvailabilityAndSetStatus() {
     throw error; // Just rethrow the caught error
   }
 }
+
+app.use(express.static(path.join(__dirname, 'client/build')));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+});
 
 app.get('/get-google-maps-key', (req, res) => {
   const apiKey = process.env.GOOGLE_MAPS_API_KEY;
@@ -654,6 +654,6 @@ app.post('/addParkingRentalTimes', async (req, res) => {
     return res.status(500).json({ message: 'Internal server error' });
   }
 });
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });

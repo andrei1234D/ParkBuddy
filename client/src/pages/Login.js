@@ -10,6 +10,7 @@ import partner from '../images/vipDark.png';
 import partnerDark from '../images/vipLight.png';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
+import api from '../api.js';
 
 //language translate imports
 import GlobalStatesContext from '../context/GlobalStatesContext';
@@ -52,7 +53,7 @@ const Login = () => {
     isRegisterNormalPressed ? (role = 'customer') : (role = 'partner');
     try {
       // Make a POST request to your server for user login
-      const response = await axios.post('http://localhost:5000/login', {
+      const response = await api.post('/login', {
         username,
         password,
         role,
