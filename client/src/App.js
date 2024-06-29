@@ -15,7 +15,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import './style/App.css';
-// import ProtectedRoutes from '../ProtectedRoutes';
 
 //Router imports
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
