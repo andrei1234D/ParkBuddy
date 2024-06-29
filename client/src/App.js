@@ -23,7 +23,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 function App() {
   return (
     <div>
-      <Router>
+      <Router basename="/">
         <GlobalStatesContextProvider>
           <Particles />
           <Nav />
