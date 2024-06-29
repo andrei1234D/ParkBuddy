@@ -6,6 +6,9 @@ const bcrypt = require('bcrypt');
 const moment = require('moment');
 const path = require('path');
 
+const app = express();
+const PORT = process.env.PORT || 5000;
+
 const {
   sendRentalDetailsCustomer,
   sendRentalDetailsPartner,
@@ -16,9 +19,6 @@ const { Customer, Partner, ParkingSpot } = require('./schemas');
 const mongoose = require('mongoose');
 
 require('dotenv').config();
-
-const app = express();
-const PORT = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(bodyParser.json());
