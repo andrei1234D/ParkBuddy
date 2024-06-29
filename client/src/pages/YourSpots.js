@@ -48,6 +48,7 @@ function YourSpots() {
         <div className="loading">Loading...</div>
       ) : (
         <div className="containerParkingSpots">
+          <div className="pageReminder">YOUR SPOTS</div>
           <div className="containerHeaderSpots">
             <p className="nrSpot">{translate('nr')}</p>
             <p className="addressName">{translate('addressName')}</p>

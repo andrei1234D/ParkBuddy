@@ -106,13 +106,13 @@ async function checkAvailabilityAndSetStatus() {
     throw error; // Just rethrow the caught error
   }
 }
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, 'client/build')));
 
-app.use(express.static(path.join(__dirname, 'client/build')));
-
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-});
-
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+  });
+}
 app.get('/get-google-maps-key', (req, res) => {
   const apiKey = process.env.GOOGLE_MAPS_API_KEY;
   res.json({ apiKey });

@@ -109,3 +109,11 @@
 .partnerDiv:hover img {
   transform: scale(0.7);
 }
+
+.authenticationPage {
+  align-items: center;
+  padding: 40px;
+  font-size: 50px;
+  color: #097b5a;
+  font-weight: bold;
+}

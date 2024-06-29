@@ -65,3 +65,10 @@
   justify-content: center;
   align-items: center;
 }
+.pageReminder {
+  text-align: center;
+  padding: 25px 0 25px 0;
+  font-size: 30px;
+  color: var(--UIColor);
+  font-weight: bold;
+}

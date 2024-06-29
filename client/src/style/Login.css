@@ -91,6 +91,13 @@
   cursor: pointer;
   text-decoration: underline;
 }
+.authenticationPage {
+  align-items: center;
+  padding: 40px;
+  font-size: 50px;
+  color: #097b5a;
+  font-weight: bold;
+}
 @media (max-width: 800px) {
   .welcomeContainer {
     width: 90%;

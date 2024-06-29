@@ -140,6 +140,7 @@ const Register = () => {
 
   return (
     <div className="biggestDiv">
+      <div className="authenticationPage">REGISTER</div>
       <Dialog open={showDialog} onClose={handleCloseDialog}>
         <DialogTitle
           style={{ backgroundColor: 'var(--UIColor)', color: 'var(--UIText)' }}
@@ -251,7 +252,7 @@ const Register = () => {
                   letterSpacing: '2px',
                 }}
               >
-                CUSTOMER REGISTER
+                PARTNER
               </p>
               <p className="textLogin">{translate('firstName')}</p>
               <input
@@ -326,7 +327,7 @@ const Register = () => {
                   letterSpacing: '2px',
                 }}
               >
-                PARTNER REGISTER
+                PARTNER
               </p>
               <p className="textLogin">{translate('firstName')}</p>
               <input

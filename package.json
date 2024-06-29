@@ -51,7 +51,7 @@
   "scripts": {
     "start": "node server/server.js",
     "heroku-postbuild": "cd client && npm install && npm run build",
-    "predeploy": "npm run build",
+    "predeploy": "cd client && npm run build",
     "deploy": "gh-pages -d build"
   },
   "eslintConfig": {

@@ -6,3 +6,8 @@
   column-gap: 10px;
   justify-content: space-between;
 }
+.normal-text {
+  color: white;
+  font-size: 25px;
+  font-weight: bold;
+}

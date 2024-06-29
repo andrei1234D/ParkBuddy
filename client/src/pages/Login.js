@@ -84,9 +84,13 @@ const Login = () => {
 
   return (
     <div className="biggestDiv">
+      <div className="authenticationPage">LOGIN</div>
       <Dialog open={showDialog} onClose={handleCloseDialog}>
         <DialogTitle
-          style={{ backgroundColor: 'var(--UIColor)', color: 'var(--UIText)' }}
+          style={{
+            backgroundColor: 'var(--UIColor)',
+            color: 'var(--UIText)',
+          }}
         >
           Wrong Credentials
         </DialogTitle>
@@ -141,7 +145,7 @@ const Login = () => {
               letterSpacing: '2px',
             }}
           >
-            CUSTOMER LOGIN
+            CUSTOMER
           </p>
           <div id="bigContainer" style={{ width: '100%' }}>
             <div className="welcomeContainer">
@@ -209,7 +213,7 @@ const Login = () => {
               letterSpacing: '2px',
             }}
           >
-            PARTNER LOGIN
+            PARTNER
           </p>
           <div id="bigContainer" style={{ width: '100%' }}>
             <div className="welcomeContainer">
