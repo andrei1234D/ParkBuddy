@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/ParkBuddy/static/css/main.77b437a1.css",
-    "main.js": "/ParkBuddy/static/js/main.c92a7833.js",
+    "main.js": "/ParkBuddy/static/js/main.9bcc6e3c.js",
     "static/media/bannerBackground.png": "/ParkBuddy/static/media/bannerBackground.39e09c70d89bb313de9c.png",
     "static/media/studentReview.png": "/ParkBuddy/static/media/studentReview.afe8a99d4b5388816d49.png",
     "static/media/familyWoods.png": "/ParkBuddy/static/media/familyWoods.ba306856409f8b5b52ed.png",
@@ -39,18 +39,18 @@
     "static/media/puma.svg": "/ParkBuddy/static/media/puma.f8366daf8b3d2e88db6227330a3a9c09.svg",
     "static/media/boeing.svg": "/ParkBuddy/static/media/boeing.f156a74a6f47fb2e41a62c6ddfc146ce.svg",
     "static/media/meta.svg": "/ParkBuddy/static/media/meta.1a5856d02b7ef9a0ac7d70498a85b407.svg",
-    "static/media/Sun.svg": "/ParkBuddy/static/media/Sun.681607dcda2a01539a9a8a157ae74e6e.svg",
+    "static/media/Sun.svg": "/ParkBuddy/static/media/Sun.aef8f60b836976321d24aa4163dbfb7f.svg",
     "static/media/bmw.svg": "/ParkBuddy/static/media/bmw.9a9afc2f3f3449fd2a60aeef9b17c278.svg",
     "index.html": "/ParkBuddy/index.html",
     "static/media/visa.svg": "/ParkBuddy/static/media/visa.a832f682ed43e496bcbeebb6f2aa31e1.svg",
-    "static/media/Moon.svg": "/ParkBuddy/static/media/Moon.0a6a2b75ac51157455302ddcfca385c0.svg",
+    "static/media/Moon.svg": "/ParkBuddy/static/media/Moon.af99a536ce1d19f741275b8554beaa63.svg",
     "static/media/tesla.svg": "/ParkBuddy/static/media/tesla.683548cb3e6cedbe7403c0b8e7ba0f5f.svg",
     "static/media/bugatti.svg": "/ParkBuddy/static/media/bugatti.fc105dadc57c70d1dd3b6fef577aa027.svg",
     "main.77b437a1.css.map": "/ParkBuddy/static/css/main.77b437a1.css.map",
-    "main.c92a7833.js.map": "/ParkBuddy/static/js/main.c92a7833.js.map"
+    "main.9bcc6e3c.js.map": "/ParkBuddy/static/js/main.9bcc6e3c.js.map"
   },
   "entrypoints": [
     "static/css/main.77b437a1.css",
-    "static/js/main.c92a7833.js"
+    "static/js/main.9bcc6e3c.js"
   ]
 }
