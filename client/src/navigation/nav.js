@@ -53,7 +53,7 @@ export default function Nav() {
         className={isHeaderVisible ? 'emptyHeader' : 'emptyHeader hidden'}
       ></div>
       <div className={`header ${isHeaderVisible ? 'show' : 'hide'}`}>
-        <Link to="/" className="link">
+        <Link to="/ParkBuddy" className="link">
           <div className="parkBuddy">
             <img
               src={parkBuddy}

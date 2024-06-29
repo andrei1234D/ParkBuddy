@@ -661,7 +661,7 @@ app.post('/addParkingRentalTimes', async (req, res) => {
     return res.status(500).json({ message: 'Internal server error' });
   }
 });
-console.log(`the hekoru port is: ${process.env.PORT}`);
+console.log(`the heroku port is: ${process.env.PORT}`);
 app.listen(PORT, () => {
   console.log(`Server is running on port: ${PORT}`);
 });
