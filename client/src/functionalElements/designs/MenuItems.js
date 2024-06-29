@@ -15,7 +15,7 @@ import '../../style/MenuItems.css';
 
 const itemsPerPage = 1;
 const menuItems = [
-  { label: 'Home', link: '/ParkBuddy', urlImg: home },
+  { label: 'Home', link: '#home', urlImg: home },
   { label: 'Reviews', link: '#reviews', urlImg: reviews },
   { label: 'Get the app', link: '#getTheApp', urlImg: getTheApp },
   { label: 'Rent A Spot', link: '/rent-a-spot', urlImg: rentASpot },

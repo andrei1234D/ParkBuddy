@@ -23,24 +23,26 @@ function Home() {
   const { translate } = useContext(GlobalStatesContext);
 
   return (
-    <div>
-      <div className="container">
-        <img src={carImg} alt="Banner Home" className="banner-img" />
-        <Link to="/Rent-A-Spot" className="linkHome">
-          <div className="option-box rentASpot rentHomeButton">
-            {translate('rentASpot')}
-          </div>
-        </Link>
+    <section id="home">
+      <div>
+        <div className="container">
+          <img src={carImg} alt="Banner Home" className="banner-img" />
+          <Link to="/Rent-A-Spot" className="linkHome">
+            <div className="option-box rentASpot rentHomeButton">
+              {translate('rentASpot')}
+            </div>
+          </Link>
+        </div>
+        <div className="emptySpace"></div>
+        <section id="reviews">
+          <Reviews />
+        </section>
+        <div className="emptySpace"></div>
+        <AppStore />
+        <div className="emptySpace"></div>
+        <FooterHome />
       </div>
-      <div className="emptySpace"></div>
-      <section id="reviews">
-        <Reviews />
-      </section>
-      <div className="emptySpace"></div>
-      <AppStore />
-      <div className="emptySpace"></div>
-      <FooterHome />
-    </div>
+    </section>
   );
 }
 
