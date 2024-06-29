@@ -21,7 +21,6 @@ import './style/App.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 function App() {
-  console.log('Public URL:', process.env.PUBLIC_URL); // Log to verify
   return (
     <div>
       <Router basename={process.env.PUBLIC_URL}>

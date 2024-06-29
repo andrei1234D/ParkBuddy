@@ -20,7 +20,13 @@ const mongoose = require('mongoose');
 
 require('dotenv').config();
 
-app.use(cors());
+const corsOptions = {
+  origin: ['https://andrei1234d.github.io', 'http://localhost:3000'],
+  methods: ['GET', 'POST'],
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
 app.use(bodyParser.json());
 
 // Secret key for JWT
