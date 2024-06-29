@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/ParkBuddy/static/css/main.77b437a1.css",
-    "main.js": "/ParkBuddy/static/js/main.c92a7833.js",
+    "main.js": "/ParkBuddy/static/js/main.30bf57b7.js",
     "static/media/bannerBackground.png": "/ParkBuddy/static/media/bannerBackground.39e09c70d89bb313de9c.png",
     "static/media/studentReview.png": "/ParkBuddy/static/media/studentReview.afe8a99d4b5388816d49.png",
     "static/media/familyWoods.png": "/ParkBuddy/static/media/familyWoods.ba306856409f8b5b52ed.png",
@@ -47,10 +47,10 @@
     "static/media/tesla.svg": "/ParkBuddy/static/media/tesla.683548cb3e6cedbe7403c0b8e7ba0f5f.svg",
     "static/media/bugatti.svg": "/ParkBuddy/static/media/bugatti.fc105dadc57c70d1dd3b6fef577aa027.svg",
     "main.77b437a1.css.map": "/ParkBuddy/static/css/main.77b437a1.css.map",
-    "main.c92a7833.js.map": "/ParkBuddy/static/js/main.c92a7833.js.map"
+    "main.30bf57b7.js.map": "/ParkBuddy/static/js/main.30bf57b7.js.map"
   },
   "entrypoints": [
     "static/css/main.77b437a1.css",
-    "static/js/main.c92a7833.js"
+    "static/js/main.30bf57b7.js"
   ]
 }
