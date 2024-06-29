@@ -23,7 +23,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 function App() {
   return (
     <div>
-      <Router basename="/">
+      <Router basename={process.env.PUBLIC_URL || '/'}>
         <GlobalStatesContextProvider>
           <Particles />
           <Nav />
