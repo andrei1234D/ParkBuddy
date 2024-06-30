@@ -11,7 +11,7 @@ export default function NavTextAnimation() {
     <div>
       {location.pathname === '/Lend-A-Spot' ? (
         <div className="normal-text">LEND A SPOT</div>
-      ) : location.pathname === '/Rent-A-Spot' ? (
+      ) : location.pathname === '/asd' ? (
         <div className="normal-text">RENT A SPOT</div>
       ) : (
         <div className="catchy">
