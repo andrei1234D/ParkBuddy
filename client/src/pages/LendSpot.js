@@ -71,7 +71,7 @@ const LendSpot = () => {
   useEffect(() => {
     const fetchApiKey = async () => {
       try {
-        const response = await api.post('/Get-google-maps-key');
+        const response = await api.post('/googleApiKey');
         setApiKey(response.data.apiKey);
       } catch (error) {
         console.error('Error fetching API key:', error);

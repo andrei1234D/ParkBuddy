@@ -31,8 +31,11 @@ app.use(bodyParser.json());
 
 // Secret key for JWT
 const secretKey = process.env.SECRET_JWT_TOKEN;
+
 const MONGO_URI = process.env.MONGO_URI;
+
 const apiKey = process.env.GOOGLE_MAPS_API_KEY;
+
 mongoose.connect(MONGO_URI, {});
 const db = mongoose.connection;
 
@@ -114,7 +117,7 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
   });
 }
-app.post('/Get-google-maps-key', (req, res) => {
+app.post('/googleApiKey', (req, res) => {
   res.json({ apiKey });
 });
 
