@@ -114,7 +114,7 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
   });
 }
-app.get('/Get-google-maps-key', (req, res) => {
+app.post('/Get-google-maps-key', (req, res) => {
   res.json({ apiKey });
 });
 
@@ -419,7 +419,7 @@ app.post('/Your-Spots', async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 });
-app.get('/Get-Spots', async (req, res) => {
+app.post('/Get-Spots', async (req, res) => {
   try {
     const availableSpots = await checkAvailabilityAndSetStatus();
     res.json(availableSpots);

@@ -66,7 +66,7 @@ const RentSpot = () => {
   useEffect(() => {
     const fetchApiKey = async () => {
       try {
-        const response = await api.get('/Get-google-maps-key');
+        const response = await api.post('/Get-google-maps-key');
         setApiKey(response.data.apiKey);
       } catch (error) {
         console.error('Error fetching API key:', error);
@@ -105,7 +105,7 @@ const RentSpot = () => {
   }, [showConfetti]);
   const fetchData = async () => {
     try {
-      const response = await api.get('/Get-Spots');
+      const response = await api.post('/Get-Spots');
       setSpots(response.data);
       setLoading(false);
     } catch (error) {
