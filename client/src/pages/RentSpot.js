@@ -66,7 +66,7 @@ const RentSpot = () => {
   useEffect(() => {
     const fetchApiKey = async () => {
       try {
-        const response = await api.get('/get-google-maps-key');
+        const response = await api.get('/Get-google-maps-key');
         setApiKey(response.data.apiKey);
       } catch (error) {
         console.error('Error fetching API key:', error);
