@@ -1,12 +1,11 @@
-import React, { useState, useEffect, useRef, useContext } from 'react';
+import React, { useEffect, useRef, useContext } from 'react';
 import '../../style/MenuIcon.css';
 import MenuItems from './MenuItems';
 import GlobalStatesContext from '../../context/GlobalStatesContext';
 export default function MenuIcon() {
   const menuRef = useRef(null);
   const containerRef = useRef(null);
-  const { toggleLanguage, translate, isMenuOpen, toggleMenu } =
-    useContext(GlobalStatesContext);
+  const { translate, isMenuOpen, toggleMenu } = useContext(GlobalStatesContext);
 
   const handleClickOutside = (event) => {
     if (

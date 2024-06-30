@@ -20,7 +20,7 @@ import VisaLogo from '../../images/sponsorImage/visa.svg';
 import WalmartLogo from '../../images/sponsorImage/walmart.svg';
 
 function FooterHome() {
-  const { translate, isDarkMode } = useContext(GlobalStatesContext);
+  const { translate } = useContext(GlobalStatesContext);
 
   const sponsors = [
     { name: 'adidas', logoUrl: AdidasLogo },

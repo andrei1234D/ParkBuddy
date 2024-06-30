@@ -9,9 +9,8 @@ import { Button } from '@mui/material';
 import '../style/Settings.css';
 
 const AccountSettings = () => {
-  const { role, username, toggleLogout, isLoggedIn, translate } =
+  const { role, username, toggleLogout, translate } =
     useContext(GlobalStatesContext);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
 
   const handleLogout = () => {
