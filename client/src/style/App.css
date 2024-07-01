@@ -29,8 +29,7 @@
   --UIText: white;
   --btn_background_gradient: white;
   --btn_text: black;
-  --text-shadow: 0 0 80px rgb(192 219 255 / 100%),
-    0 0 32px rgb(65 120 255 / 100%);
+  --text-shadow: 0 0 80px rgb(0, 0, 0), 0 0 32px rgb(0, 0, 0);
 }
 [data-theme='dark'] {
   --border_color: rgba(2, 25, 10);
@@ -40,8 +39,7 @@
   --UIText: white;
   --btn_background_gradient: white;
   --btn_text: black;
-  --text-shadow: 0 0 80px rgb(192 219 255 / 100%),
-    0 0 32px rgb(65 120 255 / 100%);
+  --text-shadow: 0 0 80px rgb(255, 255, 255), 0 0 32px rgb(255, 255, 255);
 }
 [data-theme='light'] {
   --border_color: rgba(255, 255, 255);
