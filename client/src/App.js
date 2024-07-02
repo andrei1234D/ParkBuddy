@@ -1,11 +1,4 @@
 import React, { useEffect } from 'react';
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  useLocation,
-  useNavigate,
-} from 'react-router-dom';
 import Login from './pages/Login';
 import Home from './pages/Home';
 import Nav from './navigation/nav';
@@ -19,21 +12,30 @@ import Settings from './pages/Settings';
 import PaymentMethod from './pages/PaymentMethod';
 import { GlobalStatesContextProvider } from './context/GlobalStatesContext';
 import ProtectedRoutes from './ProtectedRoutes';
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
 import './style/App.css';
+// import ProtectedRoutes from '../ProtectedRoutes';
+
+//Router imports
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  useNavigate,
+} from 'react-router-dom';
 
 function App() {
-  const location = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
-    const query = new URLSearchParams(location.search);
+    const query = new URLSearchParams(window.location.search);
     const redirect = query.get('redirect');
-    if (redirect && location.pathname === '/') {
+    if (redirect) {
       navigate(redirect, { replace: true });
     }
-  }, [location, navigate]);
+  }, [navigate]);
 
   return (
     <div>
