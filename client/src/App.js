@@ -18,12 +18,12 @@ import './style/App.css';
 // import ProtectedRoutes from '../ProtectedRoutes';
 
 //Router imports
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as HashRouter, Route, Routes } from 'react-router-dom';
 
 function App() {
   return (
     <div>
-      <Router basename={process.env.PUBLIC_URL}>
+      <HashRouter>
         <GlobalStatesContextProvider>
           <Particles />
           <Nav />
@@ -42,7 +42,7 @@ function App() {
           </Routes>
           <ToastContainer />
         </GlobalStatesContextProvider>
-      </Router>
+      </HashRouter>
     </div>
   );
 }
