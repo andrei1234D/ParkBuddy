@@ -1,11 +1,4 @@
-import React, { useEffect } from 'react';
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  useLocation,
-  useNavigate,
-} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Login from './pages/Login';
 import Home from './pages/Home';
 import Nav from './navigation/nav';
@@ -24,17 +17,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import './style/App.css';
 
 function App() {
-  const location = useLocation();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const query = new URLSearchParams(location.search);
-    const redirect = query.get('redirect');
-    if (redirect && location.pathname === '/') {
-      navigate(redirect, { replace: true });
-    }
-  }, [location, navigate]);
-
   return (
     <div>
       <Router basename={process.env.PUBLIC_URL}>
