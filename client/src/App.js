@@ -1,3 +1,4 @@
+import React, { useEffect } from 'react';
 import Login from './pages/Login';
 import Home from './pages/Home';
 import Nav from './navigation/nav';
@@ -18,9 +19,24 @@ import './style/App.css';
 // import ProtectedRoutes from '../ProtectedRoutes';
 
 //Router imports
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  useNavigate,
+} from 'react-router-dom';
 
 function App() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const query = new URLSearchParams(window.location.search);
+    const redirect = query.get('redirect');
+    if (redirect) {
+      navigate(redirect, { replace: true });
+    }
+  }, [navigate]);
+
   return (
     <div>
       <Router basename={process.env.PUBLIC_URL}>
