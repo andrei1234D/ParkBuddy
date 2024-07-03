@@ -10,16 +10,17 @@
 .welcomeContainer {
   display: flex;
   flex-direction: column;
-
-  margin-left: 10%;
-  width: 80%;
 }
 .formDiv {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  background-color: var(--UIColor);
+  background-color: rgba(var(--UIText), 0.3);
+  backdrop-filter: blur(2px);
+  width: 80%;
+  margin-left: 10%;
+  border-radius: 15px;
 }
 
 .containerLogin {
@@ -54,8 +55,8 @@
   white-space: nowrap;
   height: 50px;
   width: 80%;
-  color: var(--UIColor);
-  background-color: var(--UIText);
+  color: rgb(var(--UIText));
+  background-color: rgb(var(--UIColor));
 }
 
 .rightDiv {

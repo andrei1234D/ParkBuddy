@@ -142,8 +142,8 @@
 }
 
 .banner-img {
-  min-width: 100%;
-  min-height: 100%;
+  width: 100vw;
+  height: 100vh;
 }
 
 .content-box {
@@ -164,13 +164,15 @@
 }
 .informationContainer {
   min-height: 850px;
-  background-color: var(--UIColor);
+  background-color: rgba(var(--UIText), 0.2);
   margin-left: 10%;
   align-items: center;
   width: 80%;
   display: flex;
   flex-direction: column;
-  padding: 75px 0px 75px 0;
+  padding: 25px 0px 75px 0;
+  backdrop-filter: blur(10px);
+  border-radius: 10px;
 }
 
 .cardContainer {
@@ -192,7 +194,7 @@
 
 .middle,
 .bottomHalf {
-  color: var(--UIText);
+  color: rgb(var(--UIText));
 }
 
 .middle {
@@ -216,7 +218,7 @@
   line-height: 1.5em;
 }
 .footerBenefits {
-  color: var(--UIText);
+  color: rgb(var(--UIText));
   text-align: center;
   margin-top: 200px;
   height: 20%;
@@ -269,7 +271,7 @@
 .cardReview {
   width: 310px;
   height: 550px;
-  color: var(--UIColor);
+  color: rgb(var(--UIText));
   border-radius: 8px;
   padding: 20px;
 }
@@ -283,7 +285,7 @@
   margin-bottom: 5%;
 }
 .textReviews {
-  color: var(--UIText);
+  color: rgb(var(--UIText));
   flex-wrap: wrap; /* Allows the text to wrap onto multiple lines */
   text-align: center; /* Centers the text horizontally */
   font-size: 1.1rem;
@@ -308,7 +310,7 @@
 }
 
 .rating-text {
-  color: var(--UIText);
+  color: rgb(var(--UIText));
 }
 
 .footer {
@@ -326,14 +328,18 @@
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  background-color: var(--UIColor);
-  color: var(--UIText);
+  background-color: rgb(var(--UIColor));
+  color: rgb(var(--UIText));
 
   border-top: 2px solid rgb(15, 130, 42);
   box-shadow: 0 -5px 15px rgba(15, 130, 42, 0.5);
 }
 /* Media query for resolutions smaller than 800 pixels */
-
+.reviewsTitle {
+  color: #097b5a;
+  font-size: 40px;
+  font-weight: bold;
+}
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -359,13 +365,6 @@
     align-items: center;
   }
 
-  .option-box {
-    font-size: 40px;
-    width: 70%;
-    height: 70px; /* Increased button height on smaller screens */
-    margin: 15px; /* Increased distance between buttons on smaller screens */
-    border-radius: 28%;
-  }
   .title {
     font-size: 80px;
     margin-top: 15%;

@@ -73,6 +73,7 @@ function YourSpots() {
                   style={{
                     width: 'auto',
                     height: 'auto',
+                    color: 'var(--UIColor)',
                   }}
                 >
                   <CiCircleQuestion

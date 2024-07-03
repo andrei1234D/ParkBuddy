@@ -45,29 +45,33 @@
   align-items: center;
   height: 100%;
   width: 100%;
-  background-color: var(--UIColor);
+  background-color: rgba(var(--UIText), 0.2);
+  backdrop-filter: blur(7px);
 }
 .partnerDiv {
   cursor: pointer;
-  background-color: var(--UIText);
-  opacity: 1;
+  background-color: rgba(var(--UIText), 0.2);
+  backdrop-filter: blur(7px);
   width: 50%;
   height: 500px;
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
+  border-radius: 0px 15px 15px 0px;
+  box-shadow: -5px 0 10px rgba(var(--UIText), 0.4);
 }
 .customerDiv {
   cursor: pointer;
-  background-color: var(--UIColor);
-  opacity: 1;
+  background-color: rgba(var(--UIText), 0.2);
+  backdrop-filter: blur(7px);
   width: 50%;
   height: 500px;
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
+  border-radius: 15px 0 0 15px;
 }
 .partnerIcon,
 .customerIcon {
@@ -75,7 +79,7 @@
   height: 150px;
   border-radius: 100px;
   border-style: solid;
-  border-color: var(--UIText);
+  border-color: rgb(var(--UIText));
   margin-top: 5px;
 }
 .imgDiv {
@@ -88,13 +92,13 @@
 .bottomTextPartner {
   position: absolute;
   bottom: 0;
-  color: var(--UIColor);
+  color: rgb(var(--UIColor));
   font-size: 50px;
 }
 .bottomTextCustomer {
   position: absolute;
   bottom: 0;
-  color: var(--UIText);
+  color: rgb(var(--UIText));
   font-size: 50px;
 }
 .partnerIcon:hover,

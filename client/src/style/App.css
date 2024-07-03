@@ -24,9 +24,9 @@
 :root {
   --border_color: rgba(2, 25, 10);
   --body_background: #040720;
-  --UIColor: black;
+  --UIColor: 0, 0, 0;
   --UIButtonColor: #040720;
-  --UIText: white;
+  --UIText: 255, 255, 255;
   --btn_background_gradient: white;
   --btn_text: black;
   --text-shadow: 0 0 80px rgb(0, 0, 0), 0 0 32px rgb(0, 0, 0);
@@ -34,9 +34,9 @@
 [data-theme='dark'] {
   --border_color: rgba(2, 25, 10);
   --body_background: black;
-  --UIColor: black;
+  --UIColor: 0, 0, 0;
   --UIButtonColor: #040720;
-  --UIText: white;
+  --UIText: 255, 255, 255;
   --btn_background_gradient: white;
   --btn_text: black;
   --text-shadow: 0 0 80px rgb(255, 255, 255), 0 0 32px rgb(255, 255, 255);
@@ -44,9 +44,9 @@
 [data-theme='light'] {
   --border_color: rgba(255, 255, 255);
   --body_background: white;
-  --UIColor: white;
+  --UIColor: 255, 255, 255;
   --UIButtonColor: #393f44;
-  --UIText: black;
+  --UIText: 0, 0, 0;
   --btn_background_gradient: black;
   --btn_text: white;
   --text-shadow: 0 0 80px rgb(0, 0, 0), 0 0 32px rgb(0, 0, 0);

@@ -87,8 +87,8 @@ const AccountSettings = () => {
             <Button
               variant="contained"
               style={{
-                color: 'var(--UIText)',
-                backgroundColor: 'var(--UIColor)',
+                color: 'rgb(var(--UIColor))',
+                backgroundColor: 'transparent',
               }}
             >
               {translate('toPayment')}{' '}
@@ -100,8 +100,8 @@ const AccountSettings = () => {
             variant="contained"
             onClick={handleLogout}
             style={{
-              color: 'var(--UIText)',
-              backgroundColor: 'var(--UIColor)',
+              color: 'rgb(var(--UIColor))',
+              backgroundColor: 'transparent',
             }}
           >
             {translate('logout')} <AiOutlineLogout size="25px" />

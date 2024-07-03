@@ -12,6 +12,7 @@ function Reviews() {
   return (
     <div>
       <div className="informationContainer">
+        <p className="reviewsTitle">REVIEWS</p>
         <div className="cardReviewContainer">
           {reviews.map((review, index) => (
             <div className="cardReview" key={index}>
