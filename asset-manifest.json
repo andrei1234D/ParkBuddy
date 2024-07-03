@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.d996bdb2.css",
-    "main.js": "/static/js/main.0e33fb1b.js",
+    "main.css": "/static/css/main.3363662d.css",
+    "main.js": "/static/js/main.28121efb.js",
     "static/media/bannerBackground.png": "/static/media/bannerBackground.39e09c70d89bb313de9c.png",
     "static/media/studentReview.png": "/static/media/studentReview.afe8a99d4b5388816d49.png",
     "static/media/familyWoods.png": "/static/media/familyWoods.ba306856409f8b5b52ed.png",
@@ -19,8 +19,8 @@
     "static/media/getTheApp.jpg": "/static/media/getTheApp.1683740f70eb11f1cfef.jpg",
     "static/media/reviews.jpg": "/static/media/reviews.3ad17f78f6751d26b6ac.jpg",
     "static/media/UsaFlag.png": "/static/media/UsaFlag.0908a48f884473e099aa.png",
+    "static/media/parkImageDarkMode.png": "/static/media/parkImageDarkMode.2bf981e331f8830ac6ff.png",
     "static/media/parkBuddy.png": "/static/media/parkBuddy.391bbe8a45ff0207fecf.png",
-    "static/media/parkImageDarkMode.png": "/static/media/parkImageDarkMode.37e25a0052edc84342f8.png",
     "static/media/parkImage.png": "/static/media/parkImage.fe5150fa598571d9c666.png",
     "static/media/app_gallery-transformed.png": "/static/media/app_gallery-transformed.a445348d93a14cff836c.png",
     "static/media/vipLight.png": "/static/media/vipLight.49675becc4158445768f.png",
@@ -46,11 +46,11 @@
     "static/media/Moon.svg": "/static/media/Moon.0a6a2b75ac51157455302ddcfca385c0.svg",
     "static/media/tesla.svg": "/static/media/tesla.683548cb3e6cedbe7403c0b8e7ba0f5f.svg",
     "static/media/bugatti.svg": "/static/media/bugatti.fc105dadc57c70d1dd3b6fef577aa027.svg",
-    "main.d996bdb2.css.map": "/static/css/main.d996bdb2.css.map",
-    "main.0e33fb1b.js.map": "/static/js/main.0e33fb1b.js.map"
+    "main.3363662d.css.map": "/static/css/main.3363662d.css.map",
+    "main.28121efb.js.map": "/static/js/main.28121efb.js.map"
   },
   "entrypoints": [
-    "static/css/main.d996bdb2.css",
-    "static/js/main.0e33fb1b.js"
+    "static/css/main.3363662d.css",
+    "static/js/main.28121efb.js"
   ]
 }
