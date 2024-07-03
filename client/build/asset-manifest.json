@@ -1,16 +1,23 @@
 {
   "files": {
-    "main.css": "/static/css/main.3363662d.css",
-    "main.js": "/static/js/main.28121efb.js",
+    "main.css": "/static/css/main.9020d2f7.css",
+    "main.js": "/static/js/main.af59f050.js",
+    "static/media/sliderImage_1.png": "/static/media/sliderImage_1.def1e9b8683230716a80.png",
+    "static/media/sliderImage_4.png": "/static/media/sliderImage_4.a1379dde5ec457787f8b.png",
     "static/media/bannerBackground.png": "/static/media/bannerBackground.39e09c70d89bb313de9c.png",
+    "static/media/sliderImage_5.png": "/static/media/sliderImage_5.b532c4351ef8423d9ef9.png",
+    "static/media/sliderImage_3.png": "/static/media/sliderImage_3.500ffe00d08762c60cf4.png",
+    "static/media/sliderImage_2.png": "/static/media/sliderImage_2.b34742b209689202a44d.png",
     "static/media/studentReview.png": "/static/media/studentReview.afe8a99d4b5388816d49.png",
     "static/media/familyWoods.png": "/static/media/familyWoods.ba306856409f8b5b52ed.png",
     "static/media/seniorCitizen.png": "/static/media/seniorCitizen.9d4667cb40f7540e4526.png",
+    "static/media/bg.png": "/static/media/bg.b8f3a998043e5fc00da2.png",
     "static/media/blackManReview.png": "/static/media/blackManReview.cd14b3488a453fd024dd.png",
     "static/media/freelancer.png": "/static/media/freelancer.0f22dde8d8fa42395e24.png",
     "static/media/womanShopping.png": "/static/media/womanShopping.8d94ba991b56f31ef062.png",
     "static/media/whiteWomanReview.png": "/static/media/whiteWomanReview.a86d3e186566f51b724d.png",
     "static/media/womanVisiting.png": "/static/media/womanVisiting.00f214cbfb76fdd9290a.png",
+    "static/media/futuristicEngineer.png": "/static/media/futuristicEngineer.1a45cfe37dad2b983978.png",
     "static/media/noPaymentOptions.png": "/static/media/noPaymentOptions.a65a46e58039850eda2f.png",
     "static/media/rentASpot.jpg": "/static/media/rentASpot.96a89ae6fdf18f9d4da7.jpg",
     "static/media/home.jpg": "/static/media/home.d82fdefbb1d7a4d27268.jpg",
@@ -46,11 +53,11 @@
     "static/media/Moon.svg": "/static/media/Moon.0a6a2b75ac51157455302ddcfca385c0.svg",
     "static/media/tesla.svg": "/static/media/tesla.683548cb3e6cedbe7403c0b8e7ba0f5f.svg",
     "static/media/bugatti.svg": "/static/media/bugatti.fc105dadc57c70d1dd3b6fef577aa027.svg",
-    "main.3363662d.css.map": "/static/css/main.3363662d.css.map",
-    "main.28121efb.js.map": "/static/js/main.28121efb.js.map"
+    "main.9020d2f7.css.map": "/static/css/main.9020d2f7.css.map",
+    "main.af59f050.js.map": "/static/js/main.af59f050.js.map"
   },
   "entrypoints": [
-    "static/css/main.3363662d.css",
-    "static/js/main.28121efb.js"
+    "static/css/main.9020d2f7.css",
+    "static/js/main.af59f050.js"
   ]
 }

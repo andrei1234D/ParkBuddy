@@ -8,6 +8,7 @@ import carImg from '../images/bannerBackground.png';
 import AppStore from '../functionalElements/designs/AppStore';
 import Reviews from '../functionalElements/designs/Reviews';
 import FooterHome from '../functionalElements/designs/FooterHome';
+import Banner from '../functionalElements/designs/Banner';
 import '../style/Home.css';
 
 function Home() {
@@ -26,7 +27,7 @@ function Home() {
     <section id="home">
       <div>
         <div className="container">
-          <img src={carImg} alt="Banner Home" className="banner-img" />
+          <Banner />
           <Link to="/Rent-A-Spot" className="linkHome">
             <div className="option-box rentASpot rentHomeButton">
               {translate('rentASpot')}
