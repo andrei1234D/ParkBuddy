@@ -62,7 +62,45 @@ body {
 }
 
 .fadeAppear {
-  animation: fadeAppear linear both;
+  opacity: 0;
+}
+
+.fadeAppearTitle {
+  opacity: 0;
+}
+
+.fadeAppear.observed {
+  animation: fadeAppearAnimation 1s both;
+}
+
+.fadeAppearTitle.observed {
+  animation: fadeAppearTitleAnimation 1s both;
+}
+
+@keyframes fadeAppearAnimation {
+  from {
+    opacity: 0;
+    transform: translateY(75px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeAppearTitleAnimation {
+  from {
+    opacity: 0;
+    transform: translateY(50px) scale(0.3);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+/* animation-timeline does not work on production */
+/* .fadeAppear {
+  animation: fadeAppear both;
   animation-timeline: view(70% 5%);
 }
 .fadeAppearTitle {
@@ -83,10 +121,10 @@ body {
 @keyframes fadeAppearTitle {
   from {
     opacity: 0;
-    transform: translateY(200px) scale(0.2);
+    transform: translateY(200px) scale(0.3);
   }
   to {
     opacity: 1;
-    transform: translateY(00px) scale(1);
+    transform: translateY(0) scale(1);
   }
-}
+} */

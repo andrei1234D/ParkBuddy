@@ -14,6 +14,7 @@ import { GlobalStatesContextProvider } from './context/GlobalStatesContext';
 import ProtectedRoutes from './ProtectedRoutes';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import FadeObserver from './animations/fadeAppear';
 import './style/App.css';
 
 function App() {
@@ -23,19 +24,21 @@ function App() {
         <GlobalStatesContextProvider>
           <Particles />
           <Nav />
-          <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/" element={<Home />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/Rent-A-Spot" element={<RentSpot />} />
-            <Route element={<ProtectedRoutes />}>
-              <Route path="/paymentMethod" element={<PaymentMethod />} />
-              <Route path="/Account-Settings" element={<AccountSettings />} />
-              <Route path="/Lend-A-Spot" element={<LendSpot />} />
-              <Route path="/Your-Parking-Spots" element={<YourSpots />} />
-            </Route>
-            <Route path="/Settings" element={<Settings />} />
-          </Routes>
+          <FadeObserver>
+            <Routes>
+              <Route path="/login" element={<Login />} />
+              <Route path="/" element={<Home />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/Rent-A-Spot" element={<RentSpot />} />
+              <Route element={<ProtectedRoutes />}>
+                <Route path="/paymentMethod" element={<PaymentMethod />} />
+                <Route path="/Account-Settings" element={<AccountSettings />} />
+                <Route path="/Lend-A-Spot" element={<LendSpot />} />
+                <Route path="/Your-Parking-Spots" element={<YourSpots />} />
+              </Route>
+              <Route path="/Settings" element={<Settings />} />
+            </Routes>
+          </FadeObserver>
           <ToastContainer />
         </GlobalStatesContextProvider>
       </Router>
