@@ -62,8 +62,12 @@ body {
 }
 
 .fadeAppear {
-  animation: fadeAppear linear;
-  animation-timeline: view();
+  animation: fadeAppear linear both;
+  animation-timeline: view(70% 5%);
+}
+.fadeAppearTitle {
+  animation: fadeAppearTitle both;
+  animation-timeline: view(70% 5%);
 }
 
 @keyframes fadeAppear {
@@ -75,15 +79,14 @@ body {
     opacity: 1;
     transform: translateY(0);
   }
-  0% {
+}
+@keyframes fadeAppearTitle {
+  from {
     opacity: 0;
+    transform: translateY(200px) scale(0.2);
   }
-  20% {
+  to {
     opacity: 1;
-    transform: translate();
-    transform: translateY(0);
-  }
-  100% {
-    transform: translate();
+    transform: translateY(00px) scale(1);
   }
 }

@@ -10,7 +10,8 @@
   border-style: solid;
   border-color: white;
   border-radius: 15%;
-
+  border-radius: 15px;
+  backdrop-filter: blur(7px);
   opacity: 1;
 
   transition: box-shadow 0.3s ease-in-out, transform 0.4s ease-in-out,
@@ -76,7 +77,8 @@
   min-width: 500px;
   padding: 20px;
   height: 80%;
-  background-color: #097b5a;
+  background-color: rgba(9, 123, 90, 0.7);
+  backdrop-filter: blur(7px);
   row-gap: 20px;
   word-wrap: break-word;
   white-space: normal;

@@ -76,6 +76,7 @@ const AccountSettings = () => {
           )}
           <Button
             onClick={handleToYourParkingSpots}
+            variant="contained"
             style={{
               color: 'var(--UIText)',
               backgroundColor: 'var(--UIColor)',

@@ -13,7 +13,7 @@ function AppStore() {
   return (
     <div>
       <div className="informationContainer">
-        <div className="titleDiv fadeAppear">BENEFITS</div>
+        <div className="titleDiv fadeAppearTitle">BENEFITS</div>
         <div className="cardContainer">
           <div className="card">
             <div className="topHalf">

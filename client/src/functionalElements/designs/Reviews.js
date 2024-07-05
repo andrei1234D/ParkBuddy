@@ -12,7 +12,12 @@ function Reviews() {
   return (
     <div>
       <div className="informationContainer">
-        <p className="reviewsTitle">REVIEWS</p>
+        <p
+          className="titleDiv fadeAppearTitle"
+          style={{ margin: '20px 0 20px 0' }}
+        >
+          REVIEWS
+        </p>
         <div className="cardReviewContainer">
           {reviews.map((review, index) => (
             <div className="cardReview" key={index}>
