@@ -5,7 +5,10 @@ import { toast } from 'react-toastify';
 
 const ProtectedRoutes = () => {
   const { isLoggedIn, role } = useContext(GlobalStatesContext);
-
+  const partnerRoutes = ['/Lend-A-Spot', '/Your-Parking-Spots'];
+  const isPartnerRoute = partnerRoutes.some((route) =>
+    window.location.pathname.includes(route)
+  );
   useEffect(() => {
     if (!isLoggedIn) {
       toast.error('You need to log in to access this page.', {
@@ -31,12 +34,6 @@ const ProtectedRoutes = () => {
   if (!isLoggedIn) {
     return <Navigate to="/login" />;
   }
-
-  // Check if the user is trying to access partner-specific routes without being a partner
-  const partnerRoutes = ['/Lend-A-Spot', '/Your-Parking-Spots'];
-  const isPartnerRoute = partnerRoutes.some((route) =>
-    window.location.pathname.includes(route)
-  );
 
   if (isPartnerRoute && role !== 'partner') {
     return <Navigate to="/login" />;

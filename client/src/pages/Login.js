@@ -114,15 +114,21 @@ const Login = () => {
                 src={isDarkMode ? customerDark : customer}
                 alt="customerImg"
               />
-              <div className="bottomTextCustomer">
+              <div
+                className="coolHeadingText"
+                data-content={`${translate('customer').toUpperCase()}`}
+              >
                 {translate('customer').toUpperCase()}
               </div>
             </div>
           </div>
           <div className="partnerDiv" onClick={partnerClick}>
             <div className="imgDiv">
-              <img src={isDarkMode ? partner : partnerDark} alt="partnerImg" />
-              <div className="bottomTextPartner">
+              <img src={isDarkMode ? partnerDark : partner} alt="partnerImg" />
+              <div
+                className="coolHeadingText"
+                data-content={`${translate('partner').toUpperCase()}`}
+              >
                 {translate('partner').toUpperCase()}
               </div>
             </div>

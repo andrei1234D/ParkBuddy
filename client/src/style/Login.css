@@ -99,6 +99,27 @@
   color: #097b5a;
   font-weight: bold;
 }
+.coolHeadingText {
+  font-family: 'ICA Rubrik';
+  font-size: 5.7em;
+  line-height: 1em;
+  color: rgb(var(--UIColor));
+  position: absolute;
+  top: 60%;
+  display: flex;
+  font-weight: bold;
+}
+
+.coolHeadingText::after {
+  position: absolute;
+  inset: 0 0 0 0;
+  content: attr(data-content);
+  z-index: 11;
+
+  -webkit-text-stroke: 3px pink;
+  color: transparent;
+}
+
 @media (max-width: 800px) {
   .welcomeContainer {
     width: 90%;
