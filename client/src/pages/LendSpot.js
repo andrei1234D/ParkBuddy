@@ -21,12 +21,13 @@ import '../style/LendASpot.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import CloseIcon from '@mui/icons-material/Close';
+import { FaSearch } from 'react-icons/fa';
 import markerImage from '../images/marker2.png';
 
 import api from '../api.js';
 
 const mapContainerStyle = {
-  width: '100vw',
+  width: '100%',
   height: 'calc(100vh - 110px)',
 };
 
@@ -284,87 +285,90 @@ const LendSpot = () => {
     <div>
       <ToastContainer />
       {map && (
-        <Autocomplete
-          apiKey={apiKey}
-          onPlaceSelected={handlePlaceSelect}
-          options={{
-            componentRestrictions: { country: 'ro' },
-          }}
-          style={{
-            width: '98%',
-            position: 'relative',
-            zIndex: '100',
-            padding: '15px',
-          }}
-          placeholder="Search for a location"
-        />
+        <div className={`search-bar top`}>
+          <Autocomplete
+            apiKey={apiKey}
+            onPlaceSelected={handlePlaceSelect}
+            options={{
+              componentRestrictions: { country: 'ro' },
+            }}
+            placeholder="Search for a location"
+            types={['(regions)']}
+            className={`Autocomplete top`}
+          />
+          <FaSearch className={`search-icon top`} />
+        </div>
       )}
       {apiKey && (
-        <GoogleMap
-          mapContainerStyle={mapContainerStyle}
-          zoom={11}
-          center={selectedLocation}
-          options={{ styles: mapStyles, fullscreenControl: false }}
-          onLoad={(map) => setMap(map)}
-          onClick={handleMapClick}
-        >
-          {spots.map((spot) => (
-            <Marker
-              key={spot.id || `${spot.lat}-${spot.lng}`}
-              position={{
-                lat: spot.latitude || spot.lat,
-                lng: spot.longitude || spot.lng,
-              }}
-              onClick={() => {
-                handleMarkerClick(spot);
-              }}
-              icon={{
-                url: markerImage,
-                scaledSize: new window.google.maps.Size(70, 70),
-              }}
-              animation={window.google.maps.Animation.DROP}
-              title={spot.address}
-            />
-          ))}
-          {infoWindowOpen && selectedSpot && (
-            <InfoWindow
-              position={infoWindowPosition}
-              onCloseClick={handleInfoWindowClose}
-            >
-              <div
-                style={{
-                  padding: '5px',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  flexDirection: 'column',
-                  zIndex: '105',
+        <div style={{ marginTop: '46px' }}>
+          <GoogleMap
+            mapContainerStyle={mapContainerStyle}
+            zoom={11}
+            center={selectedLocation}
+            options={{ styles: mapStyles, fullscreenControl: false }}
+            onLoad={(map) => setMap(map)}
+            onClick={handleMapClick}
+          >
+            {spots.map((spot) => (
+              <Marker
+                key={spot.id || `${spot.lat}-${spot.lng}`}
+                position={{
+                  lat: spot.latitude || spot.lat,
+                  lng: spot.longitude || spot.lng,
                 }}
+                onClick={() => {
+                  handleMarkerClick(spot);
+                }}
+                icon={{
+                  url: markerImage,
+                  scaledSize: new window.google.maps.Size(70, 70),
+                }}
+                animation={window.google.maps.Animation.DROP}
+                title={spot.address}
+              />
+            ))}
+            {infoWindowOpen && selectedSpot && (
+              <InfoWindow
+                position={infoWindowPosition}
+                onCloseClick={handleInfoWindowClose}
               >
-                <h3>{selectedSpot.address}</h3>
-                <p>Status: {selectedSpot.status} now</p>
-                <p>
-                  Availability:
-                  {new Date(selectedSpot.startDate).toLocaleDateString()} -{' '}
-                  {new Date(selectedSpot.endDate).toLocaleDateString()}
-                </p>
-                <p>Price: the most you are willing to pay.</p>
-                <p>Owner: {firstName}</p>
-                <div style={{ display: 'flex', alignItems: 'center' }}>
-                  <div> Rating:</div>
-                  <div className="stars">
-                    <span className="star">&#9733;</span>
-                    <span className="star">&#9733;</span>
-                    <span className="star">&#9733;</span>
-                    <span className="star">&#9733;</span>
-                    <span className="star">&#9733;</span>
+                <div
+                  style={{
+                    padding: '5px',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    flexDirection: 'column',
+                    zIndex: '105',
+                  }}
+                >
+                  <h3>{selectedSpot.address}</h3>
+                  <p>Status: {selectedSpot.status} now</p>
+                  <p>
+                    Availability:
+                    {new Date(
+                      selectedSpot.startDate
+                    ).toLocaleDateString()} -{' '}
+                    {new Date(selectedSpot.endDate).toLocaleDateString()}
+                  </p>
+                  <p>Price: the most you are willing to pay.</p>
+                  <p>Owner: {firstName}</p>
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <div> Rating:</div>
+                    <div className="stars">
+                      <span className="star">&#9733;</span>
+                      <span className="star">&#9733;</span>
+                      <span className="star">&#9733;</span>
+                      <span className="star">&#9733;</span>
+                      <span className="star">&#9733;</span>
+                    </div>
+                    <div>5/5</div>
                   </div>
-                  <div>5/5</div>
                 </div>
-              </div>
-            </InfoWindow>
-          )}
-        </GoogleMap>
+              </InfoWindow>
+            )}
+          </GoogleMap>
+        </div>
       )}
       <Dialog open={openDialog} onClose={handleDialogClose} fullScreen>
         <DialogTitle>{translate('Please_verify_the_address')}</DialogTitle>

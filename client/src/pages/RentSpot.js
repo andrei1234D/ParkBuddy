@@ -39,7 +39,7 @@ const RentSpot = () => {
   const [apiKey, setApiKey] = useState(null);
   const [map, setMap] = useState(null);
   const [mapInitialized, setMapInitialized] = useState(false);
-
+  const [isMapVisible, setIsMapVisible] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
   const [spots, setSpots] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -55,6 +55,8 @@ const RentSpot = () => {
   const [errorRent, setErrorRent] = useState('');
 
   const [showBubble, setShowBubble] = useState(false);
+  const [searchPosition, setSearchPosition] = useState('center');
+
   const [selectedLocation, setSelectedLocation] = useState({
     lat: 44.415573973386864,
     lng: 26.102983712003493,
@@ -220,8 +222,7 @@ const RentSpot = () => {
   };
 
   const handlePlaceSelect = (place) => {
-    console.log('Place selected:', place.geometry.location.lat);
-    console.log(place.geometry.location);
+    console.log('Place selected:', place.geometry.location.lat());
     if (!place.geometry) {
       window.alert("No details available for input: '" + place.name + "'");
       return;
@@ -238,6 +239,8 @@ const RentSpot = () => {
       console.error('Map is not yet initialized');
     }
     setSelectedLocation(place.geometry.location);
+    setSearchPosition('top');
+    setIsMapVisible(true);
   };
 
   const handleErrorClose = () => {
@@ -263,325 +266,336 @@ const RentSpot = () => {
   }
   return (
     <div>
-      <ToastContainer />
-      {map && (
-        <Autocomplete
-          apiKey={apiKey}
-          onPlaceSelected={handlePlaceSelect}
-          options={{
-            componentRestrictions: { country: 'ro' },
-          }}
-          style={{
-            width: '98%',
-            position: 'relative',
-            zIndex: '100',
-            padding: '15px',
-          }}
-          placeholder="Search for a location"
-        />
+      {mapInitialized && (
+        <div className={`search-bar ${searchPosition}`}>
+          <Autocomplete
+            apiKey={apiKey}
+            onPlaceSelected={handlePlaceSelect}
+            options={{
+              componentRestrictions: { country: 'ro' },
+            }}
+            placeholder="Search for a location"
+            types={['(regions)']}
+            className={`Autocomplete ${searchPosition}`}
+          />
+          <FaSearch className={`search-icon ${searchPosition}`} />
+        </div>
       )}
 
-      {apiKey && (
-        <GoogleMap
-          mapContainerStyle={mapContainerStyle}
-          zoom={11}
-          center={selectedLocation}
-          options={{ styles: mapStyles, fullscreenControl: false }}
-          onLoad={(map) => setMap(map)}
-        >
-          {spots.map((spot) => (
-            <Marker
-              key={spot.id}
-              position={{ lat: spot.latitude, lng: spot.longitude }}
-              onClick={() => {
-                handleMarkerClick(spot);
-              }}
-              icon={{
-                url: markerImage,
-                scaledSize: new window.google.maps.Size(70, 70),
-              }}
-              animation={window.google.maps.Animation.DROP}
-              title={spot.address}
-            />
-          ))}
-          {infoWindowOpen && selectedSpot && (
-            <InfoWindow
-              position={infoWindowPosition}
-              onCloseClick={handleInfoWindowClose}
+      {isMapVisible && (
+        <div style={{ marginTop: '46px' }}>
+          <ToastContainer />
+
+          {apiKey && (
+            <GoogleMap
+              mapContainerStyle={mapContainerStyle}
+              zoom={11}
+              center={selectedLocation}
+              options={{ styles: mapStyles, fullscreenControl: false }}
+              onLoad={(map) => setMap(map)}
             >
-              <div
-                style={{
-                  padding: '5px',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  flexDirection: 'column',
-                  zIndex: '105',
-                }}
-              >
-                <h3>{selectedSpot.address}</h3>
-                <p>Status: {selectedSpot.status} now</p>
-                <p>Availability: {selectedSpot.endDate}</p>
-                <p>Price: the most you are willing to pay.</p>
-                <p>Owner: {selectedSpot.username}</p>
-                <p>Phone Number: 0721985898</p>
-                <p>Rating:</p>
-                <Button onClick={handleDialogConfirmationOpen}>Rent Now</Button>
-              </div>
-            </InfoWindow>
+              {spots.map((spot) => (
+                <Marker
+                  key={spot.id}
+                  position={{ lat: spot.latitude, lng: spot.longitude }}
+                  onClick={() => {
+                    handleMarkerClick(spot);
+                  }}
+                  icon={{
+                    url: markerImage,
+                    scaledSize: new window.google.maps.Size(70, 70),
+                  }}
+                  animation={window.google.maps.Animation.DROP}
+                  title={spot.address}
+                />
+              ))}
+              {infoWindowOpen && selectedSpot && (
+                <InfoWindow
+                  position={infoWindowPosition}
+                  onCloseClick={handleInfoWindowClose}
+                >
+                  <div
+                    style={{
+                      padding: '5px',
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      flexDirection: 'column',
+                      zIndex: '105',
+                    }}
+                  >
+                    <h3>{selectedSpot.address}</h3>
+                    <p>Status: {selectedSpot.status} now</p>
+                    <p>Availability: {selectedSpot.endDate}</p>
+                    <p>Price: the most you are willing to pay.</p>
+                    <p>Owner: {selectedSpot.username}</p>
+                    <p>Phone Number: 0721985898</p>
+                    <p>Rating:</p>
+                    <Button onClick={handleDialogConfirmationOpen}>
+                      Rent Now
+                    </Button>
+                  </div>
+                </InfoWindow>
+              )}
+            </GoogleMap>
           )}
-        </GoogleMap>
-      )}
-      {/* MORPHING DIALOG */}
-      <div className={`custom-dialog ${openDialog ? 'open' : 'close'}`}>
-        <div className={`dialog-content ${openDialog ? 'open' : 'close'}`}>
-          <div className="dialog-header">
-            <div>
-              Tell us when would you like your spot to be available and we will
-              show you the best spots for your needs
+          {/* MORPHING DIALOG */}
+          <div className={`custom-dialog ${openDialog ? 'open' : 'close'}`}>
+            <div className={`dialog-content ${openDialog ? 'open' : 'close'}`}>
+              <div className="dialog-header">
+                <div>
+                  Tell us when would you like your spot to be available and we
+                  will show you the best spots for your needs
+                </div>
+                <IconButton
+                  onClick={handleDialogCloseNoPreferences}
+                  style={{ width: '30px', height: '30px' }}
+                >
+                  <CloseIcon />
+                </IconButton>
+              </div>
+              <div className="dialog-body">
+                <div
+                  style={{
+                    height: '100%',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                  }}
+                >
+                  <div
+                    style={{
+                      height: '100%',
+                      width: '100%',
+                      padding: '10px',
+                      display: 'flex',
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      justifyContent: 'space-evenly ',
+                    }}
+                  >
+                    <div>
+                      <p style={{ textAlign: 'center', fontSize: '25px' }}>
+                        Start Time
+                      </p>
+                      <DatePicker
+                        title={startTime}
+                        selected={startTime}
+                        onChange={(date) => setStartTime(date)}
+                        showTimeSelect
+                        showTimeSelectOnly
+                        timeIntervals={10}
+                        timeCaption="Time"
+                        dateFormat="HH:mm"
+                      />
+                    </div>
+                    <div
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        flexDirection: 'column',
+                      }}
+                    >
+                      <p
+                        style={{
+                          textAlign: 'center',
+                          fontSize: '25px',
+                        }}
+                      >
+                        End Time
+                      </p>
+                      <DatePicker
+                        selected={endTime}
+                        onChange={(date) => setEndTime(date)}
+                        showTimeSelect
+                        showTimeSelectOnly
+                        timeIntervals={10}
+                        timeCaption="Time"
+                        dateFormat="HH:mm"
+                        minTime={getMinEndTime()}
+                        maxTime={new Date().setHours(23, 59, 59, 999)}
+                      />
+                    </div>
+                  </div>
+                  <div style={{ display: 'block' }}>
+                    <p style={{ textAlign: 'center', fontSize: '25px' }}>
+                      {' '}
+                      DATE
+                    </p>
+                    <DatePicker
+                      selected={selectedStartDate}
+                      onChange={(date) => setSelectedStartDate(date)}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="dialog-actions">
+                <div
+                  style={{
+                    width: '100%',
+                    display: 'flex',
+                    justifyContent: 'space-around',
+                  }}
+                >
+                  <Button
+                    onClick={handleDialogCloseNoPreferences}
+                    style={{ color: 'red' }}
+                  >
+                    Browse all spots
+                  </Button>
+                  <Button
+                    onClick={handlePreferencesClick}
+                    style={{ color: '#90EE90', fontWeight: '700' }}
+                  >
+                    Find your perfect fit
+                  </Button>
+                </div>
+              </div>
             </div>
-            <IconButton
-              onClick={handleDialogCloseNoPreferences}
-              style={{ width: '30px', height: '30px' }}
-            >
-              <CloseIcon />
-            </IconButton>
           </div>
-          <div className="dialog-body">
+
+          {/* BUBBLE */}
+
+          <div className={`${errorRent ? 'shrink-animation' : ''}`}></div>
+          <Tooltip
+            title={'spot preferences '}
+            className={`bubbleToolTip ${openDialog ? 'open' : 'close'} `}
+            arrow
+            placement="top"
+          >
+            <div
+              className={`bubble ${openDialog ? 'open' : 'close'} `}
+              onClick={handleBubbleClick}
+            >
+              <FaSearch color="white" size={30} />
+            </div>
+          </Tooltip>
+
+          {error && (
             <div
               style={{
-                height: '100%',
+                position: 'fixed',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                backgroundColor: '#f8d7da',
+                color: '#721c24',
+                padding: '20px',
+                borderRadius: '10px',
+                boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
                 display: 'flex',
-                flexDirection: 'column',
                 alignItems: 'center',
+                zIndex: '1301',
               }}
             >
-              <div
-                style={{
-                  height: '100%',
-                  width: '100%',
-                  padding: '10px',
-                  display: 'flex',
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  justifyContent: 'space-evenly ',
-                }}
+              <div variant="h6" style={{ flexGrow: 1 }}>
+                {error}
+              </div>
+              <IconButton
+                onClick={handleErrorClose}
+                style={{ width: '30px', height: '30px' }}
               >
-                <div>
-                  <p style={{ textAlign: 'center', fontSize: '25px' }}>
-                    Start Time
-                  </p>
-                  <DatePicker
-                    title={startTime}
-                    selected={startTime}
-                    onChange={(date) => setStartTime(date)}
-                    showTimeSelect
-                    showTimeSelectOnly
-                    timeIntervals={10}
-                    timeCaption="Time"
-                    dateFormat="HH:mm"
-                  />
-                </div>
+                <CloseIcon />
+              </IconButton>
+            </div>
+          )}
+
+          {selectedSpot && (
+            <Dialog
+              open={openDialogConfirmation}
+              onClose={handleDialogCloseConfirmation}
+            >
+              <DialogTitle>You Are Almost There !</DialogTitle>
+              <DialogContent>
                 <div
                   style={{
                     display: 'flex',
-                    alignItems: 'center',
                     flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
                   }}
                 >
-                  <p
-                    style={{
-                      textAlign: 'center',
-                      fontSize: '25px',
-                    }}
-                  >
-                    End Time
+                  <h3>
+                    Please verify that the details of your order are{' '}
+                    <b>correct</b>. We will not issue a refund if you do not use
+                    the parking spot during the paid period.{' '}
+                  </h3>
+                  <p>
+                    You will rent the {selectedSpot.address} spot on{' '}
+                    {selectedStartDate.toLocaleDateString()} from{' '}
+                    {startTime ? (
+                      <>
+                        {startTime.toLocaleTimeString('en-US', {
+                          hour: '2-digit',
+                          minute: '2-digit',
+                          hour12: true,
+                        })}
+                      </>
+                    ) : (
+                      <>'Not selected'</>
+                    )}{' '}
+                    {endTime ? (
+                      <>
+                        {endTime.toLocaleTimeString('en-US', {
+                          hour: '2-digit',
+                          minute: '2-digit',
+                          hour12: true,
+                        })}
+                      </>
+                    ) : (
+                      <>Not selected</>
+                    )}{' '}
+                    for 0.30 RON/minute
                   </p>
-                  <DatePicker
-                    selected={endTime}
-                    onChange={(date) => setEndTime(date)}
-                    showTimeSelect
-                    showTimeSelectOnly
-                    timeIntervals={10}
-                    timeCaption="Time"
-                    dateFormat="HH:mm"
-                    minTime={getMinEndTime()}
-                    maxTime={new Date().setHours(23, 59, 59, 999)}
-                  />
                 </div>
-              </div>
-              <div style={{ display: 'block' }}>
-                <p style={{ textAlign: 'center', fontSize: '25px' }}> DATE</p>
-                <DatePicker
-                  selected={selectedStartDate}
-                  onChange={(date) => setSelectedStartDate(date)}
-                />
-              </div>
-            </div>
-          </div>
-          <div className="dialog-actions">
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleDialogCloseConfirmation}>Cancel</Button>
+                <Button onClick={handleClickRedirect}>
+                  Pay & see directions
+                </Button>
+              </DialogActions>
+            </Dialog>
+          )}
+          {errorRent && (
             <div
               style={{
-                width: '100%',
+                position: 'fixed  ',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                backgroundColor: '#f8d7da',
+                color: '#721c24',
+                padding: '20px',
+                borderRadius: '10px',
+                boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
                 display: 'flex',
-                justifyContent: 'space-around',
-              }}
-            >
-              <Button
-                onClick={handleDialogCloseNoPreferences}
-                style={{ color: 'red' }}
-              >
-                Browse all spots
-              </Button>
-              <Button
-                onClick={handlePreferencesClick}
-                style={{ color: '#90EE90', fontWeight: '700' }}
-              >
-                Find your perfect fit
-              </Button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* BUBBLE */}
-
-      <div className={`${errorRent ? 'shrink-animation' : ''}`}></div>
-      <Tooltip
-        title={'spot preferences '}
-        className={`bubbleToolTip ${openDialog ? 'open' : 'close'} `}
-        arrow
-        placement="top"
-      >
-        <div
-          className={`bubble ${openDialog ? 'open' : 'close'} `}
-          onClick={handleBubbleClick}
-        >
-          <FaSearch color="white" size={30} />
-        </div>
-      </Tooltip>
-
-      {error && (
-        <div
-          style={{
-            position: 'fixed',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            backgroundColor: '#f8d7da',
-            color: '#721c24',
-            padding: '20px',
-            borderRadius: '10px',
-            boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
-            display: 'flex',
-            alignItems: 'center',
-            zIndex: '1301',
-          }}
-        >
-          <div variant="h6" style={{ flexGrow: 1 }}>
-            {error}
-          </div>
-          <IconButton
-            onClick={handleErrorClose}
-            style={{ width: '30px', height: '30px' }}
-          >
-            <CloseIcon />
-          </IconButton>
-        </div>
-      )}
-
-      {selectedSpot && (
-        <Dialog
-          open={openDialogConfirmation}
-          onClose={handleDialogCloseConfirmation}
-        >
-          <DialogTitle>You Are Almost There !</DialogTitle>
-          <DialogContent>
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
                 alignItems: 'center',
+                zIndex: '1301',
               }}
             >
-              <h3>
-                Please verify that the details of your order are <b>correct</b>.
-                We will not issue a refund if you do not use the parking spot
-                during the paid period.{' '}
-              </h3>
-              <p>
-                You will rent the {selectedSpot.address} spot on{' '}
-                {selectedStartDate.toLocaleDateString()} from{' '}
-                {startTime ? (
-                  <>
-                    {startTime.toLocaleTimeString('en-US', {
-                      hour: '2-digit',
-                      minute: '2-digit',
-                      hour12: true,
-                    })}
-                  </>
-                ) : (
-                  <>'Not selected'</>
-                )}{' '}
-                {endTime ? (
-                  <>
-                    {endTime.toLocaleTimeString('en-US', {
-                      hour: '2-digit',
-                      minute: '2-digit',
-                      hour12: true,
-                    })}
-                  </>
-                ) : (
-                  <>Not selected</>
-                )}{' '}
-                for 0.30 RON/minute
-              </p>
+              <div variant="h6" style={{ flexGrow: 1 }}>
+                {errorRent}
+              </div>
+              <IconButton
+                onClick={handleErrorRentClose}
+                style={{ width: '30px', height: '30px' }}
+              >
+                <CloseIcon />
+              </IconButton>
             </div>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleDialogCloseConfirmation}>Cancel</Button>
-            <Button onClick={handleClickRedirect}>Pay & see directions</Button>
-          </DialogActions>
-        </Dialog>
-      )}
-      {errorRent && (
-        <div
-          style={{
-            position: 'fixed  ',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            backgroundColor: '#f8d7da',
-            color: '#721c24',
-            padding: '20px',
-            borderRadius: '10px',
-            boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
-            display: 'flex',
-            alignItems: 'center',
-            zIndex: '1301',
-          }}
-        >
-          <div variant="h6" style={{ flexGrow: 1 }}>
-            {errorRent}
-          </div>
-          <IconButton
-            onClick={handleErrorRentClose}
-            style={{ width: '30px', height: '30px' }}
-          >
-            <CloseIcon />
-          </IconButton>
+          )}
+          {showConfetti && (
+            <Confetti
+              width={window.innerWidth}
+              height={window.innerHeight * 1.2}
+              numberOfPieces={600}
+              recycle={false}
+              origin={{ x: 0, y: 1 }}
+              gravity={1}
+            />
+          )}
         </div>
-      )}
-      {showConfetti && (
-        <Confetti
-          width={window.innerWidth}
-          height={window.innerHeight * 1.2}
-          numberOfPieces={600}
-          recycle={false}
-          origin={{ x: 0, y: 1 }}
-          gravity={1}
-        />
       )}
     </div>
   );
