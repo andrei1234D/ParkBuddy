@@ -132,15 +132,14 @@
 }
 
 .search-bar.top {
-  top: 87px;
-  width: 98.5%;
-  left: 50.3%;
-  border-radius: 0px;
+  position: absolute;
+  top: 115px;
+  width: 50vw;
 }
 
 .Autocomplete.top {
-  width: 100%;
-  border-radius: 0px;
+  width: 50vw;
+
   height: 27px;
 }
 

@@ -11,3 +11,9 @@
   font-size: 25px;
   font-weight: bold;
 }
+
+@media (max-width: 850px) {
+  .catchy {
+    display: none;
+  }
+}

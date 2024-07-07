@@ -28,7 +28,7 @@ import api from '../api.js';
 
 const mapContainerStyle = {
   width: '100%',
-  height: 'calc(100vh - 110px)',
+  height: 'calc(100vh - 64px)',
 };
 
 const formatDate = (date) => {
@@ -299,13 +299,17 @@ const LendSpot = () => {
         </div>
       )}
       {apiKey && (
-        <div style={{ marginTop: '46px' }}>
+        <div>
           <ToastContainer />
           <GoogleMap
             mapContainerStyle={mapContainerStyle}
             zoom={11}
             center={selectedLocation}
-            options={{ styles: mapStyles, fullscreenControl: false }}
+            options={{
+              styles: mapStyles,
+              fullscreenControl: false,
+              mapTypeControl: false,
+            }}
             onLoad={(map) => setMap(map)}
             onClick={handleMapClick}
           >

@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.244ad023.css",
-    "main.js": "/static/js/main.511a516b.js",
+    "main.css": "/static/css/main.5318508e.css",
+    "main.js": "/static/js/main.77b11f67.js",
     "static/media/sliderImage_1.png": "/static/media/sliderImage_1.def1e9b8683230716a80.png",
     "static/media/sliderImage_4.png": "/static/media/sliderImage_4.a1379dde5ec457787f8b.png",
     "static/media/bannerBackground.png": "/static/media/bannerBackground.39e09c70d89bb313de9c.png",
@@ -48,16 +48,16 @@
     "static/media/meta.svg": "/static/media/meta.1a5856d02b7ef9a0ac7d70498a85b407.svg",
     "static/media/Sun.svg": "/static/media/Sun.681607dcda2a01539a9a8a157ae74e6e.svg",
     "static/media/bmw.svg": "/static/media/bmw.9a9afc2f3f3449fd2a60aeef9b17c278.svg",
+    "index.html": "/index.html",
     "static/media/visa.svg": "/static/media/visa.a832f682ed43e496bcbeebb6f2aa31e1.svg",
     "static/media/Moon.svg": "/static/media/Moon.0a6a2b75ac51157455302ddcfca385c0.svg",
-    "index.html": "/index.html",
     "static/media/tesla.svg": "/static/media/tesla.683548cb3e6cedbe7403c0b8e7ba0f5f.svg",
     "static/media/bugatti.svg": "/static/media/bugatti.fc105dadc57c70d1dd3b6fef577aa027.svg",
-    "main.244ad023.css.map": "/static/css/main.244ad023.css.map",
-    "main.511a516b.js.map": "/static/js/main.511a516b.js.map"
+    "main.5318508e.css.map": "/static/css/main.5318508e.css.map",
+    "main.77b11f67.js.map": "/static/js/main.77b11f67.js.map"
   },
   "entrypoints": [
-    "static/css/main.244ad023.css",
-    "static/js/main.511a516b.js"
+    "static/css/main.5318508e.css",
+    "static/js/main.77b11f67.js"
   ]
 }

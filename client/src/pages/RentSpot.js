@@ -31,8 +31,8 @@ import '../style/RentASpot.css';
 import api from '../api.js';
 
 const mapContainerStyle = {
-  width: '100%',
-  height: 'calc(100vh - 110px)',
+  width: '100vw',
+  height: 'calc(100vh - 64px)',
 };
 
 const RentSpot = () => {
@@ -283,17 +283,19 @@ const RentSpot = () => {
           <FaSearch className={`search-icon ${searchPosition}`} />
         </div>
       )}
-
+      <ToastContainer />
       {isMapVisible && (
-        <div style={{ marginTop: '46px', zIndex: '2' }}>
-          <ToastContainer />
-
+        <div>
           {apiKey && (
             <GoogleMap
               mapContainerStyle={mapContainerStyle}
               zoom={11}
               center={selectedLocation}
-              options={{ styles: mapStyles, fullscreenControl: false }}
+              options={{
+                styles: mapStyles,
+                fullscreenControl: false,
+                mapTypeControl: false,
+              }}
               onLoad={(map) => setMap(map)}
             >
               {spots.map((spot) => (

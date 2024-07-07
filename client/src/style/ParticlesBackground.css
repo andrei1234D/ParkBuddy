@@ -27,4 +27,14 @@
 
 .transition-width {
   transition: width 0.5s ease-in-out;
+  width: auto;
+  height: 65px;
+}
+
+@media (max-width: 800px) {
+  .transition-width {
+    width: 500px;
+    height: 120px;
+    border-radius: 55px;
+  }
 }

@@ -48,15 +48,16 @@ function FooterHome() {
   ];
   const renderSponsors = () => {
     return sponsors.map((sponsor, index) => (
-      <img
-        className="fadeAppear"
-        key={index}
-        src={sponsor.logoUrl}
-        alt={sponsor.name}
-        width={'60px'}
-        height={'60px'}
-        style={{ padding: '25px' }}
-      />
+      <div className="sponsorsImage">
+        <img
+          className="fadeAppear sponsorsImage"
+          key={index}
+          src={sponsor.logoUrl}
+          alt={sponsor.name}
+          width={'100%'}
+          height={'100%'}
+        />
+      </div>
     ));
   };
   return (

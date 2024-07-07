@@ -29,16 +29,13 @@ const Settings = () => {
           <Select
             value={language}
             onChange={(event) => toggleLanguage(event.target.value)}
-            style={{
-              backgroundColor: 'var(--UIColor)',
-              color: 'var(--UIText)',
-            }}
+            className="largeSelect"
           >
             {languageOptions.map((option) => (
               <MenuItem
                 key={option.value}
                 value={option.value}
-                style={{ textAlign: 'center', color: 'black' }}
+                className="menuItem"
               >
                 {option.label}
               </MenuItem>

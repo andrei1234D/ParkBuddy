@@ -35,20 +35,34 @@ const AccountSettings = () => {
         </div>
 
         <p>
-          {translate('loggedInA')} <b style={{ fontSize: '20px' }}>{role}</b>{' '}
-          {translate('account')}
+          {translate('loggedInA')} <b>{role}</b> {translate('account')}
         </p>
 
         {role === 'customer' && (
           <div style={{ textAlign: 'center' }}>
             <p>
-              {translate('loggedInA')}{' '}
-              <b style={{ fontSize: '20px' }}>{translate('customer')}</b>{' '}
+              {translate('loggedInA')} <b s>{translate('customer')}</b>{' '}
               {translate('account')}, {translate('ifUWantToLend')}
             </p>
-            <Link to="/register">
-              <Button>{translate('upgradeNow')}</Button>
-            </Link>
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <Link to="/register">
+                <Button
+                  style={{
+                    color: 'rgb(var(--UIColor))',
+                    backgroundColor: 'rgb(var(--UIText))',
+                    fontSize: '20px',
+                  }}
+                >
+                  {translate('upgradeNow')}
+                </Button>
+              </Link>
+            </div>
           </div>
         )}
         <div
@@ -57,6 +71,7 @@ const AccountSettings = () => {
             rowGap: '20px',
             display: 'flex',
             flexDirection: 'column',
+            alignContent: 'center',
           }}
         >
           {role === 'partner' && (
@@ -65,8 +80,9 @@ const AccountSettings = () => {
               <Button
                 variant="contained"
                 style={{
-                  color: 'var(--UIText)',
-                  backgroundColor: 'var(--UIColor)',
+                  color: 'rgb(var(--UIColor))',
+                  backgroundColor: 'rgb(var(--UIText))',
+                  fontSize: '20px',
                 }}
                 onClick={handleToLendASpot}
               >
@@ -74,39 +90,45 @@ const AccountSettings = () => {
               </Button>
             </div>
           )}
-          <Button
-            onClick={handleToYourParkingSpots}
-            variant="contained"
-            style={{
-              color: 'var(--UIText)',
-              backgroundColor: 'var(--UIColor)',
-            }}
-          >
-            {translate('seeYourParkingSpots')}
-          </Button>
+          <div>
+            <Button
+              onClick={handleToYourParkingSpots}
+              variant="contained"
+              style={{
+                color: 'rgb(var(--UIColor))',
+                backgroundColor: 'rgb(var(--UIText))',
+                fontSize: '20px',
+              }}
+            >
+              {translate('seeYourParkingSpots')}
+            </Button>
+          </div>
           <Link to="/paymentMethod">
             <Button
               variant="contained"
               style={{
                 color: 'rgb(var(--UIColor))',
-                backgroundColor: 'transparent',
+                backgroundColor: 'rgb(var(--UIText))',
+                fontSize: '20px',
               }}
             >
               {translate('toPayment')}{' '}
-              <IoWallet size="25px" style={{ marginLeft: '8px' }} />
+              <IoWallet size="50px" style={{ marginLeft: '8px' }} />
             </Button>
           </Link>
-
-          <Button
-            variant="contained"
-            onClick={handleLogout}
-            style={{
-              color: 'rgb(var(--UIColor))',
-              backgroundColor: 'transparent',
-            }}
-          >
-            {translate('logout')} <AiOutlineLogout size="25px" />
-          </Button>
+          <div>
+            <Button
+              variant="contained"
+              onClick={handleLogout}
+              style={{
+                color: 'rgb(var(--UIColor))',
+                backgroundColor: 'rgb(var(--UIText))',
+                fontSize: '20px',
+              }}
+            >
+              {translate('logout')} <AiOutlineLogout size="25px" />
+            </Button>
+          </div>
         </div>
       </div>
     </div>

@@ -116,7 +116,7 @@
   z-index: 1;
 }
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 1023px) {
   .banner .slider {
     width: 160px;
     height: 200px;
@@ -142,7 +142,7 @@
   }
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 767px) {
   .banner .slider {
     width: 100px;
     height: 150px;

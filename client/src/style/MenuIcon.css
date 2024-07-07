@@ -1,7 +1,7 @@
 .navMenu {
   position: absolute;
   margin-top: 40px;
-  min-height: 1000px;
+  height: 100vh;
   width: 500px;
   background-color: #097b5a;
   z-index: 100;
@@ -171,5 +171,26 @@
   }
   100% {
     transform: rotate(0) translateY(0) translateX(0);
+  }
+}
+@media (max-width: 850px) {
+  .navMenu {
+    width: 100vw;
+  }
+  @keyframes slideIn {
+    from {
+      right: -100vw; /* Start position */
+    }
+    to {
+      right: 0px; /* End position */
+    }
+  }
+  @keyframes slideOut {
+    from {
+      right: 0px; /* Start position */
+    }
+    to {
+      right: -100vw; /* End position */
+    }
   }
 }

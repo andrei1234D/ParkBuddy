@@ -322,9 +322,13 @@
   background-color: white;
   display: grid;
   gap: 10px;
-  grid-template-columns: repeat(7, 1fr); /* Two columns */
+  grid-template-columns: repeat(7, 1fr);
 }
-
+.sponsorsImage {
+  width: 60px;
+  height: 60px;
+  padding: 25px;
+}
 .additional-fields {
   display: flex;
   flex-direction: row;
@@ -361,17 +365,46 @@
 }
 @media (max-width: 800px) {
   .cardReviewContainer {
-    grid-template-columns: repeat(1, 1fr);
+    grid-template-columns: repeat(1, 1fr) !important;
   }
   .cardReview {
-    width: 100%;
+    width: 90%;
     height: auto;
   }
-}
-
-@media (max-width: 1000px) {
   .informationContainer {
     width: 100%;
     margin-left: 0;
+  }
+  .stores {
+    flex-direction: column;
+  }
+  .additional-fields {
+    font-size: 10px;
+  }
+  .cardContainer {
+    flex-direction: column;
+  }
+  .bottomHalf {
+    width: 100%;
+  }
+  .card {
+    width: 100%;
+  }
+  .sponsorsImage {
+    width: 25px;
+    height: 25px;
+    padding: 7px;
+  }
+}
+
+@media (min-width: 801px) and (max-width: 1000px) {
+  .informationContainer {
+    width: 100%;
+    margin-left: 0;
+  }
+  .sponsorsImage {
+    width: 40px;
+    height: 40px;
+    padding: 15px;
   }
 }
