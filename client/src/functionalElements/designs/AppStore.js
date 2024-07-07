@@ -18,14 +18,16 @@ function AppStore() {
           <div className="card">
             <div className="topHalf">
               <div className="imgContainer fadeAppear">
-                <CgSandClock className="clockIcon" />
+                <LiaGrinWink
+                  className="clockIcon"
+                  style={{ marginTop: '5px' }}
+                />
               </div>
             </div>
-            <div className="middle fadeAppear">TIME</div>
+            <div className="middle fadeAppear">CONVENIENCE</div>
             <div className="bottomHalf fadeAppear">
-              Find or list spots in seconds. Fast, convenient, and easy-to-use
-              app. Hassle-free parking is just a tap away! What are you waiting
-              for?"
+              Customer convenience is our priority. Streamlined design, no
+              clutter. Just what you need, when you need it.
             </div>
           </div>
           <div className="card">
@@ -43,16 +45,14 @@ function AppStore() {
           <div className="card">
             <div className="topHalf">
               <div className="imgContainer fadeAppear">
-                <LiaGrinWink
-                  className="clockIcon"
-                  style={{ marginTop: '5px' }}
-                />
+                <CgSandClock className="clockIcon" />
               </div>
             </div>
-            <div className="middle fadeAppear">CONVENIENCE</div>
+            <div className="middle fadeAppear">TIME</div>
             <div className="bottomHalf fadeAppear">
-              Customer convenience is our priority. Streamlined design, no
-              clutter. Just what you need, when you need it.
+              Find or list spots in seconds. Fast, convenient, and easy-to-use
+              app. Hassle-free parking is just a tap away! What are you waiting
+              for?"
             </div>
           </div>
         </div>

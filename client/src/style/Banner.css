@@ -80,18 +80,16 @@
   font-family: 'ICA Rubrik';
   font-size: 14em;
   line-height: 1em;
-  color: #25283b;
-  position: relative;
+  color: #d2d2d2;
   display: flex;
   margin-left: 7%;
 }
 
 .banner .content h1::after {
   position: absolute;
-  inset: 0 0 0 0;
   content: attr(data-content);
   z-index: 2;
-  -webkit-text-stroke: 2px #d2d2d2;
+  -webkit-text-stroke: 4px #097b5a;
   color: transparent;
 }
 
@@ -118,7 +116,7 @@
   z-index: 1;
 }
 
-@media screen and (max-width: 1023px) {
+@media screen and (max-width: 1000px) {
   .banner .slider {
     width: 160px;
     height: 200px;
@@ -132,14 +130,10 @@
   }
   .banner .content h1 {
     text-align: center;
-    width: 100%;
-    text-shadow: 0 10px 20px #000;
-    font-size: 7em;
   }
   .banner .content .author {
     color: #fff;
     padding: 20px;
-    text-shadow: 0 10px 20px #000;
     z-index: 2;
     max-width: unset;
     width: 100%;
@@ -148,7 +142,7 @@
   }
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 800px) {
   .banner .slider {
     width: 100px;
     height: 150px;

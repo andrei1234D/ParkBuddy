@@ -283,7 +283,6 @@ const LendSpot = () => {
   }
   return (
     <div>
-      <ToastContainer />
       {map && (
         <div className={`search-bar top`}>
           <Autocomplete
@@ -301,6 +300,7 @@ const LendSpot = () => {
       )}
       {apiKey && (
         <div style={{ marginTop: '46px' }}>
+          <ToastContainer />
           <GoogleMap
             mapContainerStyle={mapContainerStyle}
             zoom={11}

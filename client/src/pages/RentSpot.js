@@ -55,6 +55,7 @@ const RentSpot = () => {
   const [errorRent, setErrorRent] = useState('');
 
   const [showBubble, setShowBubble] = useState(false);
+  const [showSearch, setShowSearch] = useState(true);
   const [searchPosition, setSearchPosition] = useState('center');
 
   const [selectedLocation, setSelectedLocation] = useState({
@@ -113,6 +114,7 @@ const RentSpot = () => {
     } catch (error) {
       console.error('Error fetching spots:', error);
       setLoading(false);
+      setShowSearch(true);
     }
   };
 
@@ -266,7 +268,7 @@ const RentSpot = () => {
   }
   return (
     <div>
-      {mapInitialized && (
+      {showSearch && (
         <div className={`search-bar ${searchPosition}`}>
           <Autocomplete
             apiKey={apiKey}
@@ -283,7 +285,7 @@ const RentSpot = () => {
       )}
 
       {isMapVisible && (
-        <div style={{ marginTop: '46px' }}>
+        <div style={{ marginTop: '46px', zIndex: '2' }}>
           <ToastContainer />
 
           {apiKey && (
@@ -326,11 +328,12 @@ const RentSpot = () => {
                   >
                     <h3>{selectedSpot.address}</h3>
                     <p>Status: {selectedSpot.status} now</p>
-                    <p>Availability: {selectedSpot.endDate}</p>
-                    <p>Price: the most you are willing to pay.</p>
+                    <p>Price: 0.30LEI pe minut</p>
                     <p>Owner: {selectedSpot.username}</p>
                     <p>Phone Number: 0721985898</p>
-                    <p>Rating:</p>
+                    <p>
+                      Rating: 5/5 <span className="star">&#9733;</span>
+                    </p>
                     <Button onClick={handleDialogConfirmationOpen}>
                       Rent Now
                     </Button>

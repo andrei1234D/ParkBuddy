@@ -259,11 +259,11 @@
   min-height: 850px;
   display: grid;
   gap: 80px;
-  grid-template-columns: repeat(2, 1fr); /* Two columns */
-  justify-items: center; /* Center cards horizontally */
-  align-items: center; /* Center cards vertically */
-  justify-content: space-around; /* Distribute remaining space evenly between and around cards */
-  align-content: space-around; /* Distribute remaining space evenly between and around cards */
+  grid-template-columns: repeat(2, 1fr);
+  justify-items: center;
+  align-items: center;
+  justify-content: space-around;
+  align-content: space-around;
 }
 .cardReview {
   width: 310px;
@@ -271,9 +271,13 @@
   color: rgb(var(--UIText));
   border-radius: 8px;
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .imgReview {
   max-width: 100%;
+  height: 38%;
 }
 .hrReviews {
   margin-top: 7%;
@@ -292,7 +296,7 @@
   line-height: 1.5em;
 }
 .rating {
-  height: 10%;
+  height: auto;
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -355,16 +359,19 @@
     opacity: 1;
   }
 }
-
 @media (max-width: 800px) {
-  .options-container {
-    flex-direction: column;
-    align-items: center;
+  .cardReviewContainer {
+    grid-template-columns: repeat(1, 1fr);
   }
+  .cardReview {
+    width: 100%;
+    height: auto;
+  }
+}
 
-  .title {
-    font-size: 80px;
-    margin-top: 15%;
-    letter-spacing: 5px;
+@media (max-width: 1000px) {
+  .informationContainer {
+    width: 100%;
+    margin-left: 0;
   }
 }
