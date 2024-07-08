@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.c811e964.css",
-    "main.js": "/static/js/main.c48439ed.js",
+    "main.css": "/static/css/main.aab76750.css",
+    "main.js": "/static/js/main.e419daf8.js",
     "static/media/sliderImage_1.png": "/static/media/sliderImage_1.def1e9b8683230716a80.png",
     "static/media/sliderImage_4.png": "/static/media/sliderImage_4.a1379dde5ec457787f8b.png",
     "static/media/bannerBackground.png": "/static/media/bannerBackground.39e09c70d89bb313de9c.png",
@@ -53,11 +53,11 @@
     "static/media/Moon.svg": "/static/media/Moon.0a6a2b75ac51157455302ddcfca385c0.svg",
     "static/media/tesla.svg": "/static/media/tesla.683548cb3e6cedbe7403c0b8e7ba0f5f.svg",
     "static/media/bugatti.svg": "/static/media/bugatti.fc105dadc57c70d1dd3b6fef577aa027.svg",
-    "main.c811e964.css.map": "/static/css/main.c811e964.css.map",
-    "main.c48439ed.js.map": "/static/js/main.c48439ed.js.map"
+    "main.aab76750.css.map": "/static/css/main.aab76750.css.map",
+    "main.e419daf8.js.map": "/static/js/main.e419daf8.js.map"
   },
   "entrypoints": [
-    "static/css/main.c811e964.css",
-    "static/js/main.c48439ed.js"
+    "static/css/main.aab76750.css",
+    "static/js/main.e419daf8.js"
   ]
 }
