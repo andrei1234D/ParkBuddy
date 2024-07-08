@@ -176,6 +176,7 @@
 @media (max-width: 850px) {
   .navMenu {
     width: 100vw;
+    height: calc(100vh + 10px);
   }
   @keyframes slideIn {
     from {
