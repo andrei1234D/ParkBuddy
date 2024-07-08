@@ -280,6 +280,7 @@
   height: 38%;
 }
 .hrReviews {
+  width: 100%;
   margin-top: 7%;
   border-color: rgb(15, 130, 42);
   box-shadow: 0 0px 20px 5px rgba(15, 130, 42, 0.7);
@@ -403,8 +404,11 @@
     width: 100%;
   }
   .sponsorsImage {
-    width: 25px;
-    height: 25px;
-    padding: 7px;
+    width: 20px;
+    height: 20px;
+    padding: 5px;
+  }
+  .titleDiv {
+    font-size: 5rem;
   }
 }

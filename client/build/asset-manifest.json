@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/static/css/main.2978256a.css",
+    "main.css": "/static/css/main.4872f624.css",
     "main.js": "/static/js/main.1fe145c7.js",
     "static/media/sliderImage_1.png": "/static/media/sliderImage_1.def1e9b8683230716a80.png",
     "static/media/sliderImage_4.png": "/static/media/sliderImage_4.a1379dde5ec457787f8b.png",
@@ -53,11 +53,11 @@
     "static/media/Moon.svg": "/static/media/Moon.0a6a2b75ac51157455302ddcfca385c0.svg",
     "static/media/tesla.svg": "/static/media/tesla.683548cb3e6cedbe7403c0b8e7ba0f5f.svg",
     "static/media/bugatti.svg": "/static/media/bugatti.fc105dadc57c70d1dd3b6fef577aa027.svg",
-    "main.2978256a.css.map": "/static/css/main.2978256a.css.map",
+    "main.4872f624.css.map": "/static/css/main.4872f624.css.map",
     "main.1fe145c7.js.map": "/static/js/main.1fe145c7.js.map"
   },
   "entrypoints": [
-    "static/css/main.2978256a.css",
+    "static/css/main.4872f624.css",
     "static/js/main.1fe145c7.js"
   ]
 }
