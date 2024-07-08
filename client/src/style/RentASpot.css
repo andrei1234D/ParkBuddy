@@ -9,7 +9,7 @@
   align-items: center;
   transition: background-color 0.7s visibility 0.7s;
   visibility: hidden;
-  overflow: visible; /* Allow overflow visibility */
+  overflow: hidden; /* Allow overflow visibility */
 }
 .custom-dialog.open {
   background-color: rgba(0, 0, 0, 0.5);
@@ -18,7 +18,7 @@
 .bubble {
   opacity: 0;
   position: absolute;
-  bottom: 290px;
+  bottom: 50%;
   right: 20px;
   width: 60px;
   height: 60px;
@@ -159,7 +159,7 @@
 
 @keyframes Morph {
   0% {
-    transform: translateX(697.5px) translateY(42px);
+    transform: translateX(65vw);
     width: 60px;
     height: 60px;
     border-radius: 50%;
@@ -176,7 +176,7 @@
 
 @keyframes MorphBack {
   100% {
-    transform: translateX(697.5px) translateY(42px);
+    transform: translateX(65vw);
     width: 60px;
     height: 60px;
     border-radius: 50%;
@@ -207,5 +207,43 @@
 @keyframes DelayOverflow {
   to {
     overflow: visible; /* Set overflow to visible at the end of the animation */
+  }
+}
+@media (max-width: 800px) {
+  .bubble {
+    bottom: 30%;
+  }
+  @keyframes Morph {
+    0% {
+      transform: translateX(65vw) translateY(20vh);
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background-color: #007bff;
+    }
+    50% {
+      height: 250px;
+      background-color: white;
+    }
+    100% {
+      transform: translateX(0px) translateY(0);
+    }
+  }
+
+  @keyframes MorphBack {
+    100% {
+      transform: translateX(65vw) translateY(20vh);
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background-color: #007bff;
+    }
+    50% {
+      background-color: white;
+      height: 250px;
+    }
+    0% {
+      transform: translateX(0px) translateY(0px);
+    }
   }
 }

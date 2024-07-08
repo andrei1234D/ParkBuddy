@@ -13,7 +13,7 @@
 }
 .formDiv {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   flex-direction: column;
   background-color: rgba(var(--UIText), 0.3);
@@ -119,21 +119,44 @@
   -webkit-text-stroke: 3px pink;
   color: transparent;
 }
-
-@media (max-width: 800px) {
-  .welcomeContainer {
-    width: 90%;
-    margin-left: 5%;
-    height: 300px;
+.containerLoginForm {
+  display: flex;
+  align-items: center;
+  width: 80%;
+  margin-left: 10%;
+}
+@media (max-width: 1300px) {
+  .containerLogin {
+    width: 100%;
+    margin-left: 0;
+    margin-top: 20%;
+  }
+  .containerLoginForm {
+    width: 100%;
+    margin-left: 0;
+  }
+  .formDiv {
+    width: 100%;
+    height: calc(100vh - 64px);
+    margin: 0;
+    border-radius: 0;
+    justify-content: space-around;
+  }
+}
+@media (max-width: 1100px) {
+  .containerLogin {
+    width: 100vw;
+    height: calc(100vh - 64px);
+    margin-top: 0;
+    margin-left: 0;
+    flex-direction: column;
+  }
+}
+@media (max-width: 550px) {
+  .coolHeadingText {
+    font-size: 4em;
   }
   .containerLogin {
-    height: 300px;
-  }
-  .containerForm {
-    height: 300px;
-  }
-  .rightDiv {
-    width: 300px;
-    height: 300px;
+    width: 100%;
   }
 }

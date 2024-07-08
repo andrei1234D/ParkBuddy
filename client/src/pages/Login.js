@@ -84,7 +84,6 @@ const Login = () => {
 
   return (
     <div className="biggestDiv">
-      <div className="authenticationPage">LOGIN</div>
       <Dialog open={showDialog} onClose={handleCloseDialog}>
         <DialogTitle
           style={{
@@ -150,7 +149,7 @@ const Login = () => {
           </p>
           <div id="bigContainer" style={{ width: '100%' }}>
             <div className="welcomeContainer">
-              <div className="containerLogin">
+              <div className="containerLoginForm">
                 <div className="containerForm textGlow highlight-on-hover">
                   <p className="textLogin">{translate('username')}</p>
                   <input
@@ -216,9 +215,9 @@ const Login = () => {
           >
             PARTNER
           </p>
-          <div id="bigContainer" style={{ width: '100%' }}>
+          <div>
             <div className="welcomeContainer">
-              <div className="containerLogin">
+              <div className="containerLoginForm">
                 <div className="containerForm textGlow highlight-on-hover">
                   <p className="textLogin">{translate('username')}</p>
                   <input

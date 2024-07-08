@@ -37,16 +37,20 @@
   justify-content: center;
   align-items: center;
   text-align: center;
+  height: 100%;
 }
+
 .formNormalAlign {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  height: 100%;
-  width: 100%;
   background-color: rgba(var(--UIText), 0.2);
   backdrop-filter: blur(7px);
+
+  height: calc(100vh - 64px);
+  min-height: 1100px;
+  overflow-y: auto;
 }
 .partnerDiv {
   cursor: pointer;
@@ -114,10 +118,23 @@
   transform: scale(0.7);
 }
 
-.authenticationPage {
-  align-items: center;
-  padding: 40px;
-  font-size: 50px;
-  color: #097b5a;
-  font-weight: bold;
+@media (max-width: 1300px) {
+  .customerDiv {
+    border-radius: 0;
+  }
+  .partnerDiv {
+    border-radius: 0;
+  }
+}
+@media (max-width: 1100px) {
+  .customerDiv {
+    border-radius: 0;
+    height: 50%;
+    width: 100%;
+  }
+  .partnerDiv {
+    border-radius: 0;
+    height: 50%;
+    width: 100%;
+  }
 }

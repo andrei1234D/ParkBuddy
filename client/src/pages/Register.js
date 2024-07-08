@@ -140,7 +140,6 @@ const Register = () => {
 
   return (
     <div className="biggestDiv">
-      <div className="authenticationPage">REGISTER</div>
       <Dialog open={showDialog} onClose={handleCloseDialog}>
         <DialogTitle
           style={{ backgroundColor: 'var(--UIColor)', color: 'var(--UIText)' }}

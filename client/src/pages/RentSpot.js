@@ -268,6 +268,7 @@ const RentSpot = () => {
   }
   return (
     <div>
+      <ToastContainer />
       {showSearch && (
         <div className={`search-bar ${searchPosition}`}>
           <Autocomplete
@@ -283,7 +284,6 @@ const RentSpot = () => {
           <FaSearch className={`search-icon ${searchPosition}`} />
         </div>
       )}
-      <ToastContainer />
       {isMapVisible && (
         <div>
           {apiKey && (
