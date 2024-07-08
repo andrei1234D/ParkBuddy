@@ -137,7 +137,6 @@
   }
   .formDiv {
     width: 100%;
-    height: calc(100vh - 64px);
     margin: 0;
     border-radius: 0;
     justify-content: space-around;

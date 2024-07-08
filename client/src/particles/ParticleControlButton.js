@@ -16,6 +16,7 @@ const ParticleControlButton = () => {
       style={{
         color: 'rgb(var(--UIText))',
         backgroundColor: 'rgb(var(--UIColor))',
+        fontSize: '35px',
       }}
     >
       {moveParticles ? translate('stopParticles') : translate('startParticles')}

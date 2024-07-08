@@ -23,8 +23,6 @@ const Settings = () => {
         </div>
         <ParticleMovement />
 
-        <DarkMode />
-
         <div className="languageSelection">
           <Select
             value={language}
@@ -42,6 +40,8 @@ const Settings = () => {
             ))}
           </Select>
         </div>
+
+        <DarkMode />
       </div>
     </div>
   );

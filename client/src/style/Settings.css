@@ -107,6 +107,7 @@ b {
     min-height: 100%;
     width: 100%;
     border-radius: 0;
+    padding: 0;
   }
   .centered-content p {
     font-size: 40px;
@@ -134,5 +135,13 @@ b {
   }
   .settingsText {
     font-size: 7rem;
+  }
+}
+@media (max-width: 700px) {
+  .settingsText {
+    font-size: 5rem;
+  }
+  .centered-content {
+    min-width: 0;
   }
 }

@@ -102,6 +102,7 @@
   background-color: #12be8c;
   border-style: none;
   border-radius: 3px;
+  font-size: 20px;
 }
 
 .pagination button.active {
@@ -128,4 +129,31 @@
 }
 .underlineAnimation:hover::after {
   width: 100%;
+}
+
+@media (max-width: 1000px) {
+}
+.menuSettingsText {
+  font-size: 50px;
+}
+.pagination button {
+  height: 12vh;
+}
+@media (max-width: 850px) {
+  .transition-width {
+    width: 40vw;
+    height: 120px;
+    border-radius: 55px;
+  }
+  .pagination button {
+    font-size: 30px;
+  }
+  .settingsIcon {
+    width: 75px;
+    height: 75px;
+  }
+  .settings {
+    width: 85px;
+    height: 85px;
+  }
 }
