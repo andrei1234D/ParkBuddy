@@ -88,25 +88,34 @@ function YourSpots() {
             </div>
           </div>
           {parkingSpots.map((spot, index) => (
-            <div key={index} className="containerSpots">
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                color: 'rgb(var(--UIText)',
+              }}
+            >
               <p className="nrSpot">{index + 1}</p>
-              <p className="addressName">{spot.address}</p>
-              <p className="coordinates">{spot.longitude}</p>
-              <p className="coordinates">{spot.latitude}</p>
-              <p className="status">
-                {spot.status === 'free' && (
-                  <FaCircle style={{ color: 'green' }} />
-                )}
-                {spot.status === 'reserved' && (
-                  <FaCircle style={{ color: 'yellow' }} />
-                )}
-                {spot.status === 'occupied' && (
-                  <FaCircle style={{ color: 'blue' }} />
-                )}
-                {spot.status === 'unavailable' && (
-                  <FaCircle style={{ color: 'red' }} />
-                )}
-              </p>
+              <div key={index} className="containerSpots">
+                <p className="addressName">{spot.address}</p>
+                <p className="coordinates">{spot.longitude}</p>
+                <p className="coordinates">{spot.latitude}</p>
+                <p className="status">
+                  {spot.status === 'free' && (
+                    <FaCircle style={{ color: 'green' }} />
+                  )}
+                  {spot.status === 'reserved' && (
+                    <FaCircle style={{ color: 'yellow' }} />
+                  )}
+                  {spot.status === 'occupied' && (
+                    <FaCircle style={{ color: 'blue' }} />
+                  )}
+                  {spot.status === 'unavailable' && (
+                    <FaCircle style={{ color: 'red' }} />
+                  )}
+                </p>
+              </div>
             </div>
           ))}
         </div>

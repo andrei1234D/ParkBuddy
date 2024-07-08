@@ -65,7 +65,7 @@
   font-size: 4rem;
   padding: 10px;
   border-radius: 5px;
-  color: #00ffff;
+  color: black;
 }
 .underlineAnimation {
   position: relative;
@@ -79,7 +79,7 @@
   bottom: 0;
   width: 0;
   height: 2px;
-  background-color: #00ffff;
+  background-color: black;
   transition: width 0.3s ease;
 }
 .pagination {

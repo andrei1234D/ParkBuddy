@@ -521,9 +521,9 @@ const RentSpot = () => {
                   }}
                 >
                   <h3>
-                    Please verify that the details of your order are{' '}
-                    <b>correct</b>. We will not issue a refund if you do not use
-                    the parking spot during the paid period.{' '}
+                    Please verify that the details of your order are correct We
+                    will not issue a refund if you do not use the parking spot
+                    during the paid period.{' '}
                   </h3>
                   <p>
                     You will rent the {selectedSpot.address} spot on{' '}
@@ -538,7 +538,8 @@ const RentSpot = () => {
                       </>
                     ) : (
                       <>'Not selected'</>
-                    )}{' '}
+                    )}
+                    {' to '}
                     {endTime ? (
                       <>
                         {endTime.toLocaleTimeString('en-US', {

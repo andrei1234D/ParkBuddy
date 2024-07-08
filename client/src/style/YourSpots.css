@@ -16,8 +16,7 @@
 .containerSpots {
   display: flex;
   flex-direction: row;
-  height: 80px;
-
+  padding: 10px;
   width: 100%;
   align-items: center;
   color: rgb(var(--UIText));
@@ -70,4 +69,13 @@
   font-size: 30px;
   color: rgb(var(--UIColor));
   font-weight: bold;
+}
+@media (max-width: 1100px) {
+  .containerParkingSpots {
+    width: 100%;
+    max-height: 100%;
+    margin: 0;
+    padding: 0px;
+    border-radius: 0;
+  }
 }
