@@ -17,3 +17,8 @@
     display: none;
   }
 }
+@media (max-width: 400px) {
+  .normal-text {
+    font-size: 1rem;
+  }
+}

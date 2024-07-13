@@ -66,11 +66,14 @@
   padding: 10px;
   border-radius: 5px;
   color: black;
+  text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff,
+    1px 1px 0 #fff;
 }
 .underlineAnimation {
   position: relative;
   display: inline-block;
   cursor: pointer;
+  text-align: center;
 }
 .underlineAnimation::after {
   content: '';
@@ -79,7 +82,7 @@
   bottom: 0;
   width: 0;
   height: 2px;
-  background-color: black;
+  background-color: white;
   transition: width 0.3s ease;
 }
 .pagination {
@@ -146,6 +149,7 @@
     border-radius: 55px;
   }
   .pagination button {
+    width: auto;
     font-size: 20px;
   }
   .settingsIcon {
@@ -155,5 +159,18 @@
   .settings {
     width: 85px;
     height: 85px;
+  }
+}
+@media (max-width: 400px) {
+  .menuItemLink {
+    font-size: 2.5rem;
+  }
+  .pagination button {
+    font-size: 15px;
+    width: auto;
+    height: 60px;
+  }
+  .pagination {
+    grid-template-columns: repeat(2, 1fr); /* Two columns */
   }
 }

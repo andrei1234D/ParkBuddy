@@ -389,85 +389,62 @@ const LendSpot = () => {
                 readOnly: true,
               }}
             />
-            <div
-              style={{
-                height: '100%',
-                width: '100%',
-                padding: '10px',
-                display: 'flex',
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-evenly ',
-              }}
-            >
-              <div>
-                <p style={{ textAlign: 'center', fontSize: '25px' }}>
-                  Start Time
-                </p>
-                <DatePicker
-                  title={startTime}
-                  selected={startTime}
-                  onChange={(date) => setStartTime(date)}
-                  showTimeSelect
-                  showTimeSelectOnly
-                  timeIntervals={10}
-                  timeCaption="Time"
-                  dateFormat="HH:mm"
-                />
+            <div className="dateTimePickerContainer">
+              <div className="datePickerWrapper">
+                <div className="datePicker">
+                  <p>Start Date</p>
+                  <DatePicker
+                    selected={selectedStartDate}
+                    onChange={(date) => setSelectedStartDate(date)}
+                    selectsStart
+                    startDate={selectedStartDate}
+                    endDate={selectedEndDate}
+                    placeholderText="Start Date"
+                  />
+                </div>
+                <div className="datePicker">
+                  <p>End Date</p>
+                  <DatePicker
+                    selected={selectedEndDate}
+                    onChange={(date) => setSelectedEndDate(date)}
+                    selectsEnd
+                    startDate={selectedStartDate}
+                    endDate={selectedEndDate}
+                    minDate={selectedStartDate}
+                    placeholderText="End Date"
+                  />
+                </div>
               </div>
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  flexDirection: 'column',
-                }}
-              >
-                <p
-                  style={{
-                    textAlign: 'center',
-                    fontSize: '25px',
-                  }}
-                >
-                  End Time
-                </p>
-                <DatePicker
-                  selected={endTime}
-                  onChange={(date) => setEndTime(date)}
-                  showTimeSelect
-                  showTimeSelectOnly
-                  timeIntervals={10}
-                  timeCaption="Time"
-                  dateFormat="HH:mm"
-                  minTime={getMinEndTime()}
-                  maxTime={new Date().setHours(23, 59, 59, 999)}
-                />
+              <div className="timePickerContainer">
+                <div className="timePicker">
+                  <p>Start Time</p>
+                  <DatePicker
+                    title={startTime}
+                    selected={startTime}
+                    onChange={(date) => setStartTime(date)}
+                    showTimeSelect
+                    showTimeSelectOnly
+                    timeIntervals={10}
+                    timeCaption="Time"
+                    dateFormat="HH:mm"
+                  />
+                </div>
+                <div className="timePicker">
+                  <p>End Time</p>
+                  <DatePicker
+                    selected={endTime}
+                    onChange={(date) => setEndTime(date)}
+                    showTimeSelect
+                    showTimeSelectOnly
+                    timeIntervals={10}
+                    timeCaption="Time"
+                    dateFormat="HH:mm"
+                    minTime={getMinEndTime()}
+                    maxTime={new Date().setHours(23, 59, 59, 999)}
+                  />
+                </div>
               </div>
             </div>
-            <Stack
-              direction="row"
-              spacing={2}
-              alignItems="center"
-              justifyContent="center"
-              style={{ marginTop: '5%' }}
-            >
-              <DatePicker
-                selected={selectedStartDate}
-                onChange={(date) => setSelectedStartDate(date)}
-                selectsStart
-                startDate={selectedStartDate}
-                endDate={selectedEndDate}
-                placeholderText="Start Date"
-              />
-              <DatePicker
-                selected={selectedEndDate}
-                onChange={(date) => setSelectedEndDate(date)}
-                selectsEnd
-                startDate={selectedStartDate}
-                endDate={selectedEndDate}
-                minDate={selectedStartDate}
-                placeholderText="End Date"
-              />
-            </Stack>
           </div>
         </DialogContent>
         <DialogActions

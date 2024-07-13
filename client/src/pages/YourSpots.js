@@ -16,11 +16,13 @@ import GlobalStatesContext from '../context/GlobalStatesContext';
 import '../style/YourSpots.css';
 
 import api from '../api.js';
+import noSpotsImage from '../images/noSpots.png';
 
 function YourSpots() {
   const { translate, username } = useContext(GlobalStatesContext);
   const [parkingSpots, setParkingSpots] = useState([]);
   const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     async function fetchParkingSpots() {
       try {
@@ -42,6 +44,7 @@ function YourSpots() {
   if (loading) {
     return <LoadingSpinner />;
   }
+
   return (
     <div>
       {loading ? (
@@ -87,37 +90,49 @@ function YourSpots() {
               </Tooltip>
             </div>
           </div>
-          {parkingSpots.map((spot, index) => (
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                alignItems: 'center',
-                color: 'rgb(var(--UIText)',
-              }}
-            >
-              <p className="nrSpot">{index + 1}</p>
-              <div key={index} className="containerSpots">
-                <p className="addressName">{spot.address}</p>
-                <p className="coordinates">{spot.longitude}</p>
-                <p className="coordinates">{spot.latitude}</p>
-                <p className="status">
-                  {spot.status === 'free' && (
-                    <FaCircle style={{ color: 'green' }} />
-                  )}
-                  {spot.status === 'reserved' && (
-                    <FaCircle style={{ color: 'yellow' }} />
-                  )}
-                  {spot.status === 'occupied' && (
-                    <FaCircle style={{ color: 'blue' }} />
-                  )}
-                  {spot.status === 'unavailable' && (
-                    <FaCircle style={{ color: 'red' }} />
-                  )}
-                </p>
-              </div>
+          {parkingSpots.length === 0 ? (
+            <div className="noSpotsContainer">
+              <img
+                src={noSpotsImage}
+                alt="No spots available"
+                className="noSpotsImage"
+              />
+              <p className="noSpotsText">No Spots Available</p>
             </div>
-          ))}
+          ) : (
+            parkingSpots.map((spot, index) => (
+              <div
+                key={index}
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  color: 'rgb(var(--UIText)',
+                }}
+              >
+                <p className="nrSpot">{index + 1}</p>
+                <div className="containerSpots">
+                  <p className="addressName">{spot.address}</p>
+                  <p className="coordinates">{spot.longitude}</p>
+                  <p className="coordinates">{spot.latitude}</p>
+                  <p className="status">
+                    {spot.status === 'free' && (
+                      <FaCircle style={{ color: 'green' }} />
+                    )}
+                    {spot.status === 'reserved' && (
+                      <FaCircle style={{ color: 'yellow' }} />
+                    )}
+                    {spot.status === 'occupied' && (
+                      <FaCircle style={{ color: 'blue' }} />
+                    )}
+                    {spot.status === 'unavailable' && (
+                      <FaCircle style={{ color: 'red' }} />
+                    )}
+                  </p>
+                </div>
+              </div>
+            ))
+          )}
         </div>
       )}
     </div>

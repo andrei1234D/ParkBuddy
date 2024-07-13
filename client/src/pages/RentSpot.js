@@ -368,17 +368,7 @@ const RentSpot = () => {
                     alignItems: 'center',
                   }}
                 >
-                  <div
-                    style={{
-                      height: '100%',
-                      width: '100%',
-                      padding: '10px',
-                      display: 'flex',
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      justifyContent: 'space-evenly ',
-                    }}
-                  >
+                  <div className="timePickerContainer">
                     <div>
                       <p style={{ textAlign: 'center', fontSize: '25px' }}>
                         Start Time
@@ -450,7 +440,7 @@ const RentSpot = () => {
                   </Button>
                   <Button
                     onClick={handlePreferencesClick}
-                    style={{ color: '#90EE90', fontWeight: '700' }}
+                    style={{ color: 'green', fontWeight: '700' }}
                   >
                     Find your perfect fit
                   </Button>

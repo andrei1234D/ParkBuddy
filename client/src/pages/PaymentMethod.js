@@ -281,7 +281,11 @@ const PaymentMethod = () => {
                 paddingTop: '20px',
               }}
             >
-              <img src={noPaymentOptions} alt="No payment options available" />
+              <img
+                src={noPaymentOptions}
+                style={{ width: '100%', height: '100%' }}
+                alt="No payment options available"
+              />
             </div>
           )}
         </div>

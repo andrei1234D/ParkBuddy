@@ -12,21 +12,29 @@
   height: 100%;
   z-index: -1; /* Ensure particles container is above the background */
 }
-.buttonStopPauseParticles {
-  background-color: var(--UIText);
-  color: var(--UIColor);
-  cursor: pointer;
-  border-style: solid;
-  padding: 10px;
-}
-
-.buttonStopPauseParticles:active {
-  transition: 0;
-  transform: scale(0.8);
-}
 
 .transition-width {
   transition: width 0.5s ease-in-out;
   width: auto;
   height: 65px;
+  color: rgb(var(--UIText)) !important;
+  background-color: rgb(var(--UIColor)) !important;
+  font-size: 40px !important;
+}
+
+@media (max-width: 900px) {
+  .transition-width {
+    width: 400px !important;
+    height: 90px !important;
+    font-size: 35px !important;
+    padding: 20px !important;
+    background-color: rgb(var(--UIColor)) !important;
+    color: rgb(var(--UIText)) !important;
+  }
+}
+@media (max-width: 450px) {
+  .transition-width {
+    width: calc(100vw - 50px) !important;
+    font-size: 25px !important;
+  }
 }

@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.aab76750.css",
-    "main.js": "/static/js/main.e419daf8.js",
+    "main.css": "/static/css/main.080f0830.css",
+    "main.js": "/static/js/main.fc96d623.js",
     "static/media/sliderImage_1.png": "/static/media/sliderImage_1.def1e9b8683230716a80.png",
     "static/media/sliderImage_4.png": "/static/media/sliderImage_4.a1379dde5ec457787f8b.png",
     "static/media/bannerBackground.png": "/static/media/bannerBackground.39e09c70d89bb313de9c.png",
@@ -24,6 +24,7 @@
     "static/media/lendASpot.jpg": "/static/media/lendASpot.04abc0a4662d1408dc5e.jpg",
     "static/media/yourSpots.jpg": "/static/media/yourSpots.7bd40f5a2d79c9c3c608.jpg",
     "static/media/getTheApp.jpg": "/static/media/getTheApp.1683740f70eb11f1cfef.jpg",
+    "static/media/noSpots.png": "/static/media/noSpots.9dd8140f68963240496c.png",
     "static/media/reviews.jpg": "/static/media/reviews.3ad17f78f6751d26b6ac.jpg",
     "static/media/UsaFlag.png": "/static/media/UsaFlag.0908a48f884473e099aa.png",
     "static/media/parkImageDarkMode.png": "/static/media/parkImageDarkMode.2bf981e331f8830ac6ff.png",
@@ -53,11 +54,11 @@
     "static/media/Moon.svg": "/static/media/Moon.0a6a2b75ac51157455302ddcfca385c0.svg",
     "static/media/tesla.svg": "/static/media/tesla.683548cb3e6cedbe7403c0b8e7ba0f5f.svg",
     "static/media/bugatti.svg": "/static/media/bugatti.fc105dadc57c70d1dd3b6fef577aa027.svg",
-    "main.aab76750.css.map": "/static/css/main.aab76750.css.map",
-    "main.e419daf8.js.map": "/static/js/main.e419daf8.js.map"
+    "main.080f0830.css.map": "/static/css/main.080f0830.css.map",
+    "main.fc96d623.js.map": "/static/js/main.fc96d623.js.map"
   },
   "entrypoints": [
-    "static/css/main.aab76750.css",
-    "static/js/main.e419daf8.js"
+    "static/css/main.080f0830.css",
+    "static/js/main.fc96d623.js"
   ]
 }

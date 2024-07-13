@@ -94,14 +94,20 @@ b {
   height: 50px;
   font-size: 25px !important;
   padding: 10px;
-  background-color: var(--UIColor);
-  color: var(--UIText);
+  background-color: rgb(var(--UIColor)) !important;
+  color: rgb(var(--UIText)) !important;
 }
 .menuItem {
   text-align: center;
   color: black;
   font-size: 25px !important;
 }
+.settings-button {
+  color: rgb(var(--UIColor)) !important;
+  background-color: rgb(var(--UIText)) !important;
+  font-size: 20px !important;
+}
+
 @media (max-width: 900px) {
   .centered-content {
     min-height: 100%;
@@ -138,10 +144,23 @@ b {
   }
 }
 @media (max-width: 700px) {
+  .centered-content Button {
+    width: 200px;
+    height: 70px;
+  }
   .settingsText {
     font-size: 5rem;
   }
   .centered-content {
     min-width: 0;
+  }
+}
+@media (max-width: 450px) {
+  .settingsText {
+    font-size: 2rem;
+  }
+  .largeSelect {
+    width: calc(100vw - 50px);
+    font-size: 25px !important;
   }
 }

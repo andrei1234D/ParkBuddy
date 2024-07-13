@@ -1,7 +1,7 @@
 .containerParkingSpots {
   display: flex;
   flex-direction: column;
-  width: 60%;
+  width: 80%;
   max-height: 500px;
   background-color: rgba(9, 123, 90, 0.5);
   margin: 0 auto;
@@ -13,6 +13,7 @@
   border-radius: 15px;
   backdrop-filter: blur(7px);
 }
+
 .containerSpots {
   display: flex;
   flex-direction: row;
@@ -23,6 +24,7 @@
   background-color: rgb(var(--UIColor));
   border-radius: 15px;
 }
+
 .containerHeaderSpots {
   display: flex;
   justify-content: space-around;
@@ -34,10 +36,12 @@
   border-radius: 15px;
   padding-bottom: 25px;
 }
+
 .containerHeaderSpots p {
   display: flex;
   justify-content: center;
 }
+
 .containerSpots .coordinates,
 .status,
 .nrSpot {
@@ -48,27 +52,48 @@
 .nrSpot {
   width: 4%;
 }
+
 .addressName {
   width: 43%;
 }
+
 .coordinates {
   width: 23%;
 }
+
 .status {
-  width: 9%;
+  width: 8%;
+  margin-right: 1%;
 }
+
 .loading {
   font-size: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
 .pageReminder {
   text-align: center;
   padding: 25px 0 25px 0;
   font-size: 30px;
   color: rgb(var(--UIColor));
   font-weight: bold;
+}
+
+.noSpotsContainer {
+  text-align: center;
+  padding: 20px;
+}
+
+.noSpotsImage {
+  max-width: 100%;
+  height: auto;
+}
+
+.noSpotsText {
+  font-size: 1.2rem;
+  color: rgb(var(--UIText));
 }
 @media (max-width: 1100px) {
   .containerParkingSpots {
@@ -77,5 +102,57 @@
     margin: 0;
     padding: 0px;
     border-radius: 0;
+  }
+}
+
+@media (max-width: 800px) {
+  .containerParkingSpots {
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+
+  .containerSpots,
+  .containerHeaderSpots {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px;
+    margin: 0;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .containerHeaderSpots {
+    display: none;
+  }
+
+  .nrSpot {
+    width: 10%;
+    text-align: left;
+    padding: 5px 0;
+  }
+
+  .addressName,
+  .coordinates,
+  .status {
+    width: 100%;
+    text-align: left;
+    padding: 5px 0;
+    word-break: break-word;
+    text-align: center;
+  }
+
+  .status {
+    margin-right: 0;
+  }
+}
+
+@media (max-width: 400px) {
+  .containerParkingSpots {
+    padding: 10px;
+  }
+
+  .containerSpots {
+    padding: 5px;
   }
 }

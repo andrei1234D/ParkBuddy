@@ -13,11 +13,6 @@ const ParticleControlButton = () => {
       variant="contained"
       onClick={toggleParticles}
       className="transition-width"
-      style={{
-        color: 'rgb(var(--UIText))',
-        backgroundColor: 'rgb(var(--UIColor))',
-        fontSize: '35px',
-      }}
     >
       {moveParticles ? translate('stopParticles') : translate('startParticles')}
     </Button>

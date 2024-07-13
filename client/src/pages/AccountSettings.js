@@ -1,11 +1,9 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-
 import { AiOutlineLogout } from 'react-icons/ai';
 import { IoWallet } from 'react-icons/io5';
 import GlobalStatesContext from '../context/GlobalStatesContext';
 import { Button } from '@mui/material';
-
 import '../style/Settings.css';
 
 const AccountSettings = () => {
@@ -41,7 +39,7 @@ const AccountSettings = () => {
         {role === 'customer' && (
           <div style={{ textAlign: 'center' }}>
             <p>
-              {translate('loggedInA')} <b s>{translate('customer')}</b>{' '}
+              {translate('loggedInA')} <b>{translate('customer')}</b>{' '}
               {translate('account')}, {translate('ifUWantToLend')}
             </p>
             <div
@@ -52,13 +50,7 @@ const AccountSettings = () => {
               }}
             >
               <Link to="/register">
-                <Button
-                  style={{
-                    color: 'rgb(var(--UIColor))',
-                    backgroundColor: 'rgb(var(--UIText))',
-                    fontSize: '20px',
-                  }}
-                >
+                <Button className="settings-button">
                   {translate('upgradeNow')}
                 </Button>
               </Link>
@@ -79,11 +71,7 @@ const AccountSettings = () => {
               <p>{translate('lendASpotWhenever')}</p>
               <Button
                 variant="contained"
-                style={{
-                  color: 'rgb(var(--UIColor))',
-                  backgroundColor: 'rgb(var(--UIText))',
-                  fontSize: '20px',
-                }}
+                className="settings-button"
                 onClick={handleToLendASpot}
               >
                 {translate('lend')}
@@ -94,11 +82,7 @@ const AccountSettings = () => {
             <Button
               onClick={handleToYourParkingSpots}
               variant="contained"
-              style={{
-                color: 'rgb(var(--UIColor))',
-                backgroundColor: 'rgb(var(--UIText))',
-                fontSize: '20px',
-              }}
+              className="settings-button"
             >
               {translate('seeYourParkingSpots')}
             </Button>
@@ -106,25 +90,16 @@ const AccountSettings = () => {
           <Link to="/paymentMethod">
             <Button
               variant="contained"
-              style={{
-                color: 'rgb(var(--UIColor))',
-                backgroundColor: 'rgb(var(--UIText))',
-                fontSize: '20px',
-              }}
+              className="settings-button settings-button-with-icon"
             >
-              {translate('toPayment')}{' '}
-              <IoWallet size="50px" style={{ marginLeft: '8px' }} />
+              {translate('toPayment')} <IoWallet size="50px" />
             </Button>
           </Link>
           <div>
             <Button
               variant="contained"
               onClick={handleLogout}
-              style={{
-                color: 'rgb(var(--UIColor))',
-                backgroundColor: 'rgb(var(--UIText))',
-                fontSize: '20px',
-              }}
+              className="settings-button settings-button-with-icon"
             >
               {translate('logout')} <AiOutlineLogout size="25px" />
             </Button>

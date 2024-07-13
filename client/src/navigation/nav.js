@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import RomanianFlag from '../images/flags/RomanianFlag.png';
 import EnglishFlag from '../images/flags/UsaFlag.png';
 import PolishFlag from '../images/flags/PolishFlag.png';
@@ -22,6 +22,7 @@ export default function Nav() {
     { value: 'ro', label: 'Română', flag: RomanianFlag },
     { value: 'pl', label: 'Polski', flag: PolishFlag },
   ];
+  const location = useLocation();
   useEffect(() => {
     let lastScrollTop = 0;
 
@@ -70,13 +71,15 @@ export default function Nav() {
             alignItems: 'center',
           }}
         >
-          {!isLoggedIn && (
-            <Link to="/login" className="linkHome">
-              <div className="option-box loginBtn loginHomeButton">
-                {translate('login')}
-              </div>
-            </Link>
-          )}
+          {!isLoggedIn &&
+            location.pathname !== '/login' &&
+            location.pathname !== '/Login' && (
+              <Link to="/login" className="linkHome">
+                <div className="option-box loginBtn loginHomeButton">
+                  {translate('login')}
+                </div>
+              </Link>
+            )}
           <div className="menuLanguageContainer">
             <div className="languages">
               {languageOptions.map((option) => (

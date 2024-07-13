@@ -377,6 +377,14 @@
   }
 }
 @media (max-width: 800px) {
+  .option-box,
+  .loginBtn {
+    font-size: 0.9rem;
+    padding: 8px 15px;
+    min-width: 80px;
+    min-height: 35px;
+  }
+
   .cardReviewContainer {
     grid-template-columns: repeat(1, 1fr) !important;
   }
@@ -410,5 +418,44 @@
   }
   .titleDiv {
     font-size: 3rem;
+  }
+}
+@media (max-width: 600px) {
+  .option-box,
+  .loginBtn {
+    font-size: 0.8rem;
+    padding: 6px 12px;
+    min-width: 70px;
+    min-height: 30px;
+  }
+
+  .options-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  .rentASpot {
+    padding: 15px;
+    font-size: 1.5rem;
+    width: auto;
+    height: auto;
+    right: 15px;
+  }
+}
+@media (max-width: 400px) {
+  .option-box,
+  .loginBtn {
+    font-size: 0.8rem;
+    padding: 5px 0px;
+    min-width: 40px;
+    min-height: 25px;
+  }
+  .parkBuddy {
+    display: none;
+  }
+  .rentASpot {
+    font-size: 1rem;
+    width: 200px;
+    height: auto;
+    right: 15px;
   }
 }

@@ -75,3 +75,10 @@ button:hover {
   font-size: 2em;
   margin-bottom: 10px;
 }
+@media (max-width: 900px) {
+  .payment-method-container {
+    margin: 0;
+    max-width: 100%;
+    border-top: darkgreen;
+  }
+}

@@ -175,12 +175,12 @@
 }
 @media (max-width: 850px) {
   .navMenu {
-    width: 100vw;
+    width: 100%;
     height: calc(100vh + 10px);
   }
   @keyframes slideIn {
     from {
-      right: -100vw; /* Start position */
+      right: -100%; /* Start position */
     }
     to {
       right: 0px; /* End position */
@@ -191,7 +191,7 @@
       right: 0px; /* Start position */
     }
     to {
-      right: -100vw; /* End position */
+      right: -100%; /* End position */
     }
   }
 }
