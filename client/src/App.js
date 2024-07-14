@@ -15,6 +15,7 @@ import ProtectedRoutes from './ProtectedRoutes';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import FadeObserver from './animations/fadeAppear';
+import LandscapeWarning from './landscapeWrapper/LandscapeWarning';
 import './style/App.css';
 
 function App() {
@@ -40,6 +41,7 @@ function App() {
             </Routes>
           </FadeObserver>
           <ToastContainer />
+          <LandscapeWarning />
         </GlobalStatesContextProvider>
       </Router>
     </div>

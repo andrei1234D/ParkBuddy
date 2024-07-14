@@ -319,3 +319,15 @@
     flex-direction: column;
   }
 }
+@media (max-width: 600px) {
+  .search-bar.center {
+    width: 80%;
+  }
+}
+@media (max-width: 300px) {
+  .search-bar.center .search-icon {
+    width: 30px;
+    height: 30px;
+    margin-right: 0px;
+  }
+}

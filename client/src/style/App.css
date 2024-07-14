@@ -23,13 +23,13 @@
 
 :root {
   --border_color: rgba(2, 25, 10);
-  --body_background: #040720;
+  --body_background: black;
   --UIColor: 0, 0, 0;
   --UIButtonColor: #040720;
   --UIText: 255, 255, 255;
   --btn_background_gradient: white;
   --btn_text: black;
-  --text-shadow: 0 0 80px rgb(0, 0, 0), 0 0 32px rgb(0, 0, 0);
+  --text-shadow: 0 0 80px rgb(255, 255, 255), 0 0 32px rgb(255, 255, 255);
 }
 [data-theme='dark'] {
   --border_color: rgba(2, 25, 10);

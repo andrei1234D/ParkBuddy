@@ -40,8 +40,8 @@ function Home() {
         </section>
         <div className="emptySpace"></div>
         <AppStore />
-        {/* <div className="emptySpace"></div>
-        <FooterHome /> */}
+        <div className="emptySpace"></div>
+        <FooterHome />
       </div>
     </section>
   );

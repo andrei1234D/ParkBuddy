@@ -50,7 +50,7 @@ function FooterHome() {
     return sponsors.map((sponsor, index) => (
       <div className="sponsorsImage">
         <img
-          className="fadeAppear sponsorsImage"
+          className="sponsorsImage"
           key={index}
           src={sponsor.logoUrl}
           alt={sponsor.name}

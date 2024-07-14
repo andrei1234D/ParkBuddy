@@ -35,7 +35,6 @@ const translations = {
     userLength: 'Username must have at least 5 characters.',
     passwordVerify:
       'Password must have at least 7 characters and contain at least one special character ( ! @ # $ % ^ & * ) ',
-    //new translations for KELAJ
     pleaseVerify:
       "Please Verify that the address is correct then proceed or repick the location if you are not sure of it's validity",
     Please_verify_the_address: 'Please verify the address',
@@ -48,7 +47,6 @@ const translations = {
     catchy1: 'SAY GOODBYE TO THE CHASE',
     catchy2: 'PARK IT NOW WITH GRACE',
     toPayment: 'To Payment Method',
-    //to romanian
     Frequently_asked_questions: 'Frequently asked questions',
     Delete_account: 'Delete account',
     Privacy_policy: 'Privacy policy',
@@ -112,8 +110,22 @@ const translations = {
     catchy1: 'ADIO CAUTARI FARA ROST',
     catchy2: 'BINE AI VENIT DIN NOU LA POST',
     toPayment: 'Metoda de Plata',
+    Frequently_asked_questions: 'Întrebări frecvente',
+    Delete_account: 'Șterge contul',
+    Privacy_policy: 'Politica de confidențialitate',
+    Cookie_policy: 'Politica cookie',
+    Terms_and_Conditions: 'Termeni și condiții',
+    Rent_A_Spot: 'Închiriază un loc',
+    carPlate: 'Plăcuța ta de înmatriculare',
+    carPlateError:
+      'Te rog verifică plăcuța de înmatriculare și încearcă din nou.',
+    fillAllError: 'Te rog completează toate câmpurile',
+    firstName: 'Prenume',
+    lastName: 'Nume de familie',
+    email: 'E-MAIL',
+    emailError: 'Te rog verifică e-mailul și încearcă din nou.',
+    emailSent: 'Am trimis un e-mail!',
   },
-
   pl: {
     login: 'Zaloguj',
     logout: 'Wyloguj',
@@ -150,6 +162,32 @@ const translations = {
     userLength: 'Nazwa użytkownika musi zawierać przynajmniej 5 znaków.',
     passwordVerify:
       'Hasło musi mieć przynajmniej 7 znaków i zawierać przynajmniej jeden znak specjalny ( ! @ # $ % ^ & * ) ',
+    pleaseVerify:
+      'Proszę sprawdzić, czy adres jest poprawny, a następnie kontynuować lub ponownie wybrać lokalizację, jeśli nie jesteś pewien jej poprawności.',
+    Please_verify_the_address: 'Proszę sprawdzić adres',
+    seeYourParkingSpots: 'Moje miejsca',
+    addressName: 'Nazwa Adresu',
+    longitude: 'Długość geograficzna',
+    latitude: 'Szerokość geograficzna',
+    status: 'Status',
+    nr: 'NR',
+    catchy1: 'POŻEGNAJ SIĘ Z POŚCIGIEM',
+    catchy2: 'PARKUJ TERAZ Z WDZIĘKIEM',
+    toPayment: 'Do Metody Płatności',
+    Frequently_asked_questions: 'Najczęściej zadawane pytania',
+    Delete_account: 'Usuń konto',
+    Privacy_policy: 'Polityka prywatności',
+    Cookie_policy: 'Polityka cookies',
+    Terms_and_Conditions: 'Zasady i Warunki',
+    Rent_A_Spot: 'Wynajmij Miejsce',
+    carPlate: 'Twój numer rejestracyjny',
+    carPlateError: 'Proszę sprawdzić numer rejestracyjny i spróbować ponownie.',
+    fillAllError: 'Proszę wypełnić wszystkie pola',
+    firstName: 'Imię',
+    lastName: 'Nazwisko',
+    email: 'E-MAIL',
+    emailError: 'Proszę sprawdzić e-mail i spróbować ponownie.',
+    emailSent: 'Wysłaliśmy e-mail!',
   },
 };
 
