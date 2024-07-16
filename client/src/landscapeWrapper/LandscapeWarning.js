@@ -1,7 +1,12 @@
 import React from 'react';
 import '../style/LandscapeWarning.css';
 import landscapeMode from '../images/landscapeMode.png';
+import { useContext } from 'react';
+import GlobalStatesContext from '../context/GlobalStatesContext';
+
 const LandscapeWarning = () => {
+  const { translate } = useContext(GlobalStatesContext);
+
   return (
     <div className="landscape-warning">
       <div className="warning-content">
@@ -11,7 +16,7 @@ const LandscapeWarning = () => {
           className="rotate-icon"
         />
         <p style={{ fontSize: '40px' }}>
-          Please rotate your device to portrait mode
+          {translate('Please_rotate_your_device_to_portrait_mode')}
         </p>
       </div>
     </div>

@@ -257,7 +257,7 @@ const Register = () => {
                   letterSpacing: '2px',
                 }}
               >
-                PARTNER
+                {translate('customer').toUpperCase()}
               </p>
               <p className="textLogin">{translate('firstName')}</p>
               <input
@@ -332,7 +332,7 @@ const Register = () => {
                   letterSpacing: '2px',
                 }}
               >
-                PARTNER
+                {translate('partner').toUpperCase()}
               </p>
               <p className="textLogin">{translate('firstName')}</p>
               <input

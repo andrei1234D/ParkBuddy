@@ -35,7 +35,7 @@ export default function MenuIcon() {
         <MenuItems />
       </div>
       <div className="menuContainer" onClick={toggleMenu} ref={containerRef}>
-        {isMenuOpen ? 'Close' : 'Menu'}
+        {isMenuOpen ? `${translate('Close')}` : `${translate('Menu')}`}
         <div className={`menuIcon ${isMenuOpen ? 'open' : ''}`}>
           <div className="line-horizontal"></div>
           <div className="line-horizontal"></div>

@@ -13,7 +13,7 @@ function AppStore() {
   return (
     <div>
       <div className="informationContainer">
-        <div className="titleDiv fadeAppearTitle">BENEFITS</div>
+        <div className="titleDiv fadeAppearTitle">{translate('benefits')}</div>
         <div className="cardContainer">
           <div className="card">
             <div className="topHalf">
@@ -24,10 +24,9 @@ function AppStore() {
                 />
               </div>
             </div>
-            <div className="middle fadeAppear">CONVENIENCE</div>
+            <div className="middle fadeAppear">{translate('convenience')}</div>
             <div className="bottomHalf fadeAppear">
-              Customer convenience is our priority. Streamlined design, no
-              clutter. Just what you need, when you need it.
+              {translate('customerConvenience')}
             </div>
           </div>
           <div className="card">
@@ -36,10 +35,9 @@ function AppStore() {
                 <PiCurrencyDollarFill className="clockIcon" />
               </div>
             </div>
-            <div className="middle fadeAppear">MONEY</div>
+            <div className="middle fadeAppear">{translate('money')}</div>
             <div className="bottomHalf fadeAppear">
-              Affordable parking, effortless booking, and more! Experience
-              convenience at its best with our user-friendly parking app.
+              {translate('affordableParking')}
             </div>
           </div>
           <div className="card">
@@ -48,11 +46,9 @@ function AppStore() {
                 <CgSandClock className="clockIcon" />
               </div>
             </div>
-            <div className="middle fadeAppear">TIME</div>
+            <div className="middle fadeAppear">{translate('time')}</div>
             <div className="bottomHalf fadeAppear">
-              Find or list spots in seconds. Fast, convenient, and easy-to-use
-              app. Hassle-free parking is just a tap away! What are you waiting
-              for?"
+              {translate('findOrListSpots')}
             </div>
           </div>
         </div>
@@ -75,7 +71,7 @@ function AppStore() {
                     &#9733;
                   </div>
                 </div>
-                <div style={{ fontSize: '0.7rem' }}>150 K reviews</div>
+                <div style={{ fontSize: '0.7rem' }}>{translate('reviews')}</div>
               </div>
               <div className="downloads">
                 <div
@@ -89,11 +85,13 @@ function AppStore() {
                 >
                   10 mil. +
                 </div>
-                <div style={{ fontSize: '0.7rem' }}>Downloads</div>
+                <div style={{ fontSize: '0.7rem' }}>
+                  {translate('downloads')}
+                </div>
               </div>
             </div>
           </section>
-          <div className="fadeAppear">Download for free</div>
+          <div className="fadeAppear">{translate('downloadForFree')}</div>
 
           <div className="stores fadeAppear">
             <a href="https://play.google.com/store/apps/details?id=your.package.name">

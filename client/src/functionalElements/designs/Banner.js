@@ -1,11 +1,10 @@
 import React from 'react';
 import '../../style/Banner.css';
-import sliderImage from '../../images/bannerImages/sliderImage_1.png';
 export default function Banner() {
   return (
     <div className="banner">
       <div className="slider" style={{ '--quantity': 5 }}>
-        {Array.from({ length: 0 }).map((_, index) => (
+        {Array.from({ length: 5 }).map((_, index) => (
           <div key={index} className="item" style={{ '--position': index + 1 }}>
             <img
               src={require(`../../images/bannerImages/sliderImage_${

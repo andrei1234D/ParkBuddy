@@ -91,7 +91,7 @@ const Login = () => {
             color: 'var(--UIText)',
           }}
         >
-          Wrong Credentials
+          {translate('Wrong_Credentials')}
         </DialogTitle>
         <DialogContent
           style={{ backgroundColor: 'var(--UIColor)', color: 'var(--UIText)' }}
@@ -101,7 +101,7 @@ const Login = () => {
         <DialogActions
           style={{ backgroundColor: 'var(--UIColor)', color: 'var(--UIText)' }}
         >
-          <Button onClick={handleCloseDialog}>Close</Button>
+          <Button onClick={handleCloseDialog}>{translate('close')}</Button>
         </DialogActions>
       </Dialog>
 
@@ -145,7 +145,7 @@ const Login = () => {
               letterSpacing: '2px',
             }}
           >
-            CUSTOMER
+            {translate('customer').toUpperCase()}
           </p>
           <div id="bigContainer" style={{ width: '100%' }}>
             <div className="welcomeContainer">
@@ -213,7 +213,7 @@ const Login = () => {
               letterSpacing: '2px',
             }}
           >
-            PARTNER
+            {translate('partner').toUpperCase()}
           </p>
           <div>
             <div className="welcomeContainer">

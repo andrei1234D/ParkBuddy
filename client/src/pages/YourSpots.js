@@ -48,10 +48,10 @@ function YourSpots() {
   return (
     <div>
       {loading ? (
-        <div className="loading">Loading...</div>
+        <div className="loading">{translate('Loading...')}</div>
       ) : (
         <div className="containerParkingSpots">
-          <div className="pageReminder">YOUR SPOTS</div>
+          <div className="pageReminder">{translate('YOUR_SPOTS')}</div>
           <div className="containerHeaderSpots">
             <p className="nrSpot">{translate('nr')}</p>
             <p className="addressName">{translate('addressName')}</p>
@@ -62,10 +62,13 @@ function YourSpots() {
               <Tooltip
                 title={
                   <div style={{ fontSize: '13px' }}>
-                    <FaCircle style={{ color: 'green' }} /> FREE <br />
-                    <FaCircle style={{ color: 'blue' }} /> OCCUPIED
+                    <FaCircle style={{ color: 'green' }} /> {translate('free')}{' '}
                     <br />
-                    <FaCircle style={{ color: 'red' }} /> UNAVAILABLE
+                    <FaCircle style={{ color: 'blue' }} />{' '}
+                    {translate('occupied')}
+                    <br />
+                    <FaCircle style={{ color: 'red' }} />{' '}
+                    {translate('unavailable')}
                     <br />
                   </div>
                 }
@@ -94,10 +97,10 @@ function YourSpots() {
             <div className="noSpotsContainer">
               <img
                 src={noSpotsImage}
-                alt="No spots available"
+                alt={translate('no_spots_available')}
                 className="noSpotsImage"
               />
-              <p className="noSpotsText">No Spots Available</p>
+              <p className="noSpotsText">{translate('no_spots_available')}</p>
             </div>
           ) : (
             parkingSpots.map((spot, index) => (

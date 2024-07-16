@@ -95,17 +95,17 @@ const RentSpot = () => {
       document.head.appendChild(script);
     }
   }, [apiKey]);
+
   useEffect(() => {
     if (showConfetti) {
-      // Set a timer to turn off confetti after 3 seconds (3000 milliseconds)
       const timer = setTimeout(() => {
         setShowConfetti(false);
       }, 3000);
 
-      // Cleanup the timer if the component is unmounted or showConfetti changes
       return () => clearTimeout(timer);
     }
   }, [showConfetti]);
+
   const fetchData = async () => {
     try {
       const response = await api.post('/Get-Spots');
@@ -119,11 +119,11 @@ const RentSpot = () => {
   };
 
   const handleMarkerClick = (spot) => {
-    console.log('Marker Click Has Been Called Once');
     setSelectedSpot(spot);
     setInfoWindowPosition({ lat: spot.latitude, lng: spot.longitude });
     setInfoWindowOpen(true);
   };
+
   const handleBubbleClick = () => {
     setShowBubble(false);
     setOpenDialog(true);
@@ -134,11 +134,12 @@ const RentSpot = () => {
     setOpenDialog(false);
     setShowBubble(true);
   };
+
   const handleDialogCloseNoPreferences = () => {
     setOpenDialog(false);
     setShowBubble(true);
     fetchData();
-    toast.success('Browsing without any filters applied', {
+    toast.success(translate('Browsing_without_any_filters_applied'), {
       position: 'top-right',
       autoClose: 8000,
       closeOnClick: true,
@@ -152,7 +153,7 @@ const RentSpot = () => {
 
   const handleDialogConfirmationOpen = () => {
     if (startTime === null || endTime === null) {
-      setErrorRent('Please specify your rental start and end times!');
+      setErrorRent(translate('Please_specify_your_rental_start_and_end_times'));
     } else {
       setOpenDialogConfirmation(true);
     }
@@ -199,9 +200,7 @@ const RentSpot = () => {
           username,
         });
         setSpots(response.data);
-        console.log('response data:');
-        console.log(response.data);
-        toast.success('Filters Applied', {
+        toast.success(translate('Filters_Applied'), {
           position: 'top-right',
           autoClose: 10000,
           closeButton: false,
@@ -209,7 +208,7 @@ const RentSpot = () => {
         });
       } catch (error) {
         console.error('Error renting spot:', error);
-        toast.error('Error applying filters', {
+        toast.error(translate('Error_applying_filters'), {
           position: 'top-right',
           autoClose: 10000,
           closeButton: false,
@@ -224,7 +223,6 @@ const RentSpot = () => {
   };
 
   const handlePlaceSelect = (place) => {
-    console.log('Place selected:', place.geometry.location.lat());
     if (!place.geometry) {
       window.alert("No details available for input: '" + place.name + "'");
       return;
@@ -248,24 +246,39 @@ const RentSpot = () => {
   const handleErrorClose = () => {
     setError('');
   };
+
   const handleErrorRentClose = () => {
     setErrorRent('');
   };
+
   const getMinEndTime = () => {
     if (!startTime) return new Date();
     const time = new Date(startTime);
     time.setMinutes(time.getMinutes() + 1);
     return time;
   };
+
   const formatTime = (date) => {
     const hours = String(date.getHours()).padStart(2, '0');
     const minutes = String(date.getMinutes()).padStart(2, '0');
     return `${hours}:${minutes}`;
   };
-
+  function translateStatus(status) {
+    switch (status) {
+      case 'free':
+        return translate('free');
+      case 'unavailable':
+        return translate('unavailable');
+      case 'occupied':
+        return translate('occupied');
+      default:
+        return status; // If no translation is found, return the status itself
+    }
+  }
   if (loading) {
     return <LoadingSpinner />;
   }
+
   return (
     <div>
       <ToastContainer />
@@ -277,7 +290,7 @@ const RentSpot = () => {
             options={{
               componentRestrictions: { country: 'ro' },
             }}
-            placeholder="Search for a location"
+            placeholder={translate('Search_for_a_location')}
             types={['(regions)']}
             className={`Autocomplete ${searchPosition}`}
           />
@@ -329,15 +342,21 @@ const RentSpot = () => {
                     }}
                   >
                     <h3>{selectedSpot.address}</h3>
-                    <p>Status: {selectedSpot.status} now</p>
-                    <p>Price: 0.30LEI pe minut</p>
-                    <p>Owner: {selectedSpot.username}</p>
-                    <p>Phone Number: 0721985898</p>
                     <p>
-                      Rating: 5/5 <span className="star">&#9733;</span>
+                      {translate('status')}{' '}
+                      {translateStatus(selectedSpot.status)} {translate('now')}
+                    </p>
+                    <p>{translate('price')}: 0.30LEI pe minut</p>
+                    <p>
+                      {translate('owner')}: {selectedSpot.username}
+                    </p>
+                    <p>{translate('Phone_Number')}: 0721985898</p>
+                    <p>
+                      {translate('Rating')}: 5/5{' '}
+                      <span className="star">&#9733;</span>
                     </p>
                     <Button onClick={handleDialogConfirmationOpen}>
-                      Rent Now
+                      {translate('Rent_Now')}
                     </Button>
                   </div>
                 </InfoWindow>
@@ -349,8 +368,9 @@ const RentSpot = () => {
             <div className={`dialog-content ${openDialog ? 'open' : 'close'}`}>
               <div className="dialog-header">
                 <div>
-                  Tell us when would you like your spot to be available and we
-                  will show you the best spots for your needs
+                  {translate(
+                    'Tell_us_when_would_you_like_your_spot_to_be_available_and_we_will_show_you_the_best_spots_for_your_needs'
+                  )}
                 </div>
                 <IconButton
                   onClick={handleDialogCloseNoPreferences}
@@ -371,7 +391,7 @@ const RentSpot = () => {
                   <div className="timePickerContainer">
                     <div>
                       <p style={{ textAlign: 'center', fontSize: '25px' }}>
-                        Start Time
+                        {translate('Start_Time')}
                       </p>
                       <DatePicker
                         title={startTime}
@@ -397,7 +417,7 @@ const RentSpot = () => {
                           fontSize: '25px',
                         }}
                       >
-                        End Time
+                        {translate('End_Time')}
                       </p>
                       <DatePicker
                         selected={endTime}
@@ -415,7 +435,7 @@ const RentSpot = () => {
                   <div style={{ display: 'block' }}>
                     <p style={{ textAlign: 'center', fontSize: '25px' }}>
                       {' '}
-                      DATE
+                      {translate('DATE')}
                     </p>
                     <DatePicker
                       selected={selectedStartDate}
@@ -436,13 +456,13 @@ const RentSpot = () => {
                     onClick={handleDialogCloseNoPreferences}
                     style={{ color: 'red' }}
                   >
-                    Browse all spots
+                    {translate('Browse_all_spots')}
                   </Button>
                   <Button
                     onClick={handlePreferencesClick}
                     style={{ color: 'green', fontWeight: '700' }}
                   >
-                    Find your perfect fit
+                    {translate('Find_your_perfect_fit')}
                   </Button>
                 </div>
               </div>
@@ -453,7 +473,7 @@ const RentSpot = () => {
 
           <div className={`${errorRent ? 'shrink-animation' : ''}`}></div>
           <Tooltip
-            title={'spot preferences '}
+            title={translate('spot_preferences')}
             className={`bubbleToolTip ${openDialog ? 'open' : 'close'} `}
             arrow
             placement="top"
@@ -500,7 +520,7 @@ const RentSpot = () => {
               open={openDialogConfirmation}
               onClose={handleDialogCloseConfirmation}
             >
-              <DialogTitle>You Are Almost There !</DialogTitle>
+              <DialogTitle>{translate('You_Are_Almost_There')}</DialogTitle>
               <DialogContent>
                 <div
                   style={{
@@ -511,13 +531,14 @@ const RentSpot = () => {
                   }}
                 >
                   <h3>
-                    Please verify that the details of your order are correct We
-                    will not issue a refund if you do not use the parking spot
-                    during the paid period.{' '}
+                    {translate(
+                      'Please_verify_that_the_details_of_your_order_are_correct_We_will_not_issue_a_refund_if_you_do_not_use_the_parking_spot_during_the_paid_period'
+                    )}
                   </h3>
                   <p>
-                    You will rent the {selectedSpot.address} spot on{' '}
-                    {selectedStartDate.toLocaleDateString()} from{' '}
+                    {translate('You_will_rent_the')} {selectedSpot.address}{' '}
+                    {translate('spot_on')}{' '}
+                    {selectedStartDate.toLocaleDateString()} {translate('from')}{' '}
                     {startTime ? (
                       <>
                         {startTime.toLocaleTimeString('en-US', {
@@ -527,9 +548,9 @@ const RentSpot = () => {
                         })}
                       </>
                     ) : (
-                      <>'Not selected'</>
-                    )}
-                    {' to '}
+                      <>'{translate('Not_selected')}'</>
+                    )}{' '}
+                    {translate('to')}{' '}
                     {endTime ? (
                       <>
                         {endTime.toLocaleTimeString('en-US', {
@@ -539,16 +560,18 @@ const RentSpot = () => {
                         })}
                       </>
                     ) : (
-                      <>Not selected</>
+                      <>{translate('Not_selected')}</>
                     )}{' '}
-                    for 0.30 RON/minute
+                    {translate('for')} 0.30 RON/{translate('minute')}
                   </p>
                 </div>
               </DialogContent>
               <DialogActions>
-                <Button onClick={handleDialogCloseConfirmation}>Cancel</Button>
+                <Button onClick={handleDialogCloseConfirmation}>
+                  {translate('Cancel')}
+                </Button>
                 <Button onClick={handleClickRedirect}>
-                  Pay & see directions
+                  {translate('Pay_and_see_directions')}
                 </Button>
               </DialogActions>
             </Dialog>

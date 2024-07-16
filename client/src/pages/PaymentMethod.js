@@ -22,7 +22,8 @@ const PaymentMethod = () => {
   const [showPayments, setShowPayments] = useState(false);
   const [currentPaymentMethod, setCurrentPaymentMethod] = useState({});
   const [loading, setLoading] = useState(true);
-  const { username, role, firstName } = useContext(GlobalStatesContext);
+  const { username, role, firstName, translate } =
+    useContext(GlobalStatesContext);
 
   useEffect(() => {
     async function fetchPaymentMethods() {
@@ -76,19 +77,19 @@ const PaymentMethod = () => {
     const newErrors = {};
 
     if (!validateCardNumber(cardNumber)) {
-      newErrors.cardNumber = 'Card number must be 16 digits';
+      newErrors.cardNumber = translate('cardNumberError');
     }
 
     if (!validateExpiryDate(expiryDate)) {
-      newErrors.expiryDate = 'Expiry date is invalid or expired';
+      newErrors.expiryDate = translate('expiryDateError');
     }
 
     if (!validateCvv(cvv)) {
-      newErrors.cvv = 'CVV must be 3 digits';
+      newErrors.cvv = translate('cvvError');
     }
 
     if (cardHolderName.trim() === '') {
-      newErrors.cardHolderName = 'Card holder name is required';
+      newErrors.cardHolderName = translate('cardHolderNameError');
     }
 
     setErrors(newErrors);
@@ -166,11 +167,13 @@ const PaymentMethod = () => {
     <div>
       {showPayments ? (
         <div className="payment-method-container">
-          <button onClick={paymentToggle}>Your Payment Methods</button>
-          <h2>Enter Your Payment Details</h2>
+          <button onClick={paymentToggle}>
+            {translate('yourPaymentMethods')}
+          </button>
+          <h2>{translate('enterPaymentDetails')}</h2>
           <form onSubmit={handleSubmit}>
             <div className="form-group">
-              <label htmlFor="bankName">Bank Name</label>
+              <label htmlFor="bankName">{translate('bankName')}</label>
               <input
                 type="text"
                 id="bankName"
@@ -178,7 +181,7 @@ const PaymentMethod = () => {
                 onChange={(e) => setBankName(e.target.value)}
                 required
               />
-              <label htmlFor="cardNumber">Card Number</label>
+              <label htmlFor="cardNumber">{translate('cardNumber')}</label>
               <input
                 type="text"
                 id="cardNumber"
@@ -191,7 +194,7 @@ const PaymentMethod = () => {
               )}
             </div>
             <div className="form-group">
-              <label htmlFor="expiryDate">Expiry Date</label>
+              <label htmlFor="expiryDate">{translate('expiryDate')}</label>
               <input
                 type="text"
                 id="expiryDate"
@@ -205,7 +208,7 @@ const PaymentMethod = () => {
               )}
             </div>
             <div className="form-group">
-              <label htmlFor="cvv">CVV</label>
+              <label htmlFor="cvv">{translate('cvv')}</label>
               <input
                 type="text"
                 id="cvv"
@@ -216,7 +219,9 @@ const PaymentMethod = () => {
               {errors.cvv && <span className="error">{errors.cvv}</span>}
             </div>
             <div className="form-group">
-              <label htmlFor="cardHolderName">Card Holder Name</label>
+              <label htmlFor="cardHolderName">
+                {translate('cardHolderName')}
+              </label>
               <input
                 type="text"
                 id="cardHolderName"
@@ -228,23 +233,23 @@ const PaymentMethod = () => {
                 <span className="error">{errors.cardHolderName}</span>
               )}
             </div>
-            <button type="submit">Add Payment Method</button>
+            <button type="submit">{translate('addPaymentMethod')}</button>
           </form>
           {successMessage && (
             <div className="success-message">
               <div className="tick">✔</div>
-              <p>Payment method added successfully</p>
+              <p>{translate('paymentMethodAdded')}</p>
             </div>
           )}
         </div>
       ) : (
         <div className="payment-method-container">
           <button onClick={paymentToggle}>
-            Add additional payment methods
+            {translate('addAdditionalPaymentMethods')}
           </button>
           {paymentMethods.length > 0 ? (
             <div>
-              <h2>Your Payment Methods</h2>
+              <h2>{translate('yourPaymentMethods')}</h2>
               <div className="alignCenter">
                 {paymentMethods.map((method, index) => (
                   <div
@@ -284,7 +289,7 @@ const PaymentMethod = () => {
               <img
                 src={noPaymentOptions}
                 style={{ width: '100%', height: '100%' }}
-                alt="No payment options available"
+                alt={translate('noPaymentOptions')}
               />
             </div>
           )}

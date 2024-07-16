@@ -33,7 +33,8 @@ const AccountSettings = () => {
         </div>
 
         <p>
-          {translate('loggedInA')} <b>{role}</b> {translate('account')}
+          {translate('loggedInA')} <b>{translate(`${role}`)}</b>{' '}
+          {translate('account')}
         </p>
 
         {role === 'customer' && (

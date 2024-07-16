@@ -204,7 +204,7 @@ const LendSpot = () => {
           setSpots([...spots, response.data]);
           setOpenDialog(false);
           setNewSpot(null);
-          toast.success('Parking spot registered successfully!', {
+          toast.success(translate('parkingSpotRegistered'), {
             position: 'top-right',
             autoClose: 10000,
             closeButton: false,
@@ -213,7 +213,7 @@ const LendSpot = () => {
           setShowConfetti(true);
         } catch (error) {
           console.log(error);
-          toast.error('Error registering parking spot!', {
+          toast.error(translate('errorRegisteringSpot'), {
             position: 'top-right',
             autoClose: 10000,
             closeOnClick: true,
@@ -278,6 +278,18 @@ const LendSpot = () => {
     const minutes = String(date.getMinutes()).padStart(2, '0');
     return `${hours}:${minutes}`;
   };
+  function translateStatus(status) {
+    switch (status) {
+      case 'free':
+        return translate('free');
+      case 'unavailable':
+        return translate('unavailable');
+      case 'occupied':
+        return translate('occupied');
+      default:
+        return status; // If no translation is found, return the status itself
+    }
+  }
   if (loading) {
     return <LoadingSpinner />;
   }
@@ -291,7 +303,7 @@ const LendSpot = () => {
             options={{
               componentRestrictions: { country: 'ro' },
             }}
-            placeholder="Search for a location"
+            placeholder={translate('searchLocation')}
             types={['(regions)']}
             className={`Autocomplete top`}
           />
@@ -347,18 +359,25 @@ const LendSpot = () => {
                   }}
                 >
                   <h3>{selectedSpot.address}</h3>
-                  <p>Status: {selectedSpot.status} now</p>
                   <p>
-                    Availability:
+                    {translate('status')} {translateStatus(selectedSpot.status)}{' '}
+                    {translate('now')}
+                  </p>
+                  <p>
+                    {translate('availability')}
                     {new Date(
                       selectedSpot.startDate
                     ).toLocaleDateString()} -{' '}
                     {new Date(selectedSpot.endDate).toLocaleDateString()}
                   </p>
-                  <p>Price: the most you are willing to pay.</p>
-                  <p>Owner: {firstName}</p>
+                  <p>
+                    {translate('price')} 0.30/{translate('minute')}
+                  </p>
+                  <p>
+                    {translate('owner')} {firstName}
+                  </p>
                   <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <div> Rating:</div>
+                    <div>{translate('rating')}</div>
                     <div className="stars">
                       <span className="star">&#9733;</span>
                       <span className="star">&#9733;</span>
@@ -392,18 +411,18 @@ const LendSpot = () => {
             <div className="dateTimePickerContainer">
               <div className="datePickerWrapper">
                 <div className="datePicker">
-                  <p>Start Date</p>
+                  <p>{translate('startDate')}</p>
                   <DatePicker
                     selected={selectedStartDate}
                     onChange={(date) => setSelectedStartDate(date)}
                     selectsStart
                     startDate={selectedStartDate}
                     endDate={selectedEndDate}
-                    placeholderText="Start Date"
+                    placeholderText={translate('startDate')}
                   />
                 </div>
                 <div className="datePicker">
-                  <p>End Date</p>
+                  <p>{translate('endDate')}</p>
                   <DatePicker
                     selected={selectedEndDate}
                     onChange={(date) => setSelectedEndDate(date)}
@@ -411,13 +430,13 @@ const LendSpot = () => {
                     startDate={selectedStartDate}
                     endDate={selectedEndDate}
                     minDate={selectedStartDate}
-                    placeholderText="End Date"
+                    placeholderText={translate('endDate')}
                   />
                 </div>
               </div>
               <div className="timePickerContainer">
                 <div className="timePicker">
-                  <p>Start Time</p>
+                  <p>{translate('startTime')}</p>
                   <DatePicker
                     title={startTime}
                     selected={startTime}
@@ -430,7 +449,7 @@ const LendSpot = () => {
                   />
                 </div>
                 <div className="timePicker">
-                  <p>End Time</p>
+                  <p>{translate('endTime')}</p>
                   <DatePicker
                     selected={endTime}
                     onChange={(date) => setEndTime(date)}
@@ -450,8 +469,8 @@ const LendSpot = () => {
         <DialogActions
           style={{ display: 'flex', justifyContent: 'space-around' }}
         >
-          <Button onClick={handleDialogClose}>Repick</Button>
-          <Button onClick={handleSubmit}>Register Spot</Button>
+          <Button onClick={handleDialogClose}>{translate('repick')}</Button>
+          <Button onClick={handleSubmit}>{translate('registerSpot')}</Button>
         </DialogActions>
         {error && (
           <div
@@ -498,8 +517,7 @@ const LendSpot = () => {
             }}
           >
             <div variant="h6" style={{ marginBottom: '10px' }}>
-              You need to log in with a partner account before you can lend
-              spots.
+              {translate('loginPartnerRequired')}
             </div>
             <div
               style={{
@@ -508,8 +526,12 @@ const LendSpot = () => {
                 width: '100%',
               }}
             >
-              <Button onClick={handleLoginErrorClose}>Nevermind</Button>
-              <Button onClick={handleNavigateToLogin}>Take me there</Button>
+              <Button onClick={handleLoginErrorClose}>
+                {translate('nevermind')}
+              </Button>
+              <Button onClick={handleNavigateToLogin}>
+                {translate('takeMeThere')}
+              </Button>
             </div>
           </div>
         )}

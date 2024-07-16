@@ -10,13 +10,13 @@ export default function NavTextAnimation() {
   return (
     <div>
       {location.pathname === '/Rent-A-Spot' ? (
-        <div className="normal-text">RENT A SPOT</div>
+        <div className="normal-text">{translate('rentASpot')}</div>
       ) : location.pathname === '/Lend-A-Spot' ? (
-        <div className="normal-text">LEND A SPOT</div>
+        <div className="normal-text">{translate('lendASpot')}</div>
       ) : location.pathname === '/login' ? (
-        <div className="normal-text">LOGIN</div>
+        <div className="normal-text">{translate('login')}</div>
       ) : location.pathname === '/register' ? (
-        <div className="normal-text">REGISTER</div>
+        <div className="normal-text">{translate('register')}</div>
       ) : (
         <div className="catchy">
           <div className="catchy1">{translate('catchy1')}</div>

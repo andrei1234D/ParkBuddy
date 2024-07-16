@@ -70,6 +70,7 @@
   font-size: 50px;
   width: auto;
   height: 40px;
+  padding: 20px;
 }
 
 .rentASpot::before {

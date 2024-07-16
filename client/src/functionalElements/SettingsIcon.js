@@ -6,9 +6,9 @@ import GlobalStatesContext from '../context/GlobalStatesContext';
 import '../style/Settings.css';
 
 const SettingsIcon = () => {
-  const { toggleMenu } = useContext(GlobalStatesContext);
+  const { toggleMenu, translate } = useContext(GlobalStatesContext);
   return (
-    <Tooltip title="Settings" arrow placement="top">
+    <Tooltip title={`${translate('settings')}`} arrow placement="top">
       <div className="settings">
         <Link to="/Settings">
           <IoSettings className="settingsIcon" onClick={toggleMenu} />

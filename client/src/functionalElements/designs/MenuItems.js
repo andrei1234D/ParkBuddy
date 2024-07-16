@@ -16,11 +16,11 @@ import '../../style/MenuItems.css';
 const itemsPerPage = 1;
 const menuItems = [
   { label: 'Home', link: '#home', urlImg: home },
-  { label: 'Reviews', link: '#reviews', urlImg: reviews },
-  { label: 'Get the app', link: '#getTheApp', urlImg: getTheApp },
-  { label: 'Rent A Spot', link: '/Rent-A-Spot', urlImg: rentASpot },
-  { label: 'Lend A Spot', link: '/Lend-A-Spot', urlImg: lendASpot },
-  { label: 'Your Spots', link: '/Your-Parking-Spots', urlImg: yourSpots },
+  { label: 'reviewsTitle', link: '#reviews', urlImg: reviews },
+  { label: 'getTheApp', link: '#getTheApp', urlImg: getTheApp },
+  { label: 'rentASpotText', link: '/Rent-A-Spot', urlImg: rentASpot },
+  { label: 'lendASpotText', link: '/Lend-A-Spot', urlImg: lendASpot },
+  { label: 'YOUR_SPOTS_TEXT', link: '/Your-Parking-Spots', urlImg: yourSpots },
 ];
 
 export default function MenuItems() {
@@ -41,7 +41,7 @@ export default function MenuItems() {
     setCurrentPage(pageIndex);
   };
 
-  const { toggleMenu } = useContext(GlobalStatesContext);
+  const { toggleMenu, translate } = useContext(GlobalStatesContext);
 
   const startIndex = currentPage * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
@@ -109,7 +109,9 @@ export default function MenuItems() {
                         className="menuItemLink"
                         onClick={() => handleNavigation(item.link)}
                       >
-                        <div className="underlineAnimation">{item.label}</div>
+                        <div className="underlineAnimation">
+                          {translate(item.label)}
+                        </div>
                       </div>
                     </div>
                     <button onClick={handleNext} className="arrowButton">
@@ -129,13 +131,13 @@ export default function MenuItems() {
               className={index === currentPage ? 'active' : ''}
               onClick={() => handlePageClick(index)}
             >
-              {menuItems[index * itemsPerPage].label}
+              {translate(menuItems[index * itemsPerPage].label)}
             </button>
           ))}
         </div>
         <div className="bottomMenu">
           <div className="menuSettingsContainer">
-            <div className="menuSettingsText">Settings</div>
+            <div className="menuSettingsText">{translate('settings')}</div>
             <div className="menuSettings">
               <SettingsIcon />
               <AccountIcon />
