@@ -148,6 +148,8 @@ const translations = {
     Please_rotate_your_device_to_portrait_mode:
       'Please rotate your device to portrait mode',
     Close: 'Close',
+    close: 'Close',
+    wrong_credentials: `Credentials don't match`,
     Menu: 'Menu',
     reviewsTitle: 'Reviews',
     studentReview:
@@ -176,6 +178,7 @@ const translations = {
     loginToAccessPage: 'You need to log in to access this page.',
     loginAsPartnerToAccessPage:
       'You need to log in as a partner account to access this page.',
+    please_fill_in_all_fields: 'Please fill in all fields',
   },
   pl: {
     login: 'Zaloguj',
@@ -357,6 +360,8 @@ const translations = {
       'Aby uzyskać dostęp do tej strony, musisz się zalogować.',
     loginAsPartnerToAccessPage:
       'Aby uzyskać dostęp do tej strony, musisz zalogować się na konto partnera.',
+    please_fill_in_all_fields: 'Proszę wypełnić wszystkie pola',
+    wrong_credentials: `Dane uwierzytelniające nie pasują`,
   },
   ro: {
     login: 'Conectează-te',
@@ -539,6 +544,8 @@ const translations = {
       'Trebuie să vă autentificați pentru a accesa această pagină.',
     loginAsPartnerToAccessPage:
       'Trebuie să vă autentificați ca un cont partener pentru a accesa această pagină.',
+    please_fill_in_all_fields: 'vă rugăm să completați toate câmpuril',
+    wrong_credentials: `Credențialele nu se potrivesc`,
   },
 };
 

@@ -220,7 +220,7 @@ const LendSpot = () => {
           });
         }
       } else {
-        setError('Please fill in all fields');
+        setError(`${translate('please_fill_in_all_fields')}`);
       }
     } else {
       setLoginError(true); // Show login error message

@@ -91,7 +91,7 @@ const Login = () => {
             color: 'var(--UIText)',
           }}
         >
-          {translate('Wrong_Credentials')}
+          {translate('wrong_credentials')}
         </DialogTitle>
         <DialogContent
           style={{ backgroundColor: 'var(--UIColor)', color: 'var(--UIText)' }}
